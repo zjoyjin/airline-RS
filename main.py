@@ -11,7 +11,7 @@ This file is Copyright (c) Ashley Bi, Zhuoyi Jin, Elizabeth Liu, and Kerri Wei.
 """
 
 from Module(Data_Classes) import _Vertex, 
-from geoplotlib import
+import geoplotlib
 from math import inf
 
 if __name__ == "__main__":
