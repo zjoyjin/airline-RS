@@ -17,12 +17,12 @@ if __name__ == "__main__":
     with open('Airline_Data.csv') as airline_file:
       flight_graph = Graph(airline_file)
 
-    print("Please type your current city (please capitalize the first
-    letter and type the city name in full):")
+    print("Please type your current city (please capitalize the first\n"
+          "letter and type the city name in full):")
         location = input()
 
-    print("Please type your desired destination (please capitalize the first letter
-    and type the city name in full):")
+    print("Please type your desired destination (please capitalize the first letter\n"
+          "and type the city name in full):")
         destination = input()
 
     print("Would you like to check bags on your flight? (Yes/No)")
