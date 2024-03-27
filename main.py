@@ -11,7 +11,8 @@ This file is Copyright (c) Ashley Bi, Zhuoyi Jin, Elizabeth Liu, and Kerri Wei.
 """
 
 from Module(Data_Classes) import _Vertex, 
-import math
+from geoplotlib import
+from math import inf
 
 if __name__ == "__main__":
     with open('Airline_Data.csv') as airline_file:
@@ -42,5 +43,17 @@ if __name__ == "__main__":
         if upper_price < lower_price:
             print("Please input a number that is greater than or equal to your lower price bound.")
 
+
+#Graph calculations
+
+geoplotlib.graph(data,
+                 src_lat=’lat_departure’,
+                 src_lon=’lon_departure’,
+                 dest_lat=’lat_arrival’,
+                 dest_lon=’lon_arrival’,
+                 color=’hot_r’,
+                 alpha=16,
+                 linewidth=2)
+geoplotlib.show()
     
       
