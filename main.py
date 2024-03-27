@@ -19,28 +19,28 @@ if __name__ == "__main__":
 
     print("Please type your current city (please capitalize the first\n"
           "letter and type the city name in full):")
-        location = input()
+    location = input()
 
     print("Please type your desired destination (please capitalize the first letter\n"
           "and type the city name in full):")
-        destination = input()
+    destination = input()
 
     print("Would you like to check bags on your flight? (Yes/No)")
-        bag_check = (input() == "Yes")
+    bag_check = (input() == "Yes")
 
     lower_price = -math.inf
     while lower_price < 0:
         print("Please type your lower price bound in CAD (please use numbers only):")
-            lower_price = int(input())
-            if lower_price < 0:
-                print("Please input a number that is greater than or equal to 0.")
+        lower_price = int(input())
+        if lower_price < 0:
+            print("Please input a number that is greater than or equal to 0.")
 
     upper_price = -math.inf
      while upper_price < lower_price:
         print("Please type your upper price bound in CAD (please use numbers only):")
-            upper_price = int(input())
-            if upper_price < lower_price:
-                print("Please input a number that is greater than or equal to your lower price bound.")
+        upper_price = int(input())
+        if upper_price < lower_price:
+            print("Please input a number that is greater than or equal to your lower price bound.")
 
     
       
