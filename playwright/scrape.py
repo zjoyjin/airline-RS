@@ -42,7 +42,6 @@ def run(playwright):
     to_place_field.press_sequentially("Vancouver")
     time.sleep(1)
     page.keyboard.press('Enter')
-    
 
 
     # # page.get_by_role("textbox", name="Return").press("Enter")
@@ -53,10 +52,8 @@ def run(playwright):
         page.locator(".xFFcie").first.click() # Opens a new tab
 
         print("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")
-    
     new_page = new_page_info.value
     new_page.wait_for_load_state()
-    print(new_page.title())
     context.close()
 
 """running it (move to main eventually?)"""
