@@ -10,9 +10,11 @@ Copyright and Usage Information
 This file is Copyright (c) Ashley Bi, Zhuoyi Jin, Elizabeth Liu, and Kerri Wei.
 """
 
-from Module(Data_Classes) import _Vertex, 
+from Module(Data_Classes) import _Vertex,
 import geoplotlib
 from math import inf
+
+
 
 if __name__ == "__main__":
     with open('Airline_Data.csv') as airline_file:
@@ -44,7 +46,33 @@ if __name__ == "__main__":
             print("Please input a number that is greater than or equal to your lower price bound.")
 
 
-#Graph calculations
+# Creating the graph with airline data
+flight_graph = Graph('Airline_Data.csv')
+
+matching_flights = []
+for edge in flight_graph.edges[location]:
+    if edge.destination.name == destination and edge.baggage == ('yes' if bag_check else 'no') and lower_price <= edge.price <= upper_price:
+        matching_flights.append(edge)
+
+# Print out the matching flights
+if matching_flights:
+    print("\nMatching flights:")
+    for flight in matching_flights:
+        print(flight)
+else:
+    print("\nNo matching flights found.")
+
+
+data = []
+for flight in matching_flights:
+    data.append({
+        'lat_departure': flight.start.lat,
+        'lon_departure': flight.start.lon,
+        'lat_arrival': flight.destination.lat,
+        'lon_arrival': flight.destination.lon
+    })
+
+
 
 geoplotlib.graph(data,
                  src_lat=’lat_departure’,
