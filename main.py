@@ -10,10 +10,11 @@ Copyright and Usage Information
 This file is Copyright (c) Ashley Bi, Zhuoyi Jin, Elizabeth Liu, and Kerri Wei.
 """
 
-from Module(Data_Classes) import _Vertex,
+from Module(Data_Classes) import
+from edges import Vertex, Graph, Edge
 import geoplotlib
-from math import inf
-
+import math
+from typing import Any, Union
 
 
 if __name__ == "__main__":
@@ -39,28 +40,28 @@ if __name__ == "__main__":
             print("Please input a number that is greater than or equal to 0.")
 
     upper_price = -math.inf
-     while upper_price < lower_price:
+    while upper_price < lower_price:
         print("Please type your upper price bound in CAD (please use numbers only):")
         upper_price = int(input())
         if upper_price < lower_price:
             print("Please input a number that is greater than or equal to your lower price bound.")
 
 
-# Creating the graph with airline data
-flight_graph = Graph('Airline_Data.csv')
+    # Creating the graph with airline data
+    flight_graph = Graph('Airline_Data.csv')
 
-matching_flights = []
-for edge in flight_graph.edges[location]:
-    if edge.destination.name == destination and edge.baggage == ('yes' if bag_check else 'no') and lower_price <= edge.price <= upper_price:
-        matching_flights.append(edge)
+    matching_flights = []
+    for edge in flight_graph.edges[location]:
+        if edge.destination.name == destination and edge.baggage == ('yes' if bag_check else 'no') and lower_price <= edge.price <= upper_price:
+            matching_flights.append(edge)
 
-# Print out the matching flights
-if matching_flights:
-    print("\nMatching flights:")
-    for flight in matching_flights:
-        print(flight)
-else:
-    print("\nNo matching flights found.")
+    # Print out the matching flights
+    if matching_flights:
+        print("\nMatching flights:")
+        for flight in matching_flights:
+            print(flight)
+    else:
+        print("\nNo matching flights found.")
 
 
 data = []
