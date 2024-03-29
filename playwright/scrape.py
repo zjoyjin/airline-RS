@@ -11,24 +11,25 @@ def get_results_page(page: Page) -> str:
     # type "From"
     from_place_field = page.locator('.e5F5td').first
     from_place_field.click()
-    time.sleep(1)
+    time.sleep(0.5)
     from_place_field.press_sequentially("Edmonton")
-    time.sleep(1)
+    time.sleep(0.5)
     page.keyboard.press('Enter')
 
     # type "To"
     to_place_field = page.locator('.e5F5td').nth(1)
     to_place_field.click()
-    time.sleep(1)
+    time.sleep(0.5)
     to_place_field.press_sequentially("Vancouver")
-    time.sleep(1)
+    time.sleep(0.5)
     page.keyboard.press('Enter')
 
     # Search
 
     page.locator(".xFFcie").first.click()
-    # page.wait_for_load_state()
-    time.sleep(1)   # NOTE: might not work if page requires more than 1 second of loading time??? fix later maybe
+    # page.wait_for_event("framenavigated")     # don't think this is needed but im not sure
+    page.wait_for_load_state('networkidle')     # discouraged apparently, but idk if this is better/worse than time.sleep
+    # time.sleep(1)   # NOTE: might not work if page requires more than 1 second of loading time??? fix later maybe
     return page.content()
 
 def parse(page: Page):
