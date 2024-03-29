@@ -32,7 +32,7 @@ def get_results_page(page: Page) -> str:
     # time.sleep(1)   # NOTE: might not work if page requires more than 1 second of loading time??? fix later maybe
     return page.content()
 
-def parse(page: Page):
+def parse(page: Page) -> dict:
     # init soup
     soup = BeautifulSoup(get_results_page(page), 'html.parser')
 
@@ -41,26 +41,37 @@ def parse(page: Page):
     arrivals = soup.find_all('div', class_='XWcVob YMlIz ogfYpf tPgKwe')
     airlines = soup.find_all('span', class_='h1fkLb')
     stops = soup.find_all('span', class_='VG3hNb')
+    prices = soup.find_all('div', class_="BVAVmf I11szd POX3ye")
+    airport_from = soup.find_all('div', class_="G2WY5c sSHqwe ogfYpf tPgKwe")
+    airport_to = soup.find_all('div', class_="c8rWCd sSHqwe ogfYpf tPgKwe")
+    durations = soup.find_all('span', class_="EzfXjb")
+    # baggage: get by aria label ("This price for this flight doesn't include...")
+
 
     # return info (maybe split into separate function later)
-    parsed = {}
+    results = {}
     for i in range(0, len(departures)):
-        parsed[i] = []
+        results[i] = []
 
     for i in range(0, len(departures)):
-        parsed[i].append(f'Departure: {departures[i].text}')
-        parsed[i].append(f'Arrival: {arrivals[i].text}')
-        parsed[i].append(f'Airline: {airlines[i].text}')
-        parsed[i].append(f'# Stops: {stops[i].text}')
+        results[i].append(f'Departure: {departures[i].text.replace("\u202f", " ")}')
+        results[i].append(f'Arrival: {arrivals[i].text.replace("\u202f", " ")}')
+        results[i].append(f'Airline: {airlines[i].text}')
+        results[i].append(f'# Stops: {stops[i].text}')
+        results[i].append(f'# Price: {[p for p in prices[i].descendants][-1]}')
+        results[i].append(f'# Duration: {durations[i].find_previous_sibling().text}')
+        results[i].append(f'From: {airport_from[i].text}')
+        results[i].append(f'To: {airport_to[i].text}')
     
-    return parsed
+    return results
 
 
 with sync_playwright() as playwright:
     context = playwright.chromium.launch(headless=False).new_context()
     page = context.new_page()
     page.goto('https://www.google.com/travel/flights?hl=en-US&curr=CAD')
+    # could probably get currency customization by changing curr=   ^
 
-    parsed = parse(page)
+    results = parse(page)
 
-    print(parsed)
+    print(results)
