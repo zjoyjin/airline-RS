@@ -13,15 +13,15 @@ def get_results_page(page: Page) -> str:
     from_place_field.click()
     time.sleep(0.5)
     from_place_field.press_sequentially("Edmonton")
-    time.sleep(0.5)
+    time.sleep(1)
     page.keyboard.press('Enter')
 
     # type "To"
     to_place_field = page.locator('.e5F5td').nth(1)
     to_place_field.click()
     time.sleep(0.5)
-    to_place_field.press_sequentially("Vancouver")
-    time.sleep(0.5)
+    to_place_field.press_sequentially("Beijing")
+    time.sleep(1)
     page.keyboard.press('Enter')
 
     # Search
@@ -40,7 +40,8 @@ def parse(page: Page) -> dict:
     departures = soup.find_all('div', class_='wtdjmc YMlIz ogfYpf tPgKwe')
     arrivals = soup.find_all('div', class_='XWcVob YMlIz ogfYpf tPgKwe')
     airlines = soup.find_all('span', class_='h1fkLb')
-    stops = soup.find_all('span', class_='VG3hNb')
+    # stops = soup.find_all('span', class_='VG3hNb')
+    airport_stops = soup.find_all('span', class_="rGRiKd")      # format: either "X stops in XYZ, ABC" or "Nonstop"
     prices = soup.find_all('div', class_="BVAVmf I11szd POX3ye")
     airport_from = soup.find_all('div', class_="G2WY5c sSHqwe ogfYpf tPgKwe")
     airport_to = soup.find_all('div', class_="c8rWCd sSHqwe ogfYpf tPgKwe")
@@ -57,11 +58,12 @@ def parse(page: Page) -> dict:
         results[i].append(f'Departure: {departures[i].text.replace("\u202f", " ")}')
         results[i].append(f'Arrival: {arrivals[i].text.replace("\u202f", " ")}')
         results[i].append(f'Airline: {airlines[i].text}')
-        results[i].append(f'# Stops: {stops[i].text}')
+        # results[i].append(f'# Stops: {stops[i].text}')
         results[i].append(f'# Price: {[p for p in prices[i].descendants][-1]}')
-        results[i].append(f'# Duration: {durations[i].find_previous_sibling().text}')
+        results[i].append(f'Duration: {durations[i].find_previous_sibling().text}')
         results[i].append(f'From: {airport_from[i].text}')
         results[i].append(f'To: {airport_to[i].text}')
+        results[i].append(airport_stops[i].text)
     
     return results
 
