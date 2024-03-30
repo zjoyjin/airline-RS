@@ -1,6 +1,6 @@
 # IT KINDA WORKS!!
 from playwright.sync_api import sync_playwright, Page
-import time
+from time import sleep
 from bs4 import BeautifulSoup
 
 def get_results_page(page: Page) -> str:
@@ -11,17 +11,17 @@ def get_results_page(page: Page) -> str:
     # type "From"
     from_place_field = page.locator('.e5F5td').first
     from_place_field.click()
-    time.sleep(0.5)
+    sleep(0.5)
     from_place_field.press_sequentially("Toronto")
-    time.sleep(1)
+    sleep(1)
     page.keyboard.press('Enter')
 
     # type "To"
     to_place_field = page.locator('.e5F5td').nth(1)
     to_place_field.click()
-    time.sleep(0.5)
+    sleep(0.5)
     to_place_field.press_sequentially("Vancouver")
-    time.sleep(1)
+    sleep(1)
     page.keyboard.press('Enter')
 
     # Search
@@ -31,11 +31,11 @@ def get_results_page(page: Page) -> str:
     # page.wait_for_event("framenavigated")     # don't think this is needed but im not sure
     # page.wait_for_load_state('networkidle')     # discouraged apparently, but idk if this is better/worse than time.sleep
 
-    time.sleep(5)   # bc none of the wait for load states work ToT
+    sleep(5)   # bc none of the wait for load states work ToT
 
     # page.locator(".zISZ5c").and_(page.locator(".QB2Jof")).click()   # get more flights
     # page.wait_for_load_state('networkidle')
-    # time.sleep(1)
+    # sleep(1)
     return page.content()
 
 def parse(page: Page) -> dict[str]:
