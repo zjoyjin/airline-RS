@@ -30,10 +30,6 @@ def get_results_page(page: Page) -> str:
     # page.wait_for_event("framenavigated")     # don't think this is needed but im not sure
     page.wait_for_load_state('networkidle')     # discouraged apparently, but idk if this is better/worse than time.sleep
     # time.sleep(1)   # NOTE: might not work if page requires more than 1 second of loading time??? fix later maybe
-
-    # page.locator(".zISZ5c").and_(page.locator(".QB2Jof")).click()   # get more flights
-    # page.wait_for_load_state('networkidle')
-    # time.sleep(1)
     return page.content()
 
 def parse(page: Page) -> dict:
@@ -79,7 +75,5 @@ with sync_playwright() as playwright:
     # could probably get currency customization by changing curr=   ^
 
     results = parse(page)
-    if results:
-        print(results)
-    else:
-        print("No flights found!")
+
+    print(results)
