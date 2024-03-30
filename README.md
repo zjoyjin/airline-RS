@@ -1,1 +1,1 @@
-# csc111-project2-airline-RS
+# csc111-project2-flight-path-finder
