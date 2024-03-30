@@ -27,9 +27,15 @@ def get_results_page(page: Page) -> str:
     # Search
 
     page.locator(".xFFcie").first.click()
+
     # page.wait_for_event("framenavigated")     # don't think this is needed but im not sure
-    page.wait_for_load_state('networkidle')     # discouraged apparently, but idk if this is better/worse than time.sleep
-    # time.sleep(1)   # NOTE: might not work if page requires more than 1 second of loading time??? fix later maybe
+    # page.wait_for_load_state('networkidle')     # discouraged apparently, but idk if this is better/worse than time.sleep
+
+    time.sleep(5)   # bc none of the wait for load states work ToT
+
+    # page.locator(".zISZ5c").and_(page.locator(".QB2Jof")).click()   # get more flights
+    # page.wait_for_load_state('networkidle')
+    # time.sleep(1)
     return page.content()
 
 def parse(page: Page) -> dict:
@@ -63,7 +69,7 @@ def parse(page: Page) -> dict:
         results[i].append(f'Duration: {durations[i].find_previous_sibling().text}')
         results[i].append(f'From: {airport_from[i].text}')
         results[i].append(f'To: {airport_to[i].text}')
-        results[i].append(airport_stops[i].text)
+        results[i].append(f'Stops: {airport_stops[i].text}')
     
     return results
 
@@ -75,5 +81,7 @@ with sync_playwright() as playwright:
     # could probably get currency customization by changing curr=   ^
 
     results = parse(page)
-
-    print(results)
+    if results:
+        print(results)
+    else:
+        print("No flights found!")
