@@ -7,11 +7,24 @@ from typing import Any, Optional
 from scrape import get_results
 
 class Vertex:
-    def __init__(self, name):
-        self.name = name
+    """A vertex is a cities that either has arriving or departing flights.
+
+    Instance Attributes:
+        - location: The name of the city 
+        - destinations: A set of tuples. Only add a tuple to this set if there exists a flight from self.location 
+            to another city. Each tuple stores the following information: (destination city, price of flights, airline).
+    
+    Representation Invariants:
+        - all({self.location != destination[0] for destination in destinations})
+    """
+    location: Any
+    destinations: set[tuple[_WeightedVertex, Union[int, float], str]]
+
+    def __init__(self, location):
+        self.name = location
 
     def __repr__(self):
-        return f"{self.name}"
+        return f"{self.location}"
 
 
 class Edge:
