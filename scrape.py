@@ -38,7 +38,7 @@ def get_results_page(page: Page) -> str:
     # sleep(1)
     return page.content()
 
-def parse(page: Page) -> dict[str]:
+def parse(page: Page) -> list[dict]:
     # init soup
     soup = BeautifulSoup(get_results_page(page), 'html.parser')
 
@@ -80,7 +80,7 @@ def parse(page: Page) -> dict[str]:
         results[i]['To'] = airport_to[i].text
         results[i]['Stops'] = airport_stops[i].text
         results[i]['Carry-on'] = baggage[i].find('svg') is None     # bool
-    
+
     return results
 
 def get_results():
