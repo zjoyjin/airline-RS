@@ -1,0 +1,167 @@
+""" CSC111 Project 2: Flight Path Finder
+============================================
+This Python module contains the code for modified Vertex and Graph data classes. This will be used to represent a
+a network of flights with the price and airline of each flight as well.
+
+Copyright and Usage Information
+============================================
+This file is Copyright (c) Ashley Bi, Zhuoyi Jin, Elizabeth Liu, and Kerri Wei.
+"""
+
+from __future__ import annotations
+from typing import Any, Optional
+from scrape import get_results
+
+
+class Vertex:
+    """A vertex is a city that either has arriving or departing flights.
+
+    Instance Attributes:
+        - location: The name of the city
+        - destinations: A set of tuples. Only add a tuple to this set if there exists a flight from self.location
+            to another city. Each tuple stores the following information: (destination city, price of flights, airline).
+
+    Representation Invariants:
+        - all({self.location != destination[0] for destination in destinations})
+        - len(self.destinations) != 0
+    """
+    location: Any
+    destinations: set[tuple[str, Union[int, float], str]]
+
+    def __init__(self, location: str):
+        """Initialize a new vertex with the given lcocation.
+
+        This vertex is initialized with no neighbours.
+        """
+        self.location = location
+        self.destinations = set()
+
+    def __repr__(self):
+        return f"{self.location}"
+
+    def degree(self) -> int:
+        """Return the degree of this vertex."""
+        return len(self.destinations)
+
+
+# class Edge:
+#     def __init__(self, start, destination, airline, baggage, price):
+#         self.start = start
+#         self.destination = destination
+#         self.airline = airline
+#         self.baggage = baggage
+#         self.price = price
+#
+#     def __repr__(self):
+#         return f"({self.start} -> {self.destination}, Airline: {self.airline}, Baggage: {self.baggage}, Price: {self.price})"
+
+
+class Graph:
+    """A graph used to represent a network of flights. Each vertex is representative of a location and each edge is
+    representative of a flights with a unique initial location, destination, price, and airline.
+
+    This is a directed graph, since we need to keep track of flights that occur in both directions (eg.
+    Toronto to Vancouver versus Vancouver to Toronto). This graph is also a multigraph, since there may be multiple
+    flights with the same route but with a different price or airline. Finally, this graph is also weighted since we
+    keep track of the price of each flight.
+
+    Instance Attributes:
+         - vertices:
+             A collection of the vertices contained in this graph.
+             Maps city name to Vertex object
+    """
+    vertices: dict[str, Vertex]
+
+    def __init__(self):
+        """Initialize an empty graph (no vertices or edges)."""
+        self.vertices = {}
+
+    def add_vertex(self, location: str):
+        """Add a vertex with the given city name, price, and airline to this graph.
+
+        The new vertex is not adjacent to any other vertices.
+        Do nothing if the given item is already in this graph.
+        """
+        if location not in self.vertices:
+            self.vertices[location] = Vertex(location)
+
+    def add_edge(self, initial: str, destination: str, price: Union[float, int], airline: str):
+        """Add an edge between the vertex for an initial location in this graph and a destination. Note that only
+        self.vertices[initial].destinations will be modified, since vertex.destinations for any vertex only stores flights
+        that depart from the location, and does not store flights that arrive at the location.
+
+        Raise a ValueError if initial or destination do not appear as vertices in this graph.
+
+        Do nothing if this edge already exists.
+
+        Preconditions:
+            - item1 != item2
+        """
+        if initial not in self.vertices or destination not in self.vertices:
+            raise ValueError
+        else:
+            initial_vertex = self.vertices[initial]
+            edge_tuple = (destination, price, airline)
+
+            if edge_tuple not in initial_vertex.destinations:
+                initial_vertex.destinations.add(edge_tuple)
+
+    def get_vertex(self, location):
+        """Return the Vertex object associated with the given location.
+
+        Raise a ValueError if item does not appear as a vertex in this graph.
+        """
+        if location in self.vertices:
+            return self.vertices[location]
+        else:
+            raise ValueError
+
+    def check_existing_flight(self, initial: str, destination: Any) -> bool:
+        """Return whether there is a flight from the given intial loaction to the given destination. This flight may be
+        of any price or airline.
+
+        Return False if initial or destination do not appear as vertices in this graph.
+        """
+        if initial in self.vertices and destination in self.vertices:
+            initial_vertex = self.vertices[initial]
+            return any(destination == initial_vertex_dest[0] for initial_vertex_dest in initial_vertex.destinations)
+        else:
+            return False
+
+    # def get_edges(self, vertex):
+    #     if isinstance(vertex, Vertex):
+    #         return self.edges[vertex.name]
+    #     else:
+    #         raise ValueError("Invalid vertex")
+
+
+# Creating graph
+graph = Graph()
+
+# Reading data from CSV file
+# with open('flights.csv', 'r') as file:
+#     csv_reader = csv.reader(file)
+#     next(csv_reader)  # Skip header
+#     for row in csv_reader:
+#         start = Vertex(row[0])
+#         destination = Vertex(row[1])
+#         airline = row[4]
+#         baggage = row[2]
+#         price = int(row[3])
+
+#         graph.add_vertex(start)
+#         graph.add_vertex(destination)
+#         graph.add_edge(Edge(start, destination, airline, baggage, price))
+
+res = get_results()
+for flight in res:
+    start = flight['To']
+    destination = flight['From']
+    price = flight['Price']
+    airline = flight['Airline']
+
+    # baggage = flight['Carry-on']
+
+    graph.add_vertex(start)
+    graph.add_vertex(destination)
+    graph.add_edge(start, destination, price, airline)

@@ -1,9 +1,6 @@
-""" CSC111 Project 2: Airline Review System
-
-Instructions
+""" CSC111 Project 2: Flight Path Finder
 ============================================
-The Python module contains the user input and visualization
-code for for Project 2. 
+The Python module contains the user input and visualization code for for Project 2. 
 
 Copyright and Usage Information
 ============================================
