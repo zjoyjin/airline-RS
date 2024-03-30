@@ -1,5 +1,4 @@
 """ CSC111 Project 2: Flight Path Finder
-
 ============================================
 This Python module contains the code for modified Vertex and Graph data classes. This will be used to represent a
 a network of flights with the price and airline of each flight as well.
