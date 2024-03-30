@@ -4,6 +4,7 @@ This is the Classes and Function for Vertex and graph
 
 from __future__ import annotations
 from typing import Any, Optional
+from scrape import get_results
 
 class Vertex:
     def __init__(self, name):
@@ -59,16 +60,28 @@ class Graph:
 graph = Graph()
 
 # Reading data from CSV file
-with open('flights.csv', 'r') as file:
-    csv_reader = csv.reader(file)
-    next(csv_reader)  # Skip header
-    for row in csv_reader:
-        start = Vertex(row[0])
-        destination = Vertex(row[1])
-        airline = row[4]
-        baggage = row[2]
-        price = int(row[3])
+# with open('flights.csv', 'r') as file:
+#     csv_reader = csv.reader(file)
+#     next(csv_reader)  # Skip header
+#     for row in csv_reader:
+#         start = Vertex(row[0])
+#         destination = Vertex(row[1])
+#         airline = row[4]
+#         baggage = row[2]
+#         price = int(row[3])
 
-        graph.add_vertex(start)
-        graph.add_vertex(destination)
-        graph.add_edge(Edge(start, destination, airline, baggage, price))
+#         graph.add_vertex(start)
+#         graph.add_vertex(destination)
+#         graph.add_edge(Edge(start, destination, airline, baggage, price))
+
+res = get_results()
+for flight in res:
+    start = Vertex(flight['To'])
+    destination = Vertex(flight['From'])
+    airline = flight['Airline']
+    price = flight['Price']
+    baggage = flight['Carry-on']
+
+    graph.add_vertex(start)
+    graph.add_vertex(destination)
+    graph.add_edge(Edge(start, destination, airline, baggage, price))
