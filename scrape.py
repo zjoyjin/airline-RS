@@ -12,7 +12,7 @@ def get_results_page(page: Page) -> str:
     from_place_field = page.locator('.e5F5td').first
     from_place_field.click()
     time.sleep(0.5)
-    from_place_field.press_sequentially("Edmonton")
+    from_place_field.press_sequentially("Toronto")
     time.sleep(1)
     page.keyboard.press('Enter')
 
@@ -20,7 +20,7 @@ def get_results_page(page: Page) -> str:
     to_place_field = page.locator('.e5F5td').nth(1)
     to_place_field.click()
     time.sleep(0.5)
-    to_place_field.press_sequentially("Beijing")
+    to_place_field.press_sequentially("Vancouver")
     time.sleep(1)
     page.keyboard.press('Enter')
 
@@ -38,7 +38,7 @@ def get_results_page(page: Page) -> str:
     # time.sleep(1)
     return page.content()
 
-def parse(page: Page) -> dict:
+def parse(page: Page) -> dict[str]:
     # init soup
     soup = BeautifulSoup(get_results_page(page), 'html.parser')
 
@@ -53,6 +53,7 @@ def parse(page: Page) -> dict:
     airport_to = soup.find_all('div', class_="c8rWCd sSHqwe ogfYpf tPgKwe")
     durations = soup.find_all('span', class_="EzfXjb")
     # baggage: get by aria label ("This price for this flight doesn't include...")
+    baggage = soup.find_all('div', class_='BVAVmf I11szd POX3ye')
 
 
     # return info as list of dictionaries (maybe split into separate function later)
@@ -65,18 +66,20 @@ def parse(page: Page) -> dict:
                         'Duration' : None,
                         'From' : None,
                         'To' : None,
-                        'Stops' : None})
+                        'Stops' : None,
+                        'Carry-on' : None})
 
     for i in range(0, len(departures)):
         results[i]['Departure'] = departures[i].text.replace("\u202f", " ")
         results[i]['Arrival'] = arrivals[i].text.replace("\u202f", " ")
         results[i]['Airline'] = airlines[i].text
         # results[i].append(f'# Stops: {stops[i].text}')
-        results[i]['Price'] = [p for p in prices[i].descendants][-1]
+        results[i]['Price'] = int([p for p in prices[i].descendants][-1][3:].replace(',', ''))  # int
         results[i]['Duration'] = durations[i].find_previous_sibling().text
         results[i]['From'] = airport_from[i].text
         results[i]['To'] = airport_to[i].text
         results[i]['Stops'] = airport_stops[i].text
+        results[i]['Carry-on'] = baggage[i].find('svg') is None     # bool
     
     return results
 
@@ -86,6 +89,7 @@ def get_results():
         page = context.new_page()
         page.goto('https://www.google.com/travel/flights?hl=en-US&curr=CAD')
         # could probably get currency customization by changing curr=   ^
+        # but then would need to alter how price str -> int is done
 
         results = parse(page)
         if results:
@@ -93,3 +97,6 @@ def get_results():
         else:
             print("No flights found!")
         return results
+
+if __name__ == "__main__":
+    get_results()
