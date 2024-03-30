@@ -55,33 +55,41 @@ def parse(page: Page) -> dict:
     # baggage: get by aria label ("This price for this flight doesn't include...")
 
 
-    # return info (maybe split into separate function later)
-    results = {}
+    # return info as list of dictionaries (maybe split into separate function later)
+    results = []
     for i in range(0, len(departures)):
-        results[i] = []
+        results.append({'Departure' : None,
+                        'Arrival' : None,
+                        'Airline' : None,
+                        'Price' : None,
+                        'Duration' : None,
+                        'From' : None,
+                        'To' : None,
+                        'Stops' : None})
 
     for i in range(0, len(departures)):
-        results[i].append(f'Departure: {departures[i].text.replace("\u202f", " ")}')
-        results[i].append(f'Arrival: {arrivals[i].text.replace("\u202f", " ")}')
-        results[i].append(f'Airline: {airlines[i].text}')
+        results[i]['Departure'] = departures[i].text.replace("\u202f", " ")
+        results[i]['Arrival'] = arrivals[i].text.replace("\u202f", " ")
+        results[i]['Airline'] = airlines[i].text
         # results[i].append(f'# Stops: {stops[i].text}')
-        results[i].append(f'# Price: {[p for p in prices[i].descendants][-1]}')
-        results[i].append(f'Duration: {durations[i].find_previous_sibling().text}')
-        results[i].append(f'From: {airport_from[i].text}')
-        results[i].append(f'To: {airport_to[i].text}')
-        results[i].append(f'Stops: {airport_stops[i].text}')
+        results[i]['Price'] = [p for p in prices[i].descendants][-1]
+        results[i]['Duration'] = durations[i].find_previous_sibling().text
+        results[i]['From'] = airport_from[i].text
+        results[i]['To'] = airport_to[i].text
+        results[i]['Stops'] = airport_stops[i].text
     
     return results
 
+def get_results():
+    with sync_playwright() as playwright:
+        context = playwright.chromium.launch(headless=False).new_context()
+        page = context.new_page()
+        page.goto('https://www.google.com/travel/flights?hl=en-US&curr=CAD')
+        # could probably get currency customization by changing curr=   ^
 
-with sync_playwright() as playwright:
-    context = playwright.chromium.launch(headless=False).new_context()
-    page = context.new_page()
-    page.goto('https://www.google.com/travel/flights?hl=en-US&curr=CAD')
-    # could probably get currency customization by changing curr=   ^
-
-    results = parse(page)
-    if results:
-        print(results)
-    else:
-        print("No flights found!")
+        results = parse(page)
+        if results:
+            print(results)
+        else:
+            print("No flights found!")
+        return results
