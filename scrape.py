@@ -3,18 +3,18 @@ from playwright.sync_api import sync_playwright, Page
 from time import sleep
 from bs4 import BeautifulSoup
 
-def get_results_page(page: Page) -> str:
-    """ Gets the HTML content of the google flights results page. """
+def get_results_page(page: Page, _to: str, _from: str, departure: str, arrival: str) -> str:
+    """ Gets the HTML content of the google flights results page according to user input """
 
     # dates
-    page.get_by_role("textbox", name="Departure").fill("2024/04/05")
-    page.get_by_role("textbox", name="Return").fill("2024/04/28")
+    page.get_by_role("textbox", name="Departure").fill(departure)
+    page.get_by_role("textbox", name="Return").fill(arrival)
 
     # type "From"
     from_place_field = page.locator('.e5F5td').first
     from_place_field.click()
     sleep(0.5)
-    from_place_field.press_sequentially("Toronto")
+    from_place_field.press_sequentially(_from)
     sleep(1)
     page.keyboard.press('Enter')
 
@@ -22,7 +22,7 @@ def get_results_page(page: Page) -> str:
     to_place_field = page.locator('.e5F5td').nth(1)
     to_place_field.click()
     sleep(0.5)
-    to_place_field.press_sequentially("Vancouver")
+    to_place_field.press_sequentially(_to)
     sleep(1)
     page.keyboard.press('Enter')
 
@@ -38,16 +38,14 @@ def get_results_page(page: Page) -> str:
     return page.content()
 
 
-def parse(page: Page) -> list[dict]:
+def parse(soup: BeautifulSoup) -> list[dict]:
     """
-    Parse the HTML page and return the data as a list of dictionaries. Calls get_results_page().
+    Parse the HTML page and return the data as a list of dictionaries.
     Data obtained (str unless otherwise stated) -- 9 total:
         departure time, arrival time, airline, price (float), flight duration,
         departure airport code, arrival airport code, # of stops and respective airport codes,
         if overhead baggage is available (bool)  
     """
-    # init soup
-    soup = BeautifulSoup(get_results_page(page), 'html.parser')
 
     # get info
     departures = soup.find_all('div', class_='wtdjmc YMlIz ogfYpf tPgKwe')
@@ -89,8 +87,8 @@ def parse(page: Page) -> list[dict]:
     return results
 
 
-def get_results() -> list[dict]:
-    """ Inits scraping and gets flight search results. (NOTE: add user query at some point). Calls parse() """
+def get_results(_to: str, _from: str, departure: str, arrival: str) -> list[dict]:
+    """ Inits scraping and gets flight search results. Calls the above two functions. """
 
     with sync_playwright() as playwright:
         browser = playwright.chromium.launch(headless=False)
@@ -99,11 +97,14 @@ def get_results() -> list[dict]:
         # could probably get currency customization by changing curr=   ^
         # but then would need to alter how price str -> int is done
 
-        return parse(page)
+        # init soup
+        soup = BeautifulSoup(get_results_page(page, _to, _from, departure, arrival), 'html.parser')
+
+        return parse(soup)
 
 # For testing purposes
 if __name__ == "__main__":
-    res = get_results()
+    res = get_results("Vancouver", "Edmonton", "2024/04/20", "2024/05/20")
     if res:
         print(res)
     else:
