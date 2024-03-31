@@ -128,16 +128,13 @@ class Graph:
         else:
             return False
 
-    def initialize_with_airports(self, airports: list[str], airline: str = None, carry_on: bool = True):
+    def initialize_with_airports(self, source: str, destination: str, start_date: str, end_date: str, airline: str = None, carry_on: bool = True):
         """Initialize the graph with flights between the specified international airports."""
-        for source in airports:
-            for destination in airports:
-                if source != destination:
-                    flights = get_results(source, destination)  # Get flight results between source and destination
-                    for flight in flights:
-                        if (not airline or flight['Airline'] == airline) and (
-                                carry_on or flight.get('Carry-on', False)):
-                            self.add_edge(source, destination, flight['Price'], flight['Airline'])
+        flights = get_results(source, destination, start_date, end_date)
+        for flight in flights:
+            if (not airline or flight['Airline'] == airline) and (carry_on or flight.get('Carry-on', False)):
+                self.add_edge(source, destination, flight['Price'], flight['Airline'])
+
 
     # def get_edges(self, vertex):
     #     if isinstance(vertex, Vertex):
@@ -180,11 +177,13 @@ for flight in res:
 
 #test
 graph = Graph()
-international_airports = ["Vancouver", "Toronto", "New York", "London", "Paris", "Tokyo", "Sydney", "Dubai", "Singapore", "Los Angeles"]
+source_city = input("Enter the source city: ").strip().capitalize()
+destination_city = input("Enter the destination city: ").strip().capitalize()
+start_date = input("Enter the start date (YYYY/MM/DD): ").strip()
+end_date = input("Enter the end date (YYYY/MM/DD): ").strip()
 
-# User input
 airline_preference = input("Enter airline preference (leave blank for all airlines): ").strip()
 carry_on_preference = input("Carry-on baggage preference (yes/no): ").strip().lower() == 'yes'
 
 # Initialize graph based on user input and flight results
-graph.initialize_with_airports(international_airports, airline=airline_preference, carry_on=carry_on_preference)
+graph.initialize_with_airports(source_city, destination_city, start_date, end_date, airline=airline_preference, carry_on=carry_on_preference)
