@@ -27,17 +27,14 @@ def get_results_page(page: Page) -> str:
     page.keyboard.press('Enter')
 
     # Search
-
     page.locator(".xFFcie").first.click()
-
     # page.wait_for_event("framenavigated")     # don't think this is needed but im not sure
     # page.wait_for_load_state('networkidle')     # discouraged apparently, but idk if this is better/worse than time.sleep
+    sleep(5)
 
-    sleep(5)   # bc none of the wait for load states work ToT
+    page.locator(".zISZ5c").and_(page.locator(".QB2Jof")).click()   # get more flights
+    sleep(2)    # if this doesn't work, then it'll just be as if this wasn't clicked
 
-    # page.locator(".zISZ5c").and_(page.locator(".QB2Jof")).click()   # get more flights
-    # page.wait_for_load_state('networkidle')
-    # sleep(1)
     return page.content()
 
 
