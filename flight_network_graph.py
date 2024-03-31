@@ -128,6 +128,20 @@ class Graph:
         else:
             return False
 
+    def initialize_with_airports(self, airports: list[str], airline: str = None, carry_on: bool = True):
+        """Initialize the graph with flights between the specified international airports."""
+        for airport in airports:
+            self.add_vertex(airport)
+
+        # Scrape flights between all combinations of international airports
+        for source in airports:
+            for destination in airports:
+                if source != destination:
+                    flights = scrape_flights(source, destination)
+                    for flight in flights:
+                        if (not airline or flight['airline'] == airline) and (carry_on or flight['baggage'] == 'yes'):
+                            self.add_edge(source, destination, flight['price'], flight['airline'])
+
     # def get_edges(self, vertex):
     #     if isinstance(vertex, Vertex):
     #         return self.edges[vertex.name]
