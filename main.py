@@ -29,27 +29,19 @@ if __name__ == "__main__":
     print("Would you like to check bags on your flight? (Yes/No)")
     bag_check = (input() == "Yes")
 
-    lower_price = -math.inf
-    while lower_price < 0:
-        print("Please type your lower price bound in CAD (please use numbers only):")
-        lower_price = int(input())
-        if lower_price < 0:
-            print("Please input a number that is greater than or equal to 0.")
-
     upper_price = -math.inf
-    while upper_price < lower_price:
+    while upper_price <= 0:
         print("Please type your upper price bound in CAD (please use numbers only):")
         upper_price = int(input())
-        if upper_price < lower_price:
-            print("Please input a number that is greater than or equal to your lower price bound.")
-
+        if upper_price <= 0:
+            print("Please input a number that is greater than or equal to $0.")
 
     # Creating the graph with airline data
     flight_graph = Graph('Airline_Data.csv')
 
     matching_flights = []
     for edge in flight_graph.edges[location]:
-        if edge.destination.name == destination and edge.baggage == ('yes' if bag_check else 'no') and lower_price <= edge.price <= upper_price:
+        if edge.destination.name == destination and edge.baggage == ('yes' if bag_check else 'no') and 0 <= edge.price <= upper_price:
             matching_flights.append(edge)
 
     # Print out the matching flights
