@@ -4,6 +4,8 @@ from time import sleep
 from bs4 import BeautifulSoup
 
 def get_results_page(page: Page) -> str:
+    """ Gets the HTML content of the google flights results page. """
+
     # dates
     page.get_by_role("textbox", name="Departure").fill("2024/04/05")
     page.get_by_role("textbox", name="Return").fill("2024/04/28")
@@ -38,7 +40,15 @@ def get_results_page(page: Page) -> str:
     # sleep(1)
     return page.content()
 
+
 def parse(page: Page) -> list[dict]:
+    """
+    Parse the HTML page and return the data as a list of dictionaries. Calls get_results_page().
+    Data obtained (str unless otherwise stated) -- 9 total:
+        departure time, arrival time, airline, price (float), flight duration,
+        departure airport code, arrival airport code, # of stops and respective airport codes,
+        if overhead baggage is available (bool)  
+    """
     # init soup
     soup = BeautifulSoup(get_results_page(page), 'html.parser')
 
@@ -52,51 +62,52 @@ def parse(page: Page) -> list[dict]:
     airport_from = soup.find_all('div', class_="G2WY5c sSHqwe ogfYpf tPgKwe")
     airport_to = soup.find_all('div', class_="c8rWCd sSHqwe ogfYpf tPgKwe")
     durations = soup.find_all('span', class_="EzfXjb")
-    # baggage: get by aria label ("This price for this flight doesn't include...")
     baggage = soup.find_all('div', class_='BVAVmf I11szd POX3ye')
 
-
-    # return info as list of dictionaries (maybe split into separate function later)
+    # return info as list of dictionaries
     results = []
     for i in range(0, len(departures)):
-        results.append({'Departure' : None,
-                        'Arrival' : None,
-                        'Airline' : None,
-                        'Price' : None,
-                        'Duration' : None,
-                        'From' : None,
-                        'To' : None,
-                        'Stops' : None,
-                        'Carry-on' : None})
+        results.append({'Departure': None,
+                        'Arrival': None,
+                        'Airline': None,
+                        'Price': None,
+                        'Duration': None,
+                        'From': None,
+                        'To': None,
+                        'Stops': None,
+                        'Overhead': None})
 
     for i in range(0, len(departures)):
         results[i]['Departure'] = departures[i].text.replace("\u202f", " ")
         results[i]['Arrival'] = arrivals[i].text.replace("\u202f", " ")
         results[i]['Airline'] = airlines[i].text
         # results[i].append(f'# Stops: {stops[i].text}')
-        results[i]['Price'] = int([p for p in prices[i].descendants][-1][3:].replace(',', ''))  # int
+        results[i]['Price'] = float([p for p in prices[i].descendants][-1][3:].replace(',', ''))  # int
         results[i]['Duration'] = durations[i].find_previous_sibling().text
         results[i]['From'] = airport_from[i].text
         results[i]['To'] = airport_to[i].text
         results[i]['Stops'] = airport_stops[i].text
-        results[i]['Carry-on'] = baggage[i].find('svg') is None     # bool
+        results[i]['Overhead'] = baggage[i].find('svg') is None     # bool
 
     return results
 
-def get_results():
+
+def get_results() -> list[dict]:
+    """ Inits scraping and gets flight search results. (NOTE: add user query at some point). Calls parse() """
+
     with sync_playwright() as playwright:
-        context = playwright.chromium.launch(headless=False).new_context()
-        page = context.new_page()
+        browser = playwright.chromium.launch(headless=False)
+        page = browser.new_page()
         page.goto('https://www.google.com/travel/flights?hl=en-US&curr=CAD')
         # could probably get currency customization by changing curr=   ^
         # but then would need to alter how price str -> int is done
 
-        results = parse(page)
-        if results:
-            print(results)
-        else:
-            print("No flights found!")
-        return results
+        return parse(page)
 
+# For testing purposes
 if __name__ == "__main__":
-    get_results()
+    res = get_results()
+    if res:
+        print(res)
+    else:
+        print("No flights found!")
