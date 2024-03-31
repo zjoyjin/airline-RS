@@ -161,20 +161,20 @@ graph = Graph()
 #         graph.add_vertex(destination)
 #         graph.add_edge(Edge(start, destination, airline, baggage, price))
 
-res = get_results()
-for flight in res:
-    start = flight['_to']
-    destination = flight['_from']
-    departure = flight['departure']
-    arrival = flight['arrival']
-    price = flight['Price']
-    airline = flight['Airline']
+# res = get_results()
+# for flight in res:
+#     start = flight['_to']
+#     destination = flight['_from']
+#     departure = flight['departure']
+#     arrival = flight['arrival']
+#     price = flight['Price']
+#     airline = flight['Airline']
 
-    # baggage = flight['Carry-on']
+#     # baggage = flight['Carry-on']
 
-    graph.add_vertex(start)
-    graph.add_vertex(destination)
-    graph.add_edge(start, destination, price, airline)
+#     graph.add_vertex(start)
+#     graph.add_vertex(destination)
+#     graph.add_edge(start, destination, price, airline)
 
 
 #test
