@@ -163,8 +163,10 @@ graph = Graph()
 
 res = get_results()
 for flight in res:
-    start = flight['To']
-    destination = flight['From']
+    start = flight['_to']
+    destination = flight['_from']
+    departure = flight['departure']
+    arrival = flight['arrival']
     price = flight['Price']
     airline = flight['Airline']
 
