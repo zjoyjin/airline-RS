@@ -408,4 +408,4 @@ carry_on_preference = input("Carry-on baggage preference (yes/no): ").strip().lo
 #     for destination_city in CITIES:
 #         graph.initialize_with_airports(source_city, destination_city, start_date, end_date, airline=airline_preference, carry_on=carry_on_preference)
 graph.initialize_with_airports(source_city, destination_city, start_date, end_date, airline=airline_preference, carry_on=carry_on_preference)
-graph.visualize_graph()
+graph.visualize_graph(airline_preference, source_city, destination_city, start_date, end_date)
