@@ -157,16 +157,16 @@ class Graph:
 
 
 
-    def visualize_graph(graph):
+    def visualize_graph(self):
         # Create a directed graph
         G = nx.DiGraph()
 
         # Add nodes (airports) to the graph
-        for airport in graph.vertices:
+        for airport in self.vertices:
             G.add_node(airport)
 
         # Add edges (flights) to the graph
-        for airport, vertex in graph.vertices.items():
+        for airport, vertex in self.vertices.items():
             for destination, price, airline in vertex.destinations:
                 G.add_edge(airport, destination, price=price, airline=airline)
 
@@ -249,5 +249,5 @@ carry_on_preference = input("Carry-on baggage preference (yes/no): ").strip().lo
 # Initialize graph based on user input and flight results
 graph.initialize_with_airports(source_city, destination_city, start_date, end_date, airline=airline_preference, carry_on=carry_on_preference)
 
-Graph.visualize_graph(graph)
+graph.visualize_graph()
 
