@@ -221,8 +221,16 @@ class WeightedGraph:
             for destination, weight, _ in vertex.destinations:
                 G.add_edge(city, destination, weight=weight)
 
+        # pos = nx.get_node_attributes(G, 'pos')
+        # edge_labels = {(city, destination): weight for city, vertex in self.vertices.items() for destination, weight, _ in vertex.destinations}
+
         pos = nx.get_node_attributes(G, 'pos')
-        edge_labels = {(city, destination): weight for city, vertex in self.vertices.items() for destination, weight, _ in vertex.destinations}
+        edge_labels = {}
+        for city, vertex in self.vertices.items():
+            for destination, weight, _ in vertex.destinations:
+                if (city, destination) not in edge_labels:
+                    edge_labels[(city, destination)] = []
+                edge_labels[(city, destination)].append(weight)
 
         plt.figure(figsize=(12, 8))
         nx.draw(G, pos, with_labels=True, node_size=700, node_color='skyblue', font_size=12, font_weight='bold')
