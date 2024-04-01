@@ -63,12 +63,12 @@ def parse(soup: BeautifulSoup) -> list[dict]:
     arrivals = soup.find_all('div', class_='XWcVob YMlIz ogfYpf tPgKwe')
     airlines = soup.find_all('span', class_='h1fkLb')
     # stops = soup.find_all('span', class_='VG3hNb')
-    airport_stops = soup.find_all('span', class_="rGRiKd")      # format: either "X stops in XYZ, ABC" or "Nonstop"
+    # airport_stops = soup.find_all('span', class_="rGRiKd")      # format: either "X stops in XYZ, ABC" or "Nonstop"
     prices = soup.find_all('div', class_="BVAVmf I11szd POX3ye")
     airport_from = soup.find_all('div', class_="G2WY5c sSHqwe ogfYpf tPgKwe")
     airport_to = soup.find_all('div', class_="c8rWCd sSHqwe ogfYpf tPgKwe")
-    durations = soup.find_all('span', class_="EzfXjb")
-    baggage = soup.find_all('div', class_='BVAVmf I11szd POX3ye')
+    # durations = soup.find_all('span', class_="EzfXjb")
+    # baggage = soup.find_all('div', class_='BVAVmf I11szd POX3ye')
 
     # return info as list of dictionaries
     results = []
@@ -77,11 +77,12 @@ def parse(soup: BeautifulSoup) -> list[dict]:
                         'Arrival': None,
                         'Airline': None,
                         'Price': None,
-                        'Duration': None,
+                        # 'Duration': None,
                         'From': None,
                         'To': None,
-                        'Stops': None,
-                        'Overhead': None})
+                        # 'Stops': None,
+                        # 'Overhead': None
+                        })
 
     for i in range(0, len(departures)):
         results[i]['Departure'] = departures[i].text.replace("\u202f", " ")
@@ -89,11 +90,11 @@ def parse(soup: BeautifulSoup) -> list[dict]:
         results[i]['Airline'] = airlines[i].text
         # results[i].append(f'# Stops: {stops[i].text}')
         results[i]['Price'] = float([p for p in prices[i].descendants][-1][3:].replace(',', ''))  # int
-        results[i]['Duration'] = durations[i].find_previous_sibling().text
+        # results[i]['Duration'] = durations[i].find_previous_sibling().text
         results[i]['From'] = airport_from[i].text
         results[i]['To'] = airport_to[i].text
-        results[i]['Stops'] = airport_stops[i].text
-        results[i]['Overhead'] = baggage[i].find('svg') is None     # bool
+        # results[i]['Stops'] = airport_stops[i].text
+        # results[i]['Overhead'] = baggage[i].find('svg') is None     # bool
 
     return results
 
