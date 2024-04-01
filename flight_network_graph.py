@@ -11,6 +11,7 @@ This file is Copyright (c) Ashley Bi, Zhuoyi Jin, Elizabeth Liu, and Kerri Wei.
 from __future__ import annotations
 from typing import Any, Optional
 from scrape import get_results
+import geo
 import networkx as nx
 import matplotlib.pyplot as plt
 
@@ -57,7 +58,7 @@ class Vertex:
 #         return f"({self.start} -> {self.destination}, Airline: {self.airline}, Baggage: {self.baggage}, Price: {self.price})"
 
 
-class Graph:
+class WeightedGraph:
     """A graph used to represent a network of flights. Each vertex is representative of a location and each edge is
     representative of a flights with a unique initial location, destination, price, and airline.
 
@@ -145,6 +146,33 @@ class Graph:
         """Return all possible paths between start and destination with the specified carry on and airline
         specifications, and a total price that is less than or equal to price_limit."""
         # TODO: FINISH THIS FUNCTION!
+    #
+    # def get_similarity_score(self, flight_start: str, flight_destination: str, price: float) -> float:
+    #     """Return a similarity score between the user input (source and destination cities, price range)
+    #     and the given flight.
+    #
+    #     The similarity score is calculated based on the closeness of the flight's start city, end city,
+    #     and price to the user's input.
+    #
+    #     Preconditions:
+    #         - flight_start and flight_destination are valid city names.
+    #         - price is a non-negative float representing the flight's price.
+    #     """
+    #     similarity_score = 0.0
+    #
+    #     if flight_start.lower() == self.user_start.lower(): #doesn't even make sense uhhhhh
+    #         similarity_score += 1.0
+    #
+    #     if flight_destination.lower() == self.user_end.lower():
+    #         similarity_score += 1.0
+    #
+    #     price_difference = abs(price - self.user_price)
+    #     if price_difference <= self.price_range:
+    #         similarity_score += 1.0 - (price_difference / self.price_range)
+    #
+    #     return similarity_score
+    # #how do i get the user input here?
+
 
     def initialize_with_airports(self, source: str, destination: str, start_date: str, end_date: str, airline: str = None, carry_on: bool = None):
         """Initialize the graph with flights between the specified international airports."""
@@ -154,6 +182,54 @@ class Graph:
                 self.add_vertex(source)
                 self.add_vertex(destination)
                 self.add_edge(source, destination, flight['Price'], flight['Airline'])
+
+    def recommend_airline(self, airline: str, source: str, destination: str, start_date: str, end_date: str)-> list[list[str]]:
+        """Return a list of up to <limit> recommended airlines, price and time based on user input
+        The return value is a list airlines associated with its price and time """
+        recommended_flights = []
+        flights = get_results(source, destination, start_date, end_date)
+
+        for flight in flights:
+            if self.check_existing_flight_strict(source, destination, True, airline):
+                recommended_flights.append([flight['Airline'], flight['Price'], flight['Time']])
+
+        return recommended_flights
+    # just thkning about this, it should work.... BUt ialso need carry_on??? comparing with user input
+
+
+    def load_viewed_graph(self,  source: str, destination: str, start_date: str, end_date: str, price_limit: int, airline: str = None, carry_on: bool = None)-> WeightedGraph:
+        """Return a airline review WEIGHTED graph corresponding to the given user inputs and the scarping of the data set.
+        """
+        flights = get_results(source, destination, start_date, end_date)
+
+        weighted_graph = WeightedGraph()
+
+        # 3. Add vertices representing
+        for flight in flights:
+            airline_per = flight['Airline']
+            start_city = flight['Source']
+            des_city = flight['Destination']
+            price = flight['Price']
+
+            weighted_graph.add_vertex(airline)
+            weighted_graph.add_vertex(start_city)
+            weighted_graph.add_vertex(destination_city)
+
+            # 4. Find the closest flights
+            paths = self.find_paths_strict(start_city, destination_city, price_limit, carry_on, airline)
+            if paths:
+                closest_flight = paths[:5]  # Select the closest 5 or 10 flight??
+                # review_score = get_similarity_score(closest_flight)  # why is there an error here!!!
+                weighted_graph.add_edge(start_city, des_city, airline_per)
+
+        return weighted_graph
+
+
+
+
+
+
+
 
 
 
@@ -237,7 +313,7 @@ class Graph:
 
 
 #test
-graph = Graph()
+graph = WeightedGraph()
 source_city = input("Enter the source city: ").strip().capitalize()
 destination_city = input("Enter the destination city: ").strip().capitalize()
 start_date = input("Enter the start date (YYYY/MM/DD): ").strip()
