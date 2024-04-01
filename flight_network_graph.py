@@ -199,7 +199,7 @@ class WeightedGraph:
 
     def visualize_graph(self):
         """Visualize the weighted graph with predefined international airports in Canada."""
-        G = nx.Graph()
+        G = nx.MultiDiGraph()
 
         airports = {
             "Toronto": (43.7, -79.42),
@@ -346,6 +346,8 @@ class WeightedGraph:
 
 
 #test
+CITIES = { "Toronto", "Vancouver", "Montreal","Calgary","Ottawa","Edmonton","Halifax","Winnipeg","Quebec City","Victoria"}
+
 graph = WeightedGraph()
 source_city = input("Enter the source city: ").strip().capitalize()
 destination_city = input("Enter the destination city: ").strip().capitalize()
@@ -356,6 +358,8 @@ airline_preference = input("Enter airline preference (leave blank for all airlin
 carry_on_preference = input("Carry-on baggage preference (yes/no): ").strip().lower() == 'yes'
 
 # Initialize graph based on user input and flight results
+# for source_city in CITIES:
+#     for destination_city in CITIES:
+#         graph.initialize_with_airports(source_city, destination_city, start_date, end_date, airline=airline_preference, carry_on=carry_on_preference)
 graph.initialize_with_airports(source_city, destination_city, start_date, end_date, airline=airline_preference, carry_on=carry_on_preference)
-
 graph.visualize_graph()
