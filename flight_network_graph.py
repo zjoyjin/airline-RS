@@ -129,11 +129,13 @@ class Graph:
         else:
             return False
 
-    def initialize_with_airports(self, source: str, destination: str, start_date: str, end_date: str, airline: str = None, carry_on: bool = True):
+    def initialize_with_airports(self, source: str, destination: str, start_date: str, end_date: str, airline: str = None, carry_on: bool = None):
         """Initialize the graph with flights between the specified international airports."""
         flights = get_results(source, destination, start_date, end_date)
         for flight in flights:
-            if (not airline or flight['Airline'] == airline) and (carry_on or flight.get('Carry-on', False)):
+            if (not airline or flight['Airline'] == airline) and (carry_on is None or flight.get('Overhead', carry_on)):
+                self.add_vertex(source)
+                self.add_vertex(destination)
                 self.add_edge(source, destination, flight['Price'], flight['Airline'])
 
 
@@ -184,7 +186,7 @@ class Graph:
 
 
 # Creating graph
-graph = Graph()
+# graph = Graph()
 
 # Reading data from CSV file
 # with open('flights.csv', 'r') as file:
