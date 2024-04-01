@@ -117,7 +117,7 @@ class Graph:
         else:
             raise ValueError
 
-       def check_existing_flight_any(self, flight_start: str, flight_destination: Any) -> bool:
+    def check_existing_flight_any(self, flight_start: str, flight_destination: Any) -> bool:
         """Return whether there is a flight from the given intial loaction to the given destination. This flight may be
         of any price or airline and does not consider whether there is carry-on or no carry-on.
 
