@@ -209,7 +209,7 @@ class WeightedGraph:
 
         return weighted_graph
 
-    def visualize_graph(self):
+    def visualize_graph(self, airline: str, source: str, destination: str, start_date: str, end_date: str):
         """Visualize the weighted graph with predefined international airports in Canada."""
         G = nx.MultiDiGraph()
 
@@ -244,13 +244,37 @@ class WeightedGraph:
                     edge_labels[(city, destination)] = []
                 edge_labels[(city, destination)].append(weight)
 
+        pos = nx.get_node_attributes(G, 'pos')
+
         plt.figure(figsize=(12, 8))
-        nx.draw(G, pos, with_labels=True, node_size=700, node_color='skyblue', font_size=12, font_weight='bold')
-        for edge, weights in edge_labels.items():
-            labels = ", ".join(map(str, weights))
-            plt.text(pos[edge[0]][0], pos[edge[0]][1], labels, horizontalalignment='center', verticalalignment='center')
-        plt.title('International Airports with Flights')
+
+        # Draw nodes
+        nx.draw_networkx_nodes(G, pos, node_size=700, node_color='skyblue', label=True)
+
+        # Draw edges
+        nx.draw_networkx_edges(G, pos, width=1.0, alpha=0.5, arrows=True)
+
+        # Draw edge labels
+        edge_labels = {(u, v): f"{d['weight']}, {d['airline']}" for u, v, d in G.edges(data=True)}
+        nx.draw_networkx_edge_labels(G, pos, edge_labels=edge_labels)
+
+        # Recommend flights
+        recommended_flights = self.recommend_airline(airline, source, destination, start_date, end_date)
+        for flight in recommended_flights:
+            plt.text(pos[source][0], pos[source][1], f"{flight[0]}: ${flight[1]}, {flight[2]}",
+                     horizontalalignment='left', verticalalignment='bottom')
+
+        plt.title('International Airports with Flights and Recommended Airlines')
+        plt.axis('off')
         plt.show()
+
+        # plt.figure(figsize=(12, 8))
+        # nx.draw(G, pos, with_labels=True, node_size=700, node_color='skyblue', font_size=12, font_weight='bold')
+        # for edge, weights in edge_labels.items():
+        #     labels = ", ".join(map(str, weights))
+        #     plt.text(pos[edge[0]][0], pos[edge[0]][1], labels, horizontalalignment='center', verticalalignment='center')
+        # plt.title('International Airports with Flights')
+        # plt.show()
 
 
 #  # Load the weighted graph
