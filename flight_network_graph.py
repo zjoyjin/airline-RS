@@ -107,6 +107,18 @@ class WeightedGraph:
             if edge_tuple not in initial_vertex.destinations:
                 initial_vertex.destinations.add(edge_tuple)
 
+                G = nx.MultiDiGraph()
+                G.add_edge(initial, destination, weight=price, airline=airline)
+
+        # if initial not in self.vertices or destination not in self.vertices:
+        #     raise ValueError
+        # else:
+        #     initial_vertex = self.vertices[initial]
+        #     edge_tuple = (destination, price, airline)
+        #
+        #     if edge_tuple not in initial_vertex.destinations:
+        #         initial_vertex.destinations.add(edge_tuple)
+
     def get_vertex(self, location):
         """Return the Vertex object associated with the given location.
 
@@ -234,7 +246,9 @@ class WeightedGraph:
 
         plt.figure(figsize=(12, 8))
         nx.draw(G, pos, with_labels=True, node_size=700, node_color='skyblue', font_size=12, font_weight='bold')
-        nx.draw_networkx_edge_labels(G, pos, edge_labels=edge_labels, font_size=10)
+        for edge, weights in edge_labels.items():
+            labels = ", ".join(map(str, weights))
+            plt.text(pos[edge[0]][0], pos[edge[0]][1], labels, horizontalalignment='center', verticalalignment='center')
         plt.title('International Airports with Flights')
         plt.show()
 
