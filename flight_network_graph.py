@@ -117,17 +117,34 @@ class Graph:
         else:
             raise ValueError
 
-    def check_existing_flight(self, initial: str, destination: Any) -> bool:
+       def check_existing_flight_any(self, flight_start: str, flight_destination: Any) -> bool:
         """Return whether there is a flight from the given intial loaction to the given destination. This flight may be
-        of any price or airline.
+        of any price or airline and does not consider whether there is carry-on or no carry-on.
 
         Return False if initial or destination do not appear as vertices in this graph.
         """
-        if initial in self.vertices and destination in self.vertices:
-            initial_vertex = self.vertices[initial]
-            return any(destination == initial_vertex_dest[0] for initial_vertex_dest in initial_vertex.destinations)
+        if flight_start in self.vertices and flight_destination in self.vertices:
+            initial_vertex = self.vertices[flight_start]
+            return any(flight_destination == initial_vertex_dest[0] for initial_vertex_dest in initial_vertex.destinations)
         else:
             return False
+
+    def check_existing_flight_strict(self, flight_start: str, flight_destination: str, carry_on: bool, airline: str) -> bool:
+        """Return whether there is a flight with the specified carry-on and airline from the given intial loaction to
+        the given destination. This flight may be of any price.
+
+        Return False if initial or destination do not appear as vertices in this graph.
+        """
+        if flight_start in self.vertices and flight_destination in self.vertices:
+            initial_vertex = self.vertices[flight_start]
+            return any((flight_destination == dest[0] and carry_on == dest[2] and airline == dest[3]) for dest in initial_vertex.destinations)
+        else:
+            return False
+
+    def find_paths_strict(self, start: str, destination: str, price_limit: int, carry_on: bool, airline: str) -> dict:
+        """Return all possible paths between start and destination with the specified carry on and airline
+        specifications, and a total price that is less than or equal to price_limit."""
+        # TODO: FINISH THIS FUNCTION!
 
     def initialize_with_airports(self, source: str, destination: str, start_date: str, end_date: str, airline: str = None, carry_on: bool = None):
         """Initialize the graph with flights between the specified international airports."""
