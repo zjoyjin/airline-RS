@@ -30,7 +30,7 @@ def get_results_page(page: Page, _to: str, _from: str, departure: str, arrival: 
     page.locator(".xFFcie").first.click()
     # page.wait_for_event("framenavigated")     # don't think this is needed but im not sure
     # page.wait_for_load_state('networkidle')     # discouraged apparently, but idk if this is better/worse than time.sleep
-    sleep(5)
+    sleep(2.5)
 
     page.locator(".zISZ5c").and_(page.locator(".QB2Jof")).click()   # get more flights
     sleep(2)    # if this doesn't work, then it'll just be as if this wasn't clicked
