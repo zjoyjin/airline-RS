@@ -11,7 +11,8 @@ This file is Copyright (c) Ashley Bi, Zhuoyi Jin, Elizabeth Liu, and Kerri Wei.
 from __future__ import annotations
 from typing import Any, Optional
 from scrape import get_results
-
+import networkx as nx
+import matplotlib.pyplot as plt
 
 class Vertex:
     """A vertex is a city that either has arriving or departing flights.
@@ -136,6 +137,45 @@ class Graph:
                 self.add_edge(source, destination, flight['Price'], flight['Airline'])
 
 
+
+    def visualize_graph(graph):
+        # Create a directed graph
+        G = nx.DiGraph()
+
+        # Add nodes (airports) to the graph
+        for airport in graph.vertices:
+            G.add_node(airport)
+
+        # Add edges (flights) to the graph
+        for airport, vertex in graph.vertices.items():
+            for destination, price, airline in vertex.destinations:
+                G.add_edge(airport, destination, price=price, airline=airline)
+
+        # Plot the graph
+        plt.figure(figsize=(12, 8))
+        pos = nx.spring_layout(G)  # Positions for all nodes
+
+        # Draw nodes
+        nx.draw_networkx_nodes(G, pos, node_size=700, node_color='skyblue')
+
+        # Draw edges
+        nx.draw_networkx_edges(G, pos, width=2, alpha=0.5, edge_color='gray')
+
+        # Draw labels (airport codes)
+        nx.draw_networkx_labels(G, pos, font_size=12, font_family='sans-serif')
+
+        # Draw edge labels (prices)
+        edge_labels = {(u, v): f"${d['price']}" for u, v, d in G.edges(data=True)}
+        nx.draw_networkx_edge_labels(G, pos, edge_labels=edge_labels, font_size=10)
+
+        # Set plot title and display the graph
+        plt.title('Flight Routes')
+        plt.axis('off')  # Turn off axis
+        plt.show()
+
+
+
+
     # def get_edges(self, vertex):
     #     if isinstance(vertex, Vertex):
     #         return self.edges[vertex.name]
@@ -189,3 +229,6 @@ carry_on_preference = input("Carry-on baggage preference (yes/no): ").strip().lo
 
 # Initialize graph based on user input and flight results
 graph.initialize_with_airports(source_city, destination_city, start_date, end_date, airline=airline_preference, carry_on=carry_on_preference)
+
+Graph.visualize_graph(graph)
+
