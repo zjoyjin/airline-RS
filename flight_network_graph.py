@@ -11,7 +11,6 @@ This file is Copyright (c) Ashley Bi, Zhuoyi Jin, Elizabeth Liu, and Kerri Wei.
 from __future__ import annotations
 from typing import Any, Optional
 from scrape import get_results
-from geopy.exc import GeocoderTimedOut
 import networkx as nx
 import matplotlib.pyplot as plt
 
@@ -360,4 +359,3 @@ carry_on_preference = input("Carry-on baggage preference (yes/no): ").strip().lo
 graph.initialize_with_airports(source_city, destination_city, start_date, end_date, airline=airline_preference, carry_on=carry_on_preference)
 
 graph.visualize_graph()
-
