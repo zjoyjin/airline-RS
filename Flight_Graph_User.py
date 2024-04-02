@@ -118,7 +118,7 @@ class Graph:
         else:
             return False
 
-    def load_viewed_user_graph(self, locations: list[str], start_date: datetime):
+    def load_viewed_user_graph(self, locations: list[str], start_date: str):
         """Initialize the graph with flights between the canadian airports."""
         start_city = locations[0]
         destination = locations[len(locations) - 1]
@@ -129,9 +129,18 @@ class Graph:
             self.add_vertex(locations[i+1])
             self.add_edge_date(locations[i-1],locations[i+1], flight[i][0], flight[2][0]) #TODO, CHECK THIS THING
 
+    def draw_graph(self):
+        """Draw the graph using NetworkX and Matplotlib."""
+        G = nx.DiGraph()
+        for vertex in self.vertices.values():
+            for dest, price, airline, date in vertex.destinations:
+                G.add_edge(vertex.location, dest, weight=price, airline=airline, date=date)
 
-    def show_visulization_user(self):
-        """
-        Show graph
-        """
+        pos = nx.spring_layout(G)
+        labels = {(start, end): f"{airline}\n${price}\n{date}" for start, end, price, airline, date in
+                  G.edges.data('weight', 'airline', 'date')}
+        nx.draw(G, pos, with_labels=True, node_size=1000, node_color='skyblue')
+        nx.draw_networkx_edge_labels(G, pos, edge_labels=labels)
+        plt.show()
+
 
