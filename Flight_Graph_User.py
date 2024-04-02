@@ -121,14 +121,12 @@ class Graph:
 
     def load_viewed_user_graph(self, locations: list[str], start_date: str):
         """Initialize the graph with flights between the canadian airports."""
-        start_city = locations[0]
-        destination = locations[len(locations) - 1]
-        self.add_vertex(start_city)
         flight = get_connections(start_date, locations)
+        self.add_vertex(locations[0])
 
-        for i in range(1, len(locations) - 1):
-            self.add_vertex(locations[i])
-            self.add_edge_date(locations[i-1],locations[i], flight[i]["Price"], flight[i]["Airline"], flight[i]["Date of Departure"]) #TODO, CHECK THIS THING
+        for i in range(0, len(locations) - 1):
+            self.add_vertex(locations[i + 1])
+            self.add_edge_date(locations[i],locations[i + 1], flight[i]["Price"], flight[i]["Airline"], flight[i]["Date of Departure"]) #TODO, CHECK THIS THING
 
     def draw_graph(self):
         """Draw the graph using NetworkX and Matplotlib."""
