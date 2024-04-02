@@ -108,7 +108,7 @@ def get_results(start: str, end: str, departure: str) -> list[dict]:
     """ Inits scraping and gets flight search results. Calls the above two functions. """
 
     with sync_playwright() as playwright:
-        browser = playwright.chromium.launch(headless=False)
+        browser = playwright.chromium.launch(headless=True)
         page = browser.new_page()
         page.goto('https://www.google.com/travel/flights?hl=en-US&curr=CAD')
         # could probably get currency customization by changing curr=   ^
