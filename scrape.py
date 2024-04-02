@@ -28,8 +28,21 @@ def get_results_page(page: Page, start: str, end: str, departure: str) -> str:
     page.keyboard.press('Enter')
 
     # dates
-    page.get_by_role("textbox", name="Departure").fill(departure)
-
+    departure_field = page.get_by_role("textbox", name="Departure")
+    departure_field.first.click()
+    # page.get_by_role("textbox", name="Departure").fill(departure)
+    departure_field.press_sequentially(departure)
+    sleep(1)
+    departure_field.press("Enter")
+    sleep(1)
+    departure_field.press("Enter")
+    sleep(1)
+    departure_field.press("Enter")
+    # x = page.get_by_label("Done. ")
+    # x.click()
+    # sleep(1)
+    # x.click()
+    # sleep(1)
     # Search
     page.locator(".xFFcie").first.click()
     # page.wait_for_event("framenavigated")     # don't think this is needed but im not sure
