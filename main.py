@@ -8,9 +8,9 @@ This file is Copyright (c) Ashley Bi, Zhuoyi Jin, Elizabeth Liu, and Kerri Wei.
 """
 
 from flight_network_graph import Graph, Vertex
+from Flight_Graph_User import Graph, Vertex
 import networkx as nx
 import matplotlib.pyplot as plt
-import geoplotlib
 import math
 from typing import Any, Union
 
@@ -25,10 +25,13 @@ if __name__ == "__main__":
 
 
     #read airport
-
+    print("please type in the number of cities you wanto go in integer")
+    number = int(input())
     print("Please type all of the airport city you want to go into\n"
           "letter and type the city name in full):")
-    locations = input()
+    locations = []
+    for i in range (number):
+        locations.append(input())
 
 
     print("Please type your desired leaving date\n"
@@ -36,17 +39,10 @@ if __name__ == "__main__":
     start_date = input()
 
     #Draw the graph after user input
-    G = nx.DiGraph()
-    for vertex in G.vertices.values():
-        for dest, price, airline, date in vertex.destinations:
-            G.add_edge(vertex.location, dest, weight=price, airline=airline, date=date)
+    flight_graph = Graph()
 
-    pos = nx.spring_layout(G)
-    labels = {(start, end): f"{airline}\n${price}\n{date}" for start, end, price, airline, date in
-              G.edges.data('weight', 'airline', 'date')}
-    nx.draw(G, pos, with_labels=True, node_size=1000, node_color='skyblue')
-    nx.draw_networkx_edge_labels(G, pos, edge_labels=labels)
-    plt.show()
+    flight_graph.load_viewed_user_graph(locations, start_date)
+    flight_graph.draw_graph()
 
     #print the graph of user input
 

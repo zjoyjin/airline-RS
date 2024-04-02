@@ -128,11 +128,16 @@ class Graph:
     #             self.add_edge(start_city, destination, flight['Price'], flight['Airline'])
 
 
-    def load_viewed_graph(self, start_date: str)-> None:
+    def load_viewed_graph(self, start_date: str, filename: str)-> None:
         """Return a airline review graph corresponding to the given user inputs and the scarping of the data set.
         """
+        city_list = []
+        # with open (filename, "r") as file:
+        #     reader = csv.reader('file')
+        #     for row in reader:
+        #         city_list.append(row[0])
+        #need some help here
 
-        city_list=[] #TODO FILL IN THE AIRPORT
 
 
         for initial_city in city_list:
@@ -215,6 +220,8 @@ class Graph:
         #     plt.text(pos[edge[0]][0], pos[edge[0]][1], labels, horizontalalignment='center', verticalalignment='center')
         # plt.title('International Airports with Flights')
         # plt.show()
+
+
 
 
 #  # Load the weighted graph
