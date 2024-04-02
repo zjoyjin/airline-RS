@@ -1,5 +1,4 @@
-from datetime import datetime
-from datetime import timedelta
+from datetime import datetime, timedelta
 from scrape import get_results
 
 def get_connections(date: str, stops: list) -> list:
