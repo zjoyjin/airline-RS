@@ -11,12 +11,12 @@ def get_results_page(page: Page, _to: str, _from: str, departure: str) -> str:
     # page.get_by_role("textbox", name="Return").fill(arrival)
 
     # change filter to one-way trips
-    filter_trip_type_field = page.locator('TQYpgc gInvKb').first
+    filter_trip_type_field = page.locator('.hqBSCb').first
     filter_trip_type_field.click()
     sleep(0.5)
-    # one_way_trip = 'MCs1Pd UbEQCe VfPpkd-OkbHre VfPpkd-OkbHre-SfQLQb-M1Soyc-bN97Pc VfPpkd-aJasdd-RWgCYc-wQNmvb  ib1Udf VfPpkd-rymPhb-ibnC6b VfPpkd-rymPhb-ibnC6b-OWXEXe-SfQLQb-M1Soyc-Bz112c VfPpkd-rymPhb-ibnC6b-OWXEXe-SfQLQb-Woal0c-RWgCYc'
-    change_trip_type = page.locator('VfPpkd-rymPhb r6B9Fd bwNLcf P2Hi5d VfPpkd-OJnkse').nth(1)
+    change_trip_type = page.locator('.F5AWCf .PnyZyf')
     change_trip_type.click()
+    sleep(0.5)
 
     # type "From"
     from_place_field = page.locator('.e5F5td').first
