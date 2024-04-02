@@ -119,40 +119,35 @@ class Graph:
             return False
 
 
-    def airport_add_edge(self, start_city: str, start_date: datetime, destination: str):
-        """Initialize the graph with flights between the canadian airports."""
-        flights = get_results(start_city, destination, start_date)
-        for flight in flights:
-                self.add_vertex(start_city)
-                self.add_vertex(destination)
-                self.add_edge(start_city, destination, flight['Price'], flight['Airline'])
+    # def airport_add_edge(self, start_city: str, start_date: datetime, destination: str):
+    #     """Initialize the graph with flights between the canadian airports."""
+    #     flights = get_results(start_city, destination, start_date)
+    #     for flight in flights:
+    #             self.add_vertex(start_city)
+    #             self.add_vertex(destination)
+    #             self.add_edge(start_city, destination, flight['Price'], flight['Airline'])
 
 
-    def load_viewed_graph(self, start_date: datetime)-> Graph:
-        """Return a airline review WEIGHTED graph corresponding to the given user inputs and the scarping of the data set.
+    def load_viewed_graph(self, start_date: str)-> None:
+        """Return a airline review graph corresponding to the given user inputs and the scarping of the data set.
         """
-        graph = Graph()
 
-        first_list=[] #TODO FILL IN THE AIRPORT
-        second_list =[]
+        city_list=[] #TODO FILL IN THE AIRPORT
 
 
-        #list of all airports
-        #second list of all airports
+        for initial_city in city_list:
+            for destination_city in city_list:
+                if initial_city != destination_city:
+                    flight = get_results(destination_city, initial_city, start_date)
+                    price = flight[0] #TODO: CHECK THIS LATER
+                    airline = flight[1] #
+                    #reAD FLIGHT FOR THE PRICE AND AIRLINE
 
-        for initial_city in  first_list:
-            for destination_city in second_list:
-                flight = get_results(destination_city, initial_city, start_date)
-                price = flight[0] #TODO: CHECK THIS LATER
-                airline = flight[1] #
-                #reAD FLIGHT FOR THE PRICE AND AIRLINE
+                    self.add_vertex(initial_city)
+                    self.add_vertex(destination_city)
 
-                graph.add_vertex(initial_city)
-                graph.add_vertex(destination_city)
+                    self.add_edge(initial_city, destination_city, price, airline)
 
-                graph.add_edge(initial_city, destination_city, price, airline)
-
-        return graph
 
     def visualize_graph(self, airline: str, source: str, destination: str, start_date: str, end_date: str):
         """Visualize the weighted graph with predefined international airports in Canada."""
@@ -336,21 +331,21 @@ class Graph:
     # #how do i get the user input here?
 
 
-#test
-CITIES = { "Toronto", "Vancouver", "Montreal","Calgary","Ottawa","Edmonton","Halifax","Winnipeg","Quebec City","Victoria"}
-
-graph = WeightedGraph()
-source_city = input("Enter the source city: ").strip().capitalize()
-destination_city = input("Enter the destination city: ").strip().capitalize()
-start_date = input("Enter the start date (YYYY/MM/DD): ").strip()
-end_date = input("Enter the end date (YYYY/MM/DD): ").strip()
-
-airline_preference = input("Enter airline preference (leave blank for all airlines): ").strip()
-carry_on_preference = input("Carry-on baggage preference (yes/no): ").strip().lower() == 'yes'
-
-# Initialize graph based on user input and flight results
-# for source_city in CITIES:
-#     for destination_city in CITIES:
-#         graph.initialize_with_airports(source_city, destination_city, start_date, end_date, airline=airline_preference, carry_on=carry_on_preference)
-graph.initialize_with_airports(source_city, destination_city, start_date, end_date, airline=airline_preference, carry_on=carry_on_preference)
-graph.visualize_graph(airline_preference, source_city, destination_city, start_date, end_date)
+# #test
+# CITIES = { "Toronto", "Vancouver", "Montreal","Calgary","Ottawa","Edmonton","Halifax","Winnipeg","Quebec City","Victoria"}
+#
+# graph = WeightedGraph()
+# source_city = input("Enter the source city: ").strip().capitalize()
+# destination_city = input("Enter the destination city: ").strip().capitalize()
+# start_date = input("Enter the start date (YYYY/MM/DD): ").strip()
+# end_date = input("Enter the end date (YYYY/MM/DD): ").strip()
+#
+# airline_preference = input("Enter airline preference (leave blank for all airlines): ").strip()
+# carry_on_preference = input("Carry-on baggage preference (yes/no): ").strip().lower() == 'yes'
+#
+# # Initialize graph based on user input and flight results
+# # for source_city in CITIES:
+# #     for destination_city in CITIES:
+# #         graph.initialize_with_airports(source_city, destination_city, start_date, end_date, airline=airline_preference, carry_on=carry_on_preference)
+# graph.initialize_with_airports(source_city, destination_city, start_date, end_date, airline=airline_preference, carry_on=carry_on_preference)
+# graph.visualize_graph(airline_preference, source_city, destination_city, start_date, end_date)

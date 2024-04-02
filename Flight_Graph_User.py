@@ -118,22 +118,20 @@ class Graph:
         else:
             return False
 
-    def user_add_edge(self, locations: list[str], start_date: datetime, destination: list[str]):
+    def load_viewed_user_graph(self, locations: list[str], start_date: datetime):
         """Initialize the graph with flights between the canadian airports."""
         start_city = locations[0]
         destination = locations[len(locations) - 1]
         self.add_vertex(start_city)
-        flight = get_results(locations[i + 1], locations[i], )
+        flight = get_results(locations, start_date)
+
+        for i in range(1, len(locations) - 1):
+            self.add_vertex(locations[i+1])
+            self.add_edge_date(locations[i-1],locations[i+1], flight[i][0], flight[2][0]) #TODO, CHECK THIS THING
 
 
+    def show_visulization_user(self):
+        """
+        Show graph
+        """
 
-        for i in range(0, len(locations) - 1):
-            self.add_vertex(locations[i + 1])
-            flight = get_results(locations[i + 1], locations[i], )
-
-        flights = get_results(start_city, destination, start_date)
-        for flight in flights:
-
-                self.add_vertex(destination)
-
-                self.add_edge(start_city, destination, flight['Price'], flight['Airline'])
