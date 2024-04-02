@@ -4,8 +4,17 @@ from scrape import get_results
 
 def get_connections(date: str, stops: list[str]) -> list[dict]:
     """Returns cheapest sequence of flights between the cities in stops with a 1-day layover between flights.
-        - date takes on the form yyyy/dd/mm.
+        - date is in the form YYYY/DD/MM.
         - stops is a list of city names. The first str is the starting city, the last str is the ending city.
+
+        Keys of each dictionary in the returned list:
+        - Departure: str (time)
+        - Arrival: str (time)
+        - Airline: str
+        - Price: int
+        - From: str (XYZ airport code)
+        - To: str (XYZ airport code)
+        - Date of Departure: str (date in YYYY/DD/MM form)
 
         Representation Invariants:
         - len(stops) >= 2
