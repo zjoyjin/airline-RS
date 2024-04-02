@@ -99,7 +99,7 @@ def parse(soup: BeautifulSoup) -> list[dict]:
     return results
 
 
-def get_results(_to: str, _from: str, departure: str, arrival: str) -> list[dict]:
+def get_results(_to: str, _from: str, departure: str) -> list[dict]:
     """ Inits scraping and gets flight search results. Calls the above two functions. """
 
     with sync_playwright() as playwright:
