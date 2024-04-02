@@ -100,6 +100,7 @@ def _parse(soup: BeautifulSoup) -> list[dict]:
 
 def get_results(start: str, end: str, departure: str) -> list[dict]:
     """ Inits scraping and returns a list of flight search results. Calls the above two functions.
+    Probably takes ~8 sec to run.
     Returned dictionary's keys:
         - Departure: str (time)
         - Arrival: str (time)
