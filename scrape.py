@@ -94,7 +94,19 @@ def _parse(soup: BeautifulSoup) -> list[dict]:
 
 
 def get_results(start: str, end: str, departure: str) -> list[dict]:
-    """ Inits scraping and gets flight search results. Calls the above two functions. """
+    """ Inits scraping and returns a list of flight search results. Calls the above two functions.
+    Dictionary keys:
+        - Departure: str (YYYY/DD/MM date format)
+        - Arrival: str (YYYY/DD/MM date format)
+        - Airline: str
+        - Price: int
+        - From: str (XYZ airport code)
+        - To: str (XYZ airport code)
+    Parameters:
+        - start: city of departure
+        - end: city of arrival
+        - departure: departing date in YYYY/DD/MM format
+    """
 
     with sync_playwright() as playwright:
         browser = playwright.chromium.launch(headless=True)     # Set to False to see Chromium pop-up
