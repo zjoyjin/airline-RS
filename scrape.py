@@ -96,8 +96,8 @@ def _parse(soup: BeautifulSoup) -> list[dict]:
 def get_results(start: str, end: str, departure: str) -> list[dict]:
     """ Inits scraping and returns a list of flight search results. Calls the above two functions.
     Dictionary keys:
-        - Departure: str (YYYY/DD/MM date format)
-        - Arrival: str (YYYY/DD/MM date format)
+        - Departure: str (time)
+        - Arrival: str (time)
         - Airline: str
         - Price: int
         - From: str (XYZ airport code)
