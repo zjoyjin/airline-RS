@@ -109,7 +109,7 @@ def get_results(_to: str, _from: str, departure: str) -> list[dict]:
 
 # For testing purposes
 if __name__ == "__main__":
-    res = get_results("Vancouver", "Edmonton", "2024/04/20", "2024/05/20")
+    res = get_results("Vancouver", "Edmonton", "2024/04/20")
     if res:
         print(res)
     else:
