@@ -2,7 +2,7 @@ from datetime import datetime, timedelta
 from scrape import get_results
 
 
-def get_connections(date: str, stops: list) -> list[dict]:
+def get_connections(date: str, stops: list[str]) -> list[dict]:
     """Returns cheapest sequence of flights between the cities in stops with a 1-day layover between flights.
         - date takes on the form yyyy/dd/mm.
         - stops is a list of city names. The first str is the starting city, the last str is the ending city.
