@@ -33,8 +33,9 @@ def get_connections(date: str, stops: list) -> list:
 
 def get_cheapest_flight(res: list[dict]) -> dict:
     """ Gets the cheapest flight from a given list of flight results. """
-    cheapest = {"Price": 0}
+    cheapest = {"Price": 10000}
     for flight in res:
+        print(flight["Price"])
         if flight["Price"] < cheapest["Price"]:
             cheapest = flight
 
@@ -43,7 +44,7 @@ def get_cheapest_flight(res: list[dict]) -> dict:
 
 # Testing!!
 if __name__ == "__main__":
-    res = get_connections("2024/04/20", ["Vancouver, Toronto, Edmonton"])
+    res = get_connections("2024/04/20", ["Vancouver", "Toronto", "Edmonton"])
     if res:
         print(res)
     else:
