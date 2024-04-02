@@ -1,9 +1,14 @@
 from datetime import datetime, timedelta
 from scrape import get_results
 
-def get_connections(date: str, stops: list) -> list:
-    """ Takes in first, last, and in-between stops. Returns cheapest sequence of flights.
-    - date: yyyy/dd/mm
+
+def get_connections(date: str, stops: list) -> list[dict]:
+    """Returns cheapest sequence of flights between the cities in stops with a 1-day layover between flights.
+        - date takes on the form yyyy/dd/mm.
+        - stops is a list of city names. The first str is the starting city, the last str is the ending city.
+
+        Representation Invariants:
+        - len(stops) >= 2
     """
     flight_path = []
 
@@ -17,12 +22,13 @@ def get_connections(date: str, stops: list) -> list:
         cheapest = get_cheapest_flight(flights)
         cheapest['Date of Departure: '] = curr_date
 
+        # Check if flight lands during the next day (from departure day)
         added_days = 0
         if '+' in cheapest['Arrival']:
             added_days = int(cheapest['Arrival'][-1])
         flight_path.append(cheapest)
 
-        # Add one day to the current date using datetime
+        # Add one day to the current date using datetime (and any other additional days from last flight)
         year = int(date[:4])
         day = int(date[5:7])
         month = int(date[8:])
@@ -36,10 +42,11 @@ def get_connections(date: str, stops: list) -> list:
 
     return flight_path
 
-def get_cheapest_flight(res: list[dict]) -> dict:
-    """ Gets the cheapest flight from a given list of flight results. """
+
+def get_cheapest_flight(flights: list[dict]) -> dict:
+    """Returns the cheapest flight from a given list of flight results."""
     cheapest = {"Price": 10000}
-    for flight in res:
+    for flight in flights:
         if flight["Price"] < cheapest["Price"]:
             cheapest = flight
 
