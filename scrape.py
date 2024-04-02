@@ -3,12 +3,20 @@ from playwright.sync_api import sync_playwright, Page
 from time import sleep
 from bs4 import BeautifulSoup
 
-def get_results_page(page: Page, _to: str, _from: str, departure: str, arrival: str) -> str:
+def get_results_page(page: Page, _to: str, _from: str, departure: str) -> str:
     """ Gets the HTML content of the google flights results page according to user input """
 
-    # dates
-    page.get_by_role("textbox", name="Departure").fill(departure)
-    page.get_by_role("textbox", name="Return").fill(arrival)
+    # # dates
+    # page.get_by_role("textbox", name="Departure").fill(departure)
+    # page.get_by_role("textbox", name="Return").fill(arrival)
+
+    # change filter to one-way trips
+    filter_trip_type_field = page.locator('.hqBSCb').first
+    filter_trip_type_field.click()
+    sleep(0.5)
+    change_trip_type = page.locator('.F5AWCf .PnyZyf')
+    change_trip_type.click()
+    sleep(0.5)
 
     # type "From"
     from_place_field = page.locator('.e5F5td').first
@@ -19,12 +27,15 @@ def get_results_page(page: Page, _to: str, _from: str, departure: str, arrival: 
     page.keyboard.press('Enter')
 
     # type "To"
-    to_place_field = page.locator('.e5F5td').nth(1)
+    to_place_field = page.locator('.e5F5td').nth(2)
     to_place_field.click()
     sleep(0.5)
     to_place_field.press_sequentially(_to)
     sleep(1)
     page.keyboard.press('Enter')
+
+    # dates
+    page.get_by_role("textbox", name="Departure").fill(departure)
 
     # Search
     page.locator(".xFFcie").first.click()
@@ -44,7 +55,7 @@ def parse(soup: BeautifulSoup) -> list[dict]:
     Data obtained (str unless otherwise stated) -- 9 total:
         departure time, arrival time, airline, price (float), flight duration,
         departure airport code, arrival airport code, # of stops and respective airport codes,
-        if overhead baggage is available (bool)  
+        if overhead baggage is available (bool)
     """
 
     # get info
@@ -99,7 +110,7 @@ def get_results(_to: str, _from: str, departure: str, arrival: str) -> list[dict
         # but then would need to alter how price str -> int is done
 
         # init soup
-        soup = BeautifulSoup(get_results_page(page, _to, _from, departure, arrival), 'html.parser')
+        soup = BeautifulSoup(get_results_page(page, _to, _from, departure), 'html.parser')
 
         return parse(soup)
 
