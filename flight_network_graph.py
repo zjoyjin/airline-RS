@@ -9,7 +9,8 @@ This file is Copyright (c) Ashley Bi, Zhuoyi Jin, Elizabeth Liu, and Kerri Wei.
 """
 
 from __future__ import annotations
-from typing import Any, Optional
+from typing import Union, Any, Optional
+from datetime import datetime
 from scrape import get_results
 import networkx as nx
 import matplotlib.pyplot as plt
@@ -29,6 +30,7 @@ class Vertex:
     location: Any
     destinations: set[tuple[str, Union[int, float], str]]
 
+
     def __init__(self, location: str):
         """Initialize a new vertex with the given lcocation.
 
@@ -45,26 +47,13 @@ class Vertex:
         return len(self.destinations)
 
 
-# class Edge:
-#     def __init__(self, start, destination, airline, baggage, price):
-#         self.start = start
-#         self.destination = destination
-#         self.airline = airline
-#         self.baggage = baggage
-#         self.price = price
-#
-#     def __repr__(self):
-#         return f"({self.start} -> {self.destination}, Airline: {self.airline}, Baggage: {self.baggage}, Price: {self.price})"
 
-
-class WeightedGraph:
+class Graph:
     """A graph used to represent a network of flights. Each vertex is representative of a location and each edge is
-    representative of a flights with a unique initial location, destination, price, and airline.
+    representative of a flights with initial location, destination, cheapest price, and airline.
 
     This is a directed graph, since we need to keep track of flights that occur in both directions (eg.
-    Toronto to Vancouver versus Vancouver to Toronto). This graph is also a multigraph, since there may be multiple
-    flights with the same route but with a different price or airline. Finally, this graph is also weighted since we
-    keep track of the price of each flight.
+    Toronto to Vancouver versus Vancouver to Toronto). Finally, this graph is showing the cheapest flight available.
 
     Instance Attributes:
          - vertices:
@@ -107,18 +96,6 @@ class WeightedGraph:
             if edge_tuple not in initial_vertex.destinations:
                 initial_vertex.destinations.add(edge_tuple)
 
-                G = nx.MultiDiGraph()
-                G.add_edge(initial, destination, weight=price, airline=airline)
-
-        # if initial not in self.vertices or destination not in self.vertices:
-        #     raise ValueError
-        # else:
-        #     initial_vertex = self.vertices[initial]
-        #     edge_tuple = (destination, price, airline)
-        #
-        #     if edge_tuple not in initial_vertex.destinations:
-        #         initial_vertex.destinations.add(edge_tuple)
-
     def get_vertex(self, location):
         """Return the Vertex object associated with the given location.
 
@@ -141,73 +118,41 @@ class WeightedGraph:
         else:
             return False
 
-    def check_existing_flight_strict(self, flight_start: str, flight_destination: str, carry_on: bool, airline: str) -> bool:
-        """Return whether there is a flight with the specified carry-on and airline from the given intial loaction to
-        the given destination. This flight may be of any price.
 
-        Return False if initial or destination do not appear as vertices in this graph.
-        """
-        if flight_start in self.vertices and flight_destination in self.vertices:
-            initial_vertex = self.vertices[flight_start]
-            return any((flight_destination == dest[0] and carry_on == dest[2] and airline == dest[3]) for dest in initial_vertex.destinations)
-        else:
-            return False
-
-    def find_paths_strict(self, start: str, destination: str, price_limit: int, carry_on: bool, airline: str) -> dict:
-        """Return all possible paths between start and destination with the specified carry on and airline
-        specifications, and a total price that is less than or equal to price_limit."""
-        # TODO: FINISH THIS FUNCTION!
-
-
-    def initialize_with_airports(self, source: str, destination: str, start_date: str, end_date: str, airline: str = None, carry_on: bool = None):
-        """Initialize the graph with flights between the specified international airports."""
-        flights = get_results(source, destination, start_date, end_date)
+    def airport_add_edge(self, start_city: str, start_date: datetime, destination: str):
+        """Initialize the graph with flights between the canadian airports."""
+        flights = get_results(start_city, destination, start_date)
         for flight in flights:
-            if (not airline or flight['Airline'] == airline) and (carry_on is None or flight.get('Overhead', carry_on)):
-                self.add_vertex(source)
+                self.add_vertex(start_city)
                 self.add_vertex(destination)
-                self.add_edge(source, destination, flight['Price'], flight['Airline'])
-
-    def recommend_airline(self, airline: str, source: str, destination: str, start_date: str, end_date: str)-> list[list[str]]:
-        """Return a list of up to <limit> recommended airlines, price and time based on user input
-        The return value is a list airlines associated with its price and time """
-        recommended_flights = []
-        flights = get_results(source, destination, start_date, end_date)
-
-        for flight in flights:
-            if self.check_existing_flight_strict(source, destination, True, airline):
-                recommended_flights.append([flight['Airline'], flight['Price'], flight['Time']])
-
-        return recommended_flights
-    # just thkning about this, it should work.... BUt is also need carry_on??? comparing with user input
+                self.add_edge(start_city, destination, flight['Price'], flight['Airline'])
 
 
-    def load_viewed_graph(self,  source: str, destination: str, start_date: str, end_date: str, price_limit: int, airline: str = None, carry_on: bool = None)-> WeightedGraph:
+    def load_viewed_graph(self, start_date: datetime)-> Graph:
         """Return a airline review WEIGHTED graph corresponding to the given user inputs and the scarping of the data set.
         """
-        flights = get_results(source, destination, start_date, end_date)
+        graph = Graph()
 
-        weighted_graph = WeightedGraph()
+        first_list=[] #TODO FILL IN THE AIRPORT
+        second_list =[]
 
-        # 3. Add vertices representing
-        for flight in flights:
-            airline_per = flight['Airline']
-            start_city = flight['Source']
-            des_city = flight['Destination']
-            price = flight['Price']
 
-            weighted_graph.add_vertex(airline)
-            weighted_graph.add_vertex(start_city)
-            weighted_graph.add_vertex(destination_city)
+        #list of all airports
+        #second list of all airports
 
-            # 4. Find the closest flights
-            paths = self.find_paths_strict(start_city, destination_city, price_limit, carry_on, airline)
-            if paths:
-                closest_flight = paths[:5]  # Select the closest 5 or 10 flight??
-                # review_score = get_similarity_score(closest_flight)  # why is there an error here!!!
-                weighted_graph.add_edge(start_city, des_city, airline_per)
+        for initial_city in  first_list:
+            for destination_city in second_list:
+                flight = get_results(destination_city, initial_city, start_date)
+                price = flight[0] #TODO: CHECK THIS LATER
+                airline = flight[1] #
+                #reAD FLIGHT FOR THE PRICE AND AIRLINE
 
-        return weighted_graph
+                graph.add_vertex(initial_city)
+                graph.add_vertex(destination_city)
+
+                graph.add_edge(initial_city, destination_city, price, airline)
+
+        return graph
 
     def visualize_graph(self, airline: str, source: str, destination: str, start_date: str, end_date: str):
         """Visualize the weighted graph with predefined international airports in Canada."""
