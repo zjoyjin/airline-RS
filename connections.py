@@ -19,7 +19,7 @@ def get_connections(date: str, stops: list[str]) -> list[dict]:
 
     while i != len(stops):
         flights = get_results(curr_start, curr_stop, date)
-        cheapest = get_cheapest_flight(flights)
+        cheapest = _get_cheapest_flight(flights)
         cheapest['Date of Departure: '] = curr_date
 
         # Check if flight lands during the next day (from departure day)
@@ -43,7 +43,7 @@ def get_connections(date: str, stops: list[str]) -> list[dict]:
     return flight_path
 
 
-def get_cheapest_flight(flights: list[dict]) -> dict:
+def _get_cheapest_flight(flights: list[dict]) -> dict:
     """Returns the cheapest flight from a given list of flight results."""
     cheapest = {"Price": 10000}
     for flight in flights:

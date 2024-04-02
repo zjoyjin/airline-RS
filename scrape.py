@@ -2,7 +2,7 @@ from playwright.sync_api import sync_playwright, Page
 from bs4 import BeautifulSoup
 from time import sleep
 
-def get_results_page(page: Page, start: str, end: str, departure: str) -> str:
+def _get_results_page(page: Page, start: str, end: str, departure: str) -> str:
     """ Gets the HTML content of the google flights results page according to user input """
 
     # change filter to one-way trips
@@ -44,7 +44,7 @@ def get_results_page(page: Page, start: str, end: str, departure: str) -> str:
     return page.content()
 
 
-def parse(soup: BeautifulSoup) -> list[dict]:
+def _parse(soup: BeautifulSoup) -> list[dict]:
     """
     Parse the HTML page and return the data as a list of dictionaries.
     Data obtained (str unless otherwise stated) -- 9 total:
@@ -106,9 +106,9 @@ def get_results(start: str, end: str, departure: str) -> list[dict]:
         print("Getting results...")
 
         # init soup
-        soup = BeautifulSoup(get_results_page(page, start, end, departure), 'html.parser')
+        soup = BeautifulSoup(_get_results_page(page, start, end, departure), 'html.parser')
 
-        return parse(soup)
+        return _parse(soup)
 
 
 # For testing purposes
