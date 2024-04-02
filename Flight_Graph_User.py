@@ -9,7 +9,7 @@ This file is Copyright (c) Ashley Bi, Zhuoyi Jin, Elizabeth Liu, and Kerri Wei.
 """
 
 from __future__ import annotations
-from connections import get_connections
+from connections import get_connections, get_cheapest_flight
 from typing import Union, Any, Optional
 from datetime import datetime
 from scrape import get_results
