@@ -3,7 +3,13 @@ from bs4 import BeautifulSoup
 from time import sleep
 
 def _get_results_page(page: Page, start: str, end: str, departure: str) -> str:
-    """ Gets the HTML content of the google flights results page according to user input """
+    """ Gets the HTML content of the google flights results page according to user input.
+    Parameters:
+        - page: initial google flights page
+        - start: city of departure
+        - end: city of arrival
+        - departure: date of departure (YYYY/DD/MM)
+    """
 
     # change filter to one-way trips
     page.locator('.hqBSCb').first.click()   # click "Round Trip" dropdown
@@ -47,10 +53,9 @@ def _get_results_page(page: Page, start: str, end: str, departure: str) -> str:
 def _parse(soup: BeautifulSoup) -> list[dict]:
     """
     Parse the HTML page and return the data as a list of dictionaries.
-    Data obtained (str unless otherwise stated) -- 9 total:
-        departure time, arrival time, airline, price (float), flight duration,
-        departure airport code, arrival airport code, # of stops and respective airport codes,
-        if overhead baggage is available (bool)
+    Data obtained per flight (str unless otherwise stated) -- 6 total:
+        departure time, arrival time, airline, price (float),
+        departure airport code, arrival airport code,
     """
     # get info
     departures = soup.find_all('div', class_='wtdjmc YMlIz ogfYpf tPgKwe')
@@ -95,7 +100,7 @@ def _parse(soup: BeautifulSoup) -> list[dict]:
 
 def get_results(start: str, end: str, departure: str) -> list[dict]:
     """ Inits scraping and returns a list of flight search results. Calls the above two functions.
-    Dictionary keys:
+    Returned dictionary's keys:
         - Departure: str (time)
         - Arrival: str (time)
         - Airline: str
