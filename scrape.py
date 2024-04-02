@@ -2,8 +2,14 @@ from playwright.sync_api import sync_playwright, Page
 from bs4 import BeautifulSoup
 from time import sleep
 
-def get_results_page(page: Page, start: str, end: str, departure: str) -> str:
-    """ Gets the HTML content of the google flights results page according to user input """
+def _get_results_page(page: Page, start: str, end: str, departure: str) -> str:
+    """ Gets the HTML content of the google flights results page according to user input.
+    Parameters:
+        - page: initial google flights page
+        - start: city of departure
+        - end: city of arrival
+        - departure: date of departure (YYYY/DD/MM)
+    """
 
     # change filter to one-way trips
     page.locator('.hqBSCb').first.click()   # click "Round Trip" dropdown
@@ -44,13 +50,12 @@ def get_results_page(page: Page, start: str, end: str, departure: str) -> str:
     return page.content()
 
 
-def parse(soup: BeautifulSoup) -> list[dict]:
+def _parse(soup: BeautifulSoup) -> list[dict]:
     """
     Parse the HTML page and return the data as a list of dictionaries.
-    Data obtained (str unless otherwise stated) -- 9 total:
-        departure time, arrival time, airline, price (float), flight duration,
-        departure airport code, arrival airport code, # of stops and respective airport codes,
-        if overhead baggage is available (bool)
+    Data obtained per flight (str unless otherwise stated) -- 6 total:
+        departure time, arrival time, airline, price (float),
+        departure airport code, arrival airport code,
     """
     # get info
     departures = soup.find_all('div', class_='wtdjmc YMlIz ogfYpf tPgKwe')
@@ -94,7 +99,20 @@ def parse(soup: BeautifulSoup) -> list[dict]:
 
 
 def get_results(start: str, end: str, departure: str) -> list[dict]:
-    """ Inits scraping and gets flight search results. Calls the above two functions. """
+    """ Inits scraping and returns a list of flight search results. Calls the above two functions.
+    Probably takes ~8 sec to run.
+    Returned dictionary's keys:
+        - Departure: str (time)
+        - Arrival: str (time)
+        - Airline: str
+        - Price: int
+        - From: str (XYZ airport code)
+        - To: str (XYZ airport code)
+    Parameters:
+        - start: city of departure
+        - end: city of arrival
+        - departure: departing date in YYYY/DD/MM format
+    """
 
     with sync_playwright() as playwright:
         browser = playwright.chromium.launch(headless=True)     # Set to False to see Chromium pop-up
@@ -106,9 +124,9 @@ def get_results(start: str, end: str, departure: str) -> list[dict]:
         print("Getting results...")
 
         # init soup
-        soup = BeautifulSoup(get_results_page(page, start, end, departure), 'html.parser')
+        soup = BeautifulSoup(_get_results_page(page, start, end, departure), 'html.parser')
 
-        return parse(soup)
+        return _parse(soup)
 
 
 # For testing purposes
