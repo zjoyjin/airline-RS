@@ -8,7 +8,8 @@ This file is Copyright (c) Ashley Bi, Zhuoyi Jin, Elizabeth Liu, and Kerri Wei.
 """
 
 from flight_network_graph import Graph, Vertex
-from datetime
+import networkx as nx
+import matplotlib.pyplot as plt
 import geoplotlib
 import math
 from typing import Any, Union
@@ -17,7 +18,7 @@ from typing import Any, Union
 if __name__ == "__main__":
     #print cheap graph here
     graph = Graph()
-    print("Please type your desired leaving date\n, in yyyy/mm/dd")
+    print("Please type your desired leaving date\n, in yy/dd/mm")
 
     start_date = input()
     graph.load_viewed_graph(start_date)
@@ -28,13 +29,27 @@ if __name__ == "__main__":
     print("Please type all of the airport city you want to go into\n"
           "letter and type the city name in full):")
     locations = input()
-    if locations not in airport.csv:
-        print("This is not a valid airport, retype")
-        locations = input()
+
 
     print("Please type your desired leaving date\n"
-          "type the format in yyyy/mm/dd):")
+          "type the format in yy/dd/mm):")
     start_date = input()
+
+    #Draw the graph after user input
+    G = nx.DiGraph()
+    for vertex in G.vertices.values():
+        for dest, price, airline, date in vertex.destinations:
+            G.add_edge(vertex.location, dest, weight=price, airline=airline, date=date)
+
+    pos = nx.spring_layout(G)
+    labels = {(start, end): f"{airline}\n${price}\n{date}" for start, end, price, airline, date in
+              G.edges.data('weight', 'airline', 'date')}
+    nx.draw(G, pos, with_labels=True, node_size=1000, node_color='skyblue')
+    nx.draw_networkx_edge_labels(G, pos, edge_labels=labels)
+    plt.show()
+
+    #print the graph of user input
+
 
 
     # # Creating the graph with airline data
