@@ -17,16 +17,16 @@ from typing import Any, Union
 
 if __name__ == "__main__":
     #print cheap graph here
-    graph = Graph()
-    print("Please type your desired leaving date\n, in yy/dd/mm")
-
-    start_date = input()
-    graph.load_viewed_graph(start_date)
+    # graph = Graph()
+    # print("Please type your desired leaving date\n in yyyy/dd/mm")
+    #
+    # start_date = input()
 
 
     #read airport
     print("please type in the number of cities you wanto go in integer")
     number = int(input())
+    #print all the cities here
     print("Please type all of the airport city you want to go into\n"
           "letter and type the city name in full):")
     locations = []
@@ -35,14 +35,14 @@ if __name__ == "__main__":
 
 
     print("Please type your desired leaving date\n"
-          "type the format in yy/dd/mm):")
+          "type the format in yyyy/dd/mm):")
     start_date = input()
 
     #Draw the graph after user input
     flight_graph = Graph()
 
     flight_graph.load_viewed_user_graph(locations, start_date)
-    flight_graph.draw_graph()
+
 
     #print the graph of user input
 
@@ -53,7 +53,10 @@ if __name__ == "__main__":
     #
     # matching_flights = []
     # for edge in flight_graph.edges[location]:
-    #     if edge.destination.name == destination and edge.baggage == ('yes' if bag_check else 'no') and 0 <= edge.price <= upper_price:
+    #     if edge.desfor initial, vertex in self.vertices.items():
+    #         for dest_tuple in vertex.destinations:
+    #             dest, price, airline, date = dest_tuple
+    #             G.add_edge(initial, dest, weight=price, airline=airline, date=date)tination.name == destination and edge.baggage == ('yes' if bag_check else 'no') and 0 <= edge.price <= upper_price:
     #         matching_flights.append(edge)
     #
     # # Print out the matching flights

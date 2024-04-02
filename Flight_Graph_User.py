@@ -9,6 +9,7 @@ This file is Copyright (c) Ashley Bi, Zhuoyi Jin, Elizabeth Liu, and Kerri Wei.
 """
 
 from __future__ import annotations
+from connections import get_connections
 from typing import Union, Any, Optional
 from datetime import datetime
 from scrape import get_results
@@ -90,7 +91,7 @@ class Graph:
             raise ValueError
         else:
             initial_vertex = self.vertices[initial]
-            edge_tuple = (destination, price, airline, date)
+            edge_tuple = (initial, destination, price, airline, date)
 
             if edge_tuple not in initial_vertex.destinations:
                 initial_vertex.destinations.add(edge_tuple)
@@ -123,24 +124,36 @@ class Graph:
         start_city = locations[0]
         destination = locations[len(locations) - 1]
         self.add_vertex(start_city)
-        flight = get_results(locations, start_date)
+        flight = get_connections(start_date, locations)
 
         for i in range(1, len(locations) - 1):
-            self.add_vertex(locations[i+1])
-            self.add_edge_date(locations[i-1],locations[i+1], flight[i][0], flight[2][0]) #TODO, CHECK THIS THING
+            self.add_vertex(locations[i])
+            self.add_edge_date(locations[i-1],locations[i], flight[i]["Price"], flight[i]["Airline"], flight[i]["Date of Departure"]) #TODO, CHECK THIS THING
 
     def draw_graph(self):
         """Draw the graph using NetworkX and Matplotlib."""
-        G = nx.DiGraph()
-        for vertex in self.vertices.values():
-            for dest, price, airline, date in vertex.destinations:
-                G.add_edge(vertex.location, dest, weight=price, airline=airline, date=date)
+        G = nx.Graph()
+
+        #TODO: add a forloop here
+        for initial, vertex in self.vertices.items():
+            G.add_node(initial)
+
+        for initial, vertex in self.vertices.items():
+            for dest_tuple in vertex.destinations:
+                dest, price, airline, date = dest_tuple
+                G.add_edge(initial, dest, weight=price, airline=airline, date=date)
+
+        # for initial, vertex in self.vertices.items():
+        #     for dest_tuple in vertex.destinations:
+        #         dest, price, airline, date = dest_tuple
+        #         G.add_edge(initial, dest, weight=price, airline=airline, date=date)
 
         pos = nx.spring_layout(G)
         labels = {(start, end): f"{airline}\n${price}\n{date}" for start, end, price, airline, date in
                   G.edges.data('weight', 'airline', 'date')}
         nx.draw(G, pos, with_labels=True, node_size=1000, node_color='skyblue')
         nx.draw_networkx_edge_labels(G, pos, edge_labels=labels)
+        plt.title('Graph of Cities with Flights')
         plt.show()
 
 

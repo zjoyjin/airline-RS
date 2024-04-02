@@ -115,7 +115,7 @@ def get_results(start: str, end: str, departure: str) -> list[dict]:
     """
 
     with sync_playwright() as playwright:
-        browser = playwright.chromium.launch(headless=True)     # Set to False to see Chromium pop-up
+        browser = playwright.chromium.launch(headless=False)     # Set to False to see Chromium pop-up
         page = browser.new_page()
         page.goto('https://www.google.com/travel/flights?hl=en-US&curr=CAD')
         # could probably get currency customization by changing curr=   ^
