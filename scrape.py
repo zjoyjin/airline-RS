@@ -3,12 +3,20 @@ from playwright.sync_api import sync_playwright, Page
 from time import sleep
 from bs4 import BeautifulSoup
 
-def get_results_page(page: Page, _to: str, _from: str, departure: str, arrival: str) -> str:
+def get_results_page(page: Page, _to: str, _from: str, departure: str) -> str:
     """ Gets the HTML content of the google flights results page according to user input """
 
-    # dates
-    page.get_by_role("textbox", name="Departure").fill(departure)
-    page.get_by_role("textbox", name="Return").fill(arrival)
+    # # dates
+    # page.get_by_role("textbox", name="Departure").fill(departure)
+    # page.get_by_role("textbox", name="Return").fill(arrival)
+
+    # change filter to one-way trips
+    filter_trip_type_field = page.locator('.hqBSCb').first
+    filter_trip_type_field.click()
+    sleep(0.5)
+    change_trip_type = page.locator('.F5AWCf .PnyZyf')
+    change_trip_type.click()
+    sleep(0.5)
 
     # type "From"
     from_place_field = page.locator('.e5F5td').first
@@ -19,12 +27,15 @@ def get_results_page(page: Page, _to: str, _from: str, departure: str, arrival: 
     page.keyboard.press('Enter')
 
     # type "To"
-    to_place_field = page.locator('.e5F5td').nth(1)
+    to_place_field = page.locator('.e5F5td').nth(2)
     to_place_field.click()
     sleep(0.5)
     to_place_field.press_sequentially(_to)
     sleep(1)
     page.keyboard.press('Enter')
+
+    # dates
+    page.get_by_role("textbox", name="Departure").fill(departure)
 
     # Search
     page.locator(".xFFcie").first.click()
@@ -32,8 +43,8 @@ def get_results_page(page: Page, _to: str, _from: str, departure: str, arrival: 
     # page.wait_for_load_state('networkidle')     # discouraged apparently, but idk if this is better/worse than time.sleep
     sleep(2.5)
 
-    page.locator(".zISZ5c").and_(page.locator(".QB2Jof")).click()   # get more flights
-    sleep(2)    # if this doesn't work, then it'll just be as if this wasn't clicked
+    # page.locator(".zISZ5c").and_(page.locator(".QB2Jof")).click()   # get more flights
+    # sleep(2)    # if this doesn't work, then it'll just be as if this wasn't clicked
 
     return page.content()
 
@@ -44,7 +55,7 @@ def parse(soup: BeautifulSoup) -> list[dict]:
     Data obtained (str unless otherwise stated) -- 9 total:
         departure time, arrival time, airline, price (float), flight duration,
         departure airport code, arrival airport code, # of stops and respective airport codes,
-        if overhead baggage is available (bool)  
+        if overhead baggage is available (bool)
     """
 
     # get info
@@ -52,12 +63,12 @@ def parse(soup: BeautifulSoup) -> list[dict]:
     arrivals = soup.find_all('div', class_='XWcVob YMlIz ogfYpf tPgKwe')
     airlines = soup.find_all('span', class_='h1fkLb')
     # stops = soup.find_all('span', class_='VG3hNb')
-    airport_stops = soup.find_all('span', class_="rGRiKd")      # format: either "X stops in XYZ, ABC" or "Nonstop"
+    # airport_stops = soup.find_all('span', class_="rGRiKd")      # format: either "X stops in XYZ, ABC" or "Nonstop"
     prices = soup.find_all('div', class_="BVAVmf I11szd POX3ye")
     airport_from = soup.find_all('div', class_="G2WY5c sSHqwe ogfYpf tPgKwe")
     airport_to = soup.find_all('div', class_="c8rWCd sSHqwe ogfYpf tPgKwe")
-    durations = soup.find_all('span', class_="EzfXjb")
-    baggage = soup.find_all('div', class_='BVAVmf I11szd POX3ye')
+    # durations = soup.find_all('span', class_="EzfXjb")
+    # baggage = soup.find_all('div', class_='BVAVmf I11szd POX3ye')
 
     # return info as list of dictionaries
     results = []
@@ -66,11 +77,12 @@ def parse(soup: BeautifulSoup) -> list[dict]:
                         'Arrival': None,
                         'Airline': None,
                         'Price': None,
-                        'Duration': None,
+                        # 'Duration': None,
                         'From': None,
                         'To': None,
-                        'Stops': None,
-                        'Overhead': None})
+                        # 'Stops': None,
+                        # 'Overhead': None
+                        })
 
     for i in range(0, len(departures)):
         results[i]['Departure'] = departures[i].text.replace("\u202f", " ")
@@ -78,11 +90,11 @@ def parse(soup: BeautifulSoup) -> list[dict]:
         results[i]['Airline'] = airlines[i].text
         # results[i].append(f'# Stops: {stops[i].text}')
         results[i]['Price'] = float([p for p in prices[i].descendants][-1][3:].replace(',', ''))  # int
-        results[i]['Duration'] = durations[i].find_previous_sibling().text
+        # results[i]['Duration'] = durations[i].find_previous_sibling().text
         results[i]['From'] = airport_from[i].text
         results[i]['To'] = airport_to[i].text
-        results[i]['Stops'] = airport_stops[i].text
-        results[i]['Overhead'] = baggage[i].find('svg') is None     # bool
+        # results[i]['Stops'] = airport_stops[i].text
+        # results[i]['Overhead'] = baggage[i].find('svg') is None     # bool
 
     return results
 
@@ -98,7 +110,7 @@ def get_results(_to: str, _from: str, departure: str, arrival: str) -> list[dict
         # but then would need to alter how price str -> int is done
 
         # init soup
-        soup = BeautifulSoup(get_results_page(page, _to, _from, departure, arrival), 'html.parser')
+        soup = BeautifulSoup(get_results_page(page, _to, _from, departure), 'html.parser')
 
         return parse(soup)
 
