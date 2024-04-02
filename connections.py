@@ -2,14 +2,14 @@ from datetime import datetime
 from datetime import timedelta
 from scrape import get_results
 
-def get_connections(first: str, last: str, date: str, stops: list):
+def get_connections(date: str, stops: list) -> list:
     """ Takes in first, last, and in-between stops. Returns cheapest sequence of flights.
     - date: yyyy/mm/dd
     """
     flight_path = []
 
     curr_date = date
-    curr_start = first
+    curr_start = stops[0]
     i = 1
     curr_stop = stops[i]
 
@@ -26,7 +26,8 @@ def get_connections(first: str, last: str, date: str, stops: list):
         curr_date = f'{temp_date.year}/{temp_date.month}/{temp_date.day}'
 
         i += 1
-        curr_start, curr_stop = curr_stop, stops[i]
+        if i < len(stops):
+            curr_start, curr_stop = curr_stop, stops[i]
 
     return flight_path
 
@@ -38,3 +39,12 @@ def get_cheapest_flight(res: list[dict]) -> dict:
             cheapest = flight
 
     return cheapest
+
+
+# Testing!!
+if __name__ == "__main__":
+    res = get_connections("2024/04/20", ["Vancouver, Toronto, Edmonton"])
+    if res:
+        print(res)
+    else:
+        print("No flights found!")
