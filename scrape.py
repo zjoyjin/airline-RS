@@ -1,7 +1,6 @@
-# IT KINDA WORKS!!
 from playwright.sync_api import sync_playwright, Page
-from time import sleep
 from bs4 import BeautifulSoup
+from time import sleep
 
 def get_results_page(page: Page, start: str, end: str, departure: str) -> str:
     """ Gets the HTML content of the google flights results page according to user input """
@@ -30,23 +29,13 @@ def get_results_page(page: Page, start: str, end: str, departure: str) -> str:
     # dates
     departure_field = page.get_by_role("textbox", name="Departure")
     departure_field.first.click()
-    # page.get_by_role("textbox", name="Departure").fill(departure)
     departure_field.press_sequentially(departure)
-    sleep(1)
-    departure_field.press("Enter")
-    sleep(1)
-    departure_field.press("Enter")
-    sleep(1)
-    departure_field.press("Enter")
-    # x = page.get_by_label("Done. ")
-    # x.click()
-    # sleep(1)
-    # x.click()
-    # sleep(1)
+    for i in range(3):
+        sleep(0.5)
+        departure_field.press("Enter")
+
     # Search
     page.locator(".xFFcie").first.click()
-    # page.wait_for_event("framenavigated")     # don't think this is needed but im not sure
-    # page.wait_for_load_state('networkidle')     # discouraged apparently, but idk if this is better/worse than time.sleep
     sleep(2.5)
 
     # page.locator(".zISZ5c").and_(page.locator(".QB2Jof")).click()   # get more flights
@@ -108,16 +97,19 @@ def get_results(start: str, end: str, departure: str) -> list[dict]:
     """ Inits scraping and gets flight search results. Calls the above two functions. """
 
     with sync_playwright() as playwright:
-        browser = playwright.chromium.launch(headless=False)
+        browser = playwright.chromium.launch(headless=True)     # Set to False to see Chromium pop-up
         page = browser.new_page()
         page.goto('https://www.google.com/travel/flights?hl=en-US&curr=CAD')
         # could probably get currency customization by changing curr=   ^
         # but then would need to alter how price str -> int is done
 
+        print("Getting results...")
+
         # init soup
         soup = BeautifulSoup(get_results_page(page, start, end, departure), 'html.parser')
 
         return parse(soup)
+
 
 # For testing purposes
 if __name__ == "__main__":
