@@ -13,7 +13,9 @@ from typing import Union, Any, Optional
 from datetime import datetime
 from scrape import get_results
 import networkx as nx
+from mpl_toolkits.basemap import Basemap
 import matplotlib.pyplot as plt
+import csv
 
 
 class Vertex:
@@ -47,7 +49,7 @@ class Vertex:
         return len(self.destinations)
 
 
-class Graph:
+class Graph_all:
     """A graph used to represent a network of flights. Each vertex is representative of a location and each edge is
     representative of a flights with initial location, destination, cheapest price, and airline.
 
@@ -113,7 +115,8 @@ class Graph:
         """
         if flight_start in self.vertices and flight_destination in self.vertices:
             initial_vertex = self.vertices[flight_start]
-            return any(flight_destination == initial_vertex_dest[0] for initial_vertex_dest in initial_vertex.destinations)
+            return any(
+                flight_destination == initial_vertex_dest[0] for initial_vertex_dest in initial_vertex.destinations)
         else:
             return False
 
@@ -125,152 +128,129 @@ class Graph:
     #             self.add_vertex(destination)
     #             self.add_edge(start_city, destination, flight['Price'], flight['Airline'])
 
-    def load_viewed_graph(self, start_date: str, filename: str) -> None:
+    def load_viewed_graph(self, start_date: str, airport_file: str, locations: list[str]) -> None:
         """Return a airline review graph corresponding to the given user inputs and the scarping of the data set.
         """
         city_list = []
-        # with open (filename, "r") as file:
-        #     reader = csv.reader('file')
-        #     for row in reader:
-        #         city_list.append(row[0])
-        # need some help here
+        with open(airport_file, 'r') as file:
+            reader = csv.reader(file)
+            for row in reader:
+                if row[0] == locations[0]:
+                    city_list += [(float(row[0]))]
+                    break
+
 
         for initial_city in city_list:
             for destination_city in city_list:
                 if initial_city != destination_city:
                     flight = get_results(destination_city, initial_city, start_date)
-                    price = flight[0] #TODO: CHECK THIS LATER
-                    airline = flight[1] #
-                    #reAD FLIGHT FOR THE PRICE AND AIRLINE
+                    price = flight[initial_city]["Price"]
+                    airline = flight[initial_city]["Airline"]  #
+                    # reAD FLIGHT FOR THE PRICE AND AIRLINE
 
                     self.add_vertex(initial_city)
                     self.add_vertex(destination_city)
 
                     self.add_edge(initial_city, destination_city, price, airline)
 
+    def draw_graph_matplot_all(self, airport_file: str, locations: list[str]):
+        """Draw the flights on a map using matplotlib."""
+        # set background and map colors
+        bg_color = (1.0, 1.0, 1.0, 1.0)
+        coast_color = (10.0 / 255.0, 10.0 / 255.0, 10 / 255.0, 0.8)
+        m = Basemap(llcrnrlon=-139.808215, llcrnrlat=41.508585, urcrnrlon=-41.425033, urcrnrlat=83.335074)
+        m.drawcoastlines(color=coast_color)
+        m.fillcontinents(color=bg_color, lake_color=bg_color)
+        m.drawmapboundary(fill_color=bg_color)
+        locations_coord = []
+        # find the coordinates for the first city in locations with airport_fill
+        # find the coordinates for the first city in locations with airport_file
+        with open(airport_file, 'r') as file:
+            reader = csv.reader(file)
+            for row in reader:
+                if row[0] == locations[0]:
+                    latitude = float(row[3])
+                    longitude = float(row[4])
+                    locations_coord += [(latitude, longitude)]
+                    break
 
-    def visualize_graph(self, airline: str, source: str, destination: str, start_date: str, end_date: str):
-        """Visualize the weighted graph with predefined international airports in Canada."""
-        G = nx.MultiDiGraph()
+        for i in range(1, len(locations)):
+            with open(airport_file, 'r') as file:
+                reader = csv.reader(file)
+                for row in reader:
+                    if row[0] != locations[i]:
+                        continue
+                    else:
+                        latitude = float(row[3])
+                        longitude = float(row[4])
+                        locations_coord += [(latitude, longitude)]
 
-        airports = {
-            "Toronto": (43.7, -79.42),
-            "Vancouver": (49.19, -123.18),
-            "Montreal": (45.47, -73.74),
-            "Calgary": (51.13, -114.01),
-            "Ottawa": (45.42, -75.69),
-            "Edmonton": (53.55, -113.49),
-            "Halifax": (44.65, -63.57),
-            "Winnipeg": (49.9, -97.23),
-            "Quebec City": (46.81, -71.21),
-            "Victoria": (48.43, -123.37)
-        }
+                        prev_latitude = locations_coord[i - 1][0]
+                        prev_longitude = locations_coord[i - 1][1]
+                        m.drawgreatcircle(prev_longitude, prev_latitude, longitude, latitude)
+                        break
 
-        for city, coordinates in airports.items():
-            G.add_node(city, pos=coordinates)
+        # airline = get_connections(locations[i]["Airline"])    # Draw nodes
+        # money = get_connections(locations[i]["Price"])    nx.draw_networkx_nodes(G, pos, node_size=700, node_color='skyblue', label=True)
+        # date = get_connections(locations[i], locations[i])
+        #     # Draw edges
+        # plt.annotate(f"{airline}, {money}, {date}")    nx.draw_networkx_edges(G, pos, width=1.0, alpha=0.5, arrows=True)
 
-        for city, vertex in self.vertices.items():
-            for destination, weight, _ in vertex.destinations:
-                G.add_edge(city, destination, weight=weight)
 
-        # pos = nx.get_node_attributes(G, 'pos')
-        # edge_labels = {(city, destination): weight for city, vertex in self.vertices.items() for destination, weight, _ in vertex.destinations}
-
-        pos = nx.get_node_attributes(G, 'pos')
-        edge_labels = {}
-        for city, vertex in self.vertices.items():
-            for destination, weight, _ in vertex.destinations:
-                if (city, destination) not in edge_labels:
-                    edge_labels[(city, destination)] = []
-                edge_labels[(city, destination)].append(weight)
-
-        pos = nx.get_node_attributes(G, 'pos')
-
-        plt.figure(figsize=(12, 8))
-
-        # Draw nodes
-        nx.draw_networkx_nodes(G, pos, node_size=700, node_color='skyblue', label=True)
-
-        # Draw edges
-        nx.draw_networkx_edges(G, pos, width=1.0, alpha=0.5, arrows=True)
-
-        # Draw edge labels
-        edge_labels = {(u, v): f"{d['weight']}, {d['airline']}" for u, v, d in G.edges(data=True)}
-        nx.draw_networkx_edge_labels(G, pos, edge_labels=edge_labels)
-
-        # Recommend flights
-        recommended_flights = self.recommend_airline(airline, source, destination, start_date, end_date)
-        for flight in recommended_flights:
-            plt.text(pos[source][0], pos[source][1], f"{flight[0]}: ${flight[1]}, {flight[2]}",
-                     horizontalalignment='left', verticalalignment='bottom')
-
-        plt.title('International Airports with Flights and Recommended Airlines')
-        plt.axis('off')
         plt.show()
-    
-
-        # plt.figure(figsize=(12, 8))
-        # nx.draw(G, pos, with_labels=True, node_size=700, node_color='skyblue', font_size=12, font_weight='bold')
-        # for edge, weights in edge_labels.items():
-        #     labels = ", ".join(map(str, weights))
-        #     plt.text(pos[edge[0]][0], pos[edge[0]][1], labels, horizontalalignment='center', verticalalignment='center')
-        # plt.title('International Airports with Flights')
-        # plt.show()
-
+        # edge_labels = {(u, v): f"{d['weight']}, {d['airline']}" for u, v, d in G.edges(data=True)}
 
 
 
 #  # Load the weighted graph
-    #         graph = WeightedGraph()
-    #         graph.load_viewed_graph()
-    #
-    #         # Visualize the graph
-    #         graph.visualize_graph()
+#         graph = WeightedGraph()
+#         graph.load_viewed_graph()
+#
+#         # Visualize the graph
+#         graph.visualize_graph()
 
 
-    # def visualize_graph(self):
-    #     # Create a directed graph
-    #     G = nx.DiGraph()
-    #
-    #     # Add nodes (airports) to the graph
-    #     for airport in self.vertices:
-    #         G.add_node(airport)
-    #
-    #     # Add edges (flights) to the graph
-    #     for airport, vertex in self.vertices.items():
-    #         for destination, price, airline in vertex.destinations:
-    #             G.add_edge(airport, destination, price=price, airline=airline)
-    #
-    #     # Plot the graph
-    #     plt.figure(figsize=(12, 8))
-    #     pos = nx.spring_layout(G)  # Positions for all nodes
-    #
-    #     # Draw nodes
-    #     nx.draw_networkx_nodes(G, pos, node_size=700, node_color='skyblue')
-    #
-    #     # Draw edges
-    #     nx.draw_networkx_edges(G, pos, width=2, alpha=0.5, edge_color='gray')
-    #
-    #     # Draw labels (airport codes)
-    #     nx.draw_networkx_labels(G, pos, font_size=12, font_family='sans-serif')
-    #
-    #     # Draw edge labels (prices)
-    #     edge_labels = {(u, v): f"${d['price']}" for u, v, d in G.edges(data=True)}
-    #     nx.draw_networkx_edge_labels(G, pos, edge_labels=edge_labels, font_size=10)
-    #
-    #     # Set plot title and display the graph
-    #     plt.title('Flight Routes')
-    #     plt.axis('off')  # Turn off axis
-    #     plt.show()
+# def visualize_graph(self):
+#     # Create a directed graph
+#     G = nx.DiGraph()
+#
+#     # Add nodes (airports) to the graph
+#     for airport in self.vertices:
+#         G.add_node(airport)
+#
+#     # Add edges (flights) to the graph
+#     for airport, vertex in self.vertices.items():
+#         for destination, price, airline in vertex.destinations:
+#             G.add_edge(airport, destination, price=price, airline=airline)
+#
+#     # Plot the graph
+#     plt.figure(figsize=(12, 8))
+#     pos = nx.spring_layout(G)  # Positions for all nodes
+#
+#     # Draw nodes
+#     nx.draw_networkx_nodes(G, pos, node_size=700, node_color='skyblue')
+#
+#     # Draw edges
+#     nx.draw_networkx_edges(G, pos, width=2, alpha=0.5, edge_color='gray')
+#
+#     # Draw labels (airport codes)
+#     nx.draw_networkx_labels(G, pos, font_size=12, font_family='sans-serif')
+#
+#     # Draw edge labels (prices)
+#     edge_labels = {(u, v): f"${d['price']}" for u, v, d in G.edges(data=True)}
+#     nx.draw_networkx_edge_labels(G, pos, edge_labels=edge_labels, font_size=10)
+#
+#     # Set plot title and display the graph
+#     plt.title('Flight Routes')
+#     plt.axis('off')  # Turn off axis
+#     plt.show()
 
 
-
-
-    # def get_edges(self, vertex):
-    #     if isinstance(vertex, Vertex):
-    #         return self.edges[vertex.name]
-    #     else:
-    #         raise ValueError("Invalid vertex")
+# def get_edges(self, vertex):
+#     if isinstance(vertex, Vertex):
+#         return self.edges[vertex.name]
+#     else:
+#         raise ValueError("Invalid vertex")
 
 
 # Creating graph
@@ -307,31 +287,31 @@ class Graph:
 #     graph.add_edge(start, destination, price, airline)
 
 #
-    # def get_similarity_score(self, flight_start: str, flight_destination: str, price: float) -> float:
-    #     """Return a similarity score between the user input (source and destination cities, price range)
-    #     and the given flight.
-    #
-    #     The similarity score is calculated based on the closeness of the flight's start city, end city,
-    #     and price to the user's input.
-    #
-    #     Preconditions:
-    #         - flight_start and flight_destination are valid city names.
-    #         - price is a non-negative float representing the flight's price.
-    #     """
-    #     similarity_score = 0.0
-    #
-    #     if flight_start.lower() == self.user_start.lower(): #doesn't even make sense uhhhhh
-    #         similarity_score += 1.0
-    #
-    #     if flight_destination.lower() == self.user_end.lower():
-    #         similarity_score += 1.0
-    #
-    #     price_difference = abs(price - self.user_price)
-    #     if price_difference <= self.price_range:
-    #         similarity_score += 1.0 - (price_difference / self.price_range)
-    #
-    #     return similarity_score
-    # #how do i get the user input here?
+# def get_similarity_score(self, flight_start: str, flight_destination: str, price: float) -> float:
+#     """Return a similarity score between the user input (source and destination cities, price range)
+#     and the given flight.
+#
+#     The similarity score is calculated based on the closeness of the flight's start city, end city,
+#     and price to the user's input.
+#
+#     Preconditions:
+#         - flight_start and flight_destination are valid city names.
+#         - price is a non-negative float representing the flight's price.
+#     """
+#     similarity_score = 0.0
+#
+#     if flight_start.lower() == self.user_start.lower(): #doesn't even make sense uhhhhh
+#         similarity_score += 1.0
+#
+#     if flight_destination.lower() == self.user_end.lower():
+#         similarity_score += 1.0
+#
+#     price_difference = abs(price - self.user_price)
+#     if price_difference <= self.price_range:
+#         similarity_score += 1.0 - (price_difference / self.price_range)
+#
+#     return similarity_score
+# #how do i get the user input here?
 
 
 # #test

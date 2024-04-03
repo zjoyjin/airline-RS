@@ -7,13 +7,16 @@ Copyright and Usage Information
 This file is Copyright (c) Ashley Bi, Zhuoyi Jin, Elizabeth Liu, and Kerri Wei.
 """
 
-from flight_network_graph import Graph, Vertex
-from Flight_Graph_User import Graph, Vertex
-from mpl_toolkits.basemap import Basemap
 import networkx as nx
 import matplotlib.pyplot as plt
 import math
 from typing import Any, Union
+from Flight_Graph_User import Graph
+
+from flight_network_graph import Graph_all
+
+from mpl_toolkits.basemap import Basemap
+
 
 
 
@@ -37,6 +40,9 @@ if __name__ == "__main__":
     flight_graph = Graph()
     flight_graph.load_viewed_user_graph(locations, start_date)
     flight_graph.draw_graph_matplot("airport.csv", locations)
+    flight_graph.load_viewed_graph(locations, start_date)
+    flight_graph.draw_graph_matplot_all("airport.csv", locations)
+
 
 
     #print the graph of user input

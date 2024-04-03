@@ -129,7 +129,7 @@ class Graph:
 
         for i in range(0, len(locations) - 1):
             self.add_vertex(locations[i + 1])
-            self.add_edge_date(locations[i], locations[i + 1], flight[i]["Price"], flight[i]["Airline"], flight[i]["Date of Departure"])
+            self.add_edge_date(locations[i],locations[i + 1], flight[i]["Price"], flight[i]["Airline"], flight[i]["Date of Departure"]) #TODO, CHECK THIS THING
 
     def draw_graph_matplot(self, airport_file: str, locations: list[str]):
         """Draw the flights on a map using matplotlib."""
@@ -172,37 +172,12 @@ class Graph:
                         break
 
             # Add label with airline, money, and date
-            airline = get_cheapest_flight(locations[i]["Ailine"])
-            money = get_cheapest_flight(locations[i]["Price"])
-            date = get_cheapest_flight(locations[i]["date"])
 
-            plt.annotate(f"{airline}, {money}, {date}")
+            # airline = get_connections(locations[i]["Airline"])
+            # money = get_connections(locations[i]["Price"])
+            # date = get_connections(locations[i], locations[i])
+            #
+            # plt.annotate(f"{airline}, {money}, {date}")
 
 
-        plt.show()
-
-    def draw_graph(self):
-        """Draw the graph using NetworkX and Matplotlib."""
-        g = nx.Graph()
-
-        # TODO: add a for loop here
-        for initial, vertex in self.vertices.items():
-            g.add_node(initial)
-
-        for initial, vertex in self.vertices.items():
-            for dest_tuple in vertex.destinations:
-                dest, price, airline, date = dest_tuple
-                g.add_edge(initial, dest, weight=price, airline=airline, date=date)
-
-        # for initial, vertex in self.vertices.items():
-        #     for dest_tuple in vertex.destinations:
-        #         dest, price, airline, date = dest_tuple
-        #         g.add_edge(initial, dest, weight=price, airline=airline, date=date)
-
-        pos = nx.spring_layout(g)
-        labels = {(start, end): f"{airline}\n${price}\n{date}" for start, end, price, airline, date in
-                  g.edges.data('weight', 'airline', 'date')}
-        nx.draw(g, pos, with_labels=True, node_size=1000, node_color='skyblue')
-        nx.draw_networkx_edge_labels(g, pos, edge_labels=labels)
-        plt.title('Graph of Cities with Flights')
         plt.show()
