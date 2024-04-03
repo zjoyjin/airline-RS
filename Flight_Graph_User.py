@@ -171,6 +171,14 @@ class Graph:
                         m.drawgreatcircle(prev_longitude, prev_latitude, longitude, latitude)
                         break
 
+            # Add label with airline, money, and date
+            airline = get_cheapest_flight(locations[i]["Ailine"])
+            money = get_cheapest_flight(locations[i]["Price"])
+            date = get_cheapest_flight(locations[i]["date"])
+
+            plt.annotate(f"{airline}, {money}, {date}")
+
+
         plt.show()
 
     def draw_graph(self):

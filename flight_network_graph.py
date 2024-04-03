@@ -148,6 +148,7 @@ class Graph:
 
                     self.add_edge(initial_city, destination_city, price, airline)
 
+
     def visualize_graph(self, airline: str, source: str, destination: str, start_date: str, end_date: str):
         """Visualize the weighted graph with predefined international airports in Canada."""
         G = nx.MultiDiGraph()
@@ -206,6 +207,7 @@ class Graph:
         plt.title('International Airports with Flights and Recommended Airlines')
         plt.axis('off')
         plt.show()
+    
 
         # plt.figure(figsize=(12, 8))
         # nx.draw(G, pos, with_labels=True, node_size=700, node_color='skyblue', font_size=12, font_weight='bold')
