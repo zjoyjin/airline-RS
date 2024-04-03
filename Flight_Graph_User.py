@@ -14,7 +14,9 @@ from typing import Union, Any, Optional
 from datetime import datetime
 from scrape import get_results
 import networkx as nx
+from mpl_toolkits.basemap import Basemap
 import matplotlib.pyplot as plt
+import csv
 
 
 class Vertex:
@@ -23,7 +25,8 @@ class Vertex:
     Instance Attributes:
         - location: The name of the city
         - destinations: A set of tuples. Only add a tuple to this set if there exists a flight from self.location
-            to another city. Each tuple stores the following information: (destination city, price of flights, airline, date).
+            to another city. Each tuple stores the following information: (destination city, price of flights, airline,
+            date).
 
     Representation Invariants:
         - all({self.location != destination[0] for destination in destinations})
@@ -77,8 +80,8 @@ class Graph:
 
     def add_edge_date(self, initial: str, destination: str, price: Union[float, int], airline: str, date: str):
         """Add an edge between the vertex for an initial location in this graph and a destination. Note that only
-        self.vertices[initial].destinations will be modified, since vertex.destinations for any vertex only stores flights
-        that depart from the location, and does not store flights that arrive at the location.
+        self.vertices[initial].destinations will be modified, since vertex.destinations for any vertex only stores
+        flights that depart from the location, and does not store flights that arrive at the location.
 
         Raise a ValueError if initial or destination do not appear as vertices in this graph.
 
@@ -128,30 +131,70 @@ class Graph:
             self.add_vertex(locations[i + 1])
             self.add_edge_date(locations[i],locations[i + 1], flight[i]["Price"], flight[i]["Airline"], flight[i]["Date of Departure"]) #TODO, CHECK THIS THING
 
+    def draw_graph_matplot(self, airport_file: str, locations: list[str]):
+        """Draw the flights on a map using matplotlib."""
+        # set background and map colors
+        bg_color = (1.0, 1.0, 1.0, 1.0)
+        coast_color = (10.0 / 255.0, 10.0 / 255.0, 10 / 255.0, 0.8)
+
+        m = Basemap(llcrnrlon=-139.808215, llcrnrlat=41.508585, urcrnrlon=-41.425033, urcrnrlat=83.335074)
+        m.drawcoastlines(color=coast_color)
+        m.fillcontinents(color=bg_color, lake_color=bg_color)
+        m.drawmapboundary(fill_color=bg_color)
+
+        locations_coord = []  # this is a list that keeps tracks of coordinates
+
+        # find the coordinates for the first city in locations with airport_file
+        with open(airport_file, 'r') as file:
+            reader = csv.reader(file)
+            for row in reader:
+                if row[0] == locations[0]:
+                    latitude = float(row[3])
+                    longitude = float(row[4])
+                    locations_coord += [(latitude, longitude)]
+                    break
+
+        # find coordinates of each city (other than the first one) in locations with airport_file
+        for i in range(1, len(locations)):
+            with open(airport_file, 'r') as file:
+                reader = csv.reader(file)
+                for row in reader:
+                    if row[0] != locations[i]:
+                        continue
+                    else:
+                        latitude = float(row[3])
+                        longitude = float(row[4])
+                        locations_coord += [(latitude, longitude)]
+
+                        prev_latitude = locations_coord[i - 1][0]
+                        prev_longitude = locations_coord[i - 1][1]
+                        m.drawgreatcircle(prev_longitude, prev_latitude, longitude, latitude)
+                        break
+
+        plt.show()
+
     def draw_graph(self):
         """Draw the graph using NetworkX and Matplotlib."""
-        G = nx.Graph()
+        g = nx.Graph()
 
-        #TODO: add a forloop here
+        # TODO: add a for loop here
         for initial, vertex in self.vertices.items():
-            G.add_node(initial)
+            g.add_node(initial)
 
         for initial, vertex in self.vertices.items():
             for dest_tuple in vertex.destinations:
                 dest, price, airline, date = dest_tuple
-                G.add_edge(initial, dest, weight=price, airline=airline, date=date)
+                g.add_edge(initial, dest, weight=price, airline=airline, date=date)
 
         # for initial, vertex in self.vertices.items():
         #     for dest_tuple in vertex.destinations:
         #         dest, price, airline, date = dest_tuple
-        #         G.add_edge(initial, dest, weight=price, airline=airline, date=date)
+        #         g.add_edge(initial, dest, weight=price, airline=airline, date=date)
 
-        pos = nx.spring_layout(G)
+        pos = nx.spring_layout(g)
         labels = {(start, end): f"{airline}\n${price}\n{date}" for start, end, price, airline, date in
-                  G.edges.data('weight', 'airline', 'date')}
-        nx.draw(G, pos, with_labels=True, node_size=1000, node_color='skyblue')
-        nx.draw_networkx_edge_labels(G, pos, edge_labels=labels)
+                  g.edges.data('weight', 'airline', 'date')}
+        nx.draw(g, pos, with_labels=True, node_size=1000, node_color='skyblue')
+        nx.draw_networkx_edge_labels(g, pos, edge_labels=labels)
         plt.title('Graph of Cities with Flights')
         plt.show()
-
-

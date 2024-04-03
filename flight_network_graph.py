@@ -15,6 +15,7 @@ from scrape import get_results
 import networkx as nx
 import matplotlib.pyplot as plt
 
+
 class Vertex:
     """A vertex is a city that either has arriving or departing flights.
 
@@ -30,7 +31,6 @@ class Vertex:
     location: Any
     destinations: set[tuple[str, Union[int, float], str]]
 
-
     def __init__(self, location: str):
         """Initialize a new vertex with the given lcocation.
 
@@ -45,7 +45,6 @@ class Vertex:
     def degree(self) -> int:
         """Return the degree of this vertex."""
         return len(self.destinations)
-
 
 
 class Graph:
@@ -118,7 +117,6 @@ class Graph:
         else:
             return False
 
-
     # def airport_add_edge(self, start_city: str, start_date: datetime, destination: str):
     #     """Initialize the graph with flights between the canadian airports."""
     #     flights = get_results(start_city, destination, start_date)
@@ -127,8 +125,7 @@ class Graph:
     #             self.add_vertex(destination)
     #             self.add_edge(start_city, destination, flight['Price'], flight['Airline'])
 
-
-    def load_viewed_graph(self, start_date: str, filename: str)-> None:
+    def load_viewed_graph(self, start_date: str, filename: str) -> None:
         """Return a airline review graph corresponding to the given user inputs and the scarping of the data set.
         """
         city_list = []
@@ -136,9 +133,7 @@ class Graph:
         #     reader = csv.reader('file')
         #     for row in reader:
         #         city_list.append(row[0])
-        #need some help here
-
-
+        # need some help here
 
         for initial_city in city_list:
             for destination_city in city_list:
@@ -152,7 +147,6 @@ class Graph:
                     self.add_vertex(destination_city)
 
                     self.add_edge(initial_city, destination_city, price, airline)
-
 
     def visualize_graph(self, airline: str, source: str, destination: str, start_date: str, end_date: str):
         """Visualize the weighted graph with predefined international airports in Canada."""

@@ -1,6 +1,6 @@
 """ CSC111 Project 2: Flight Path Finder
 ============================================
-The Python module contains the user input and visualization code for for Project 2. 
+The Python module contains the user input and visualization code for for Project 2.
 
 Copyright and Usage Information
 ============================================
@@ -16,32 +16,24 @@ from typing import Any, Union
 
 
 if __name__ == "__main__":
-    #print cheap graph here
-    # graph = Graph()
-    # print("Please type your desired leaving date\n in yyyy/dd/mm")
-    #
-    # start_date = input()
+    print("What city are you currently in?")
+    locations = [input()]
 
-
-    #read airport
-    print("please type in the number of cities you wanto go in integer")
+    print("How many cities do you want to visit (not including your current location)")
     number = int(input())
-    #print all the cities here
-    print("Please type all of the airport city you want to go into\n"
-          "letter and type the city name in full):")
-    locations = []
-    for i in range (number):
-        locations.append(input())
 
+    print("Please type the names of all cities you want to visit and hit \"enter\" after each one.")
+    for i in range(number):
+        locations.append(input())
 
     print("Please type your desired leaving date\n"
           "type the format in yyyy/dd/mm):")
     start_date = input()
 
-    #Draw the graph after user input
+    # Draw the graph after user input
     flight_graph = Graph()
-
     flight_graph.load_viewed_user_graph(locations, start_date)
+    flight_graph.draw_graph_matplot("airport.csv", locations)
 
 
     #print the graph of user input
@@ -66,8 +58,3 @@ if __name__ == "__main__":
     #         print(flight)
     # else:
     #     print("\nNo matching flights found.")
-
-
-
-    
-      
