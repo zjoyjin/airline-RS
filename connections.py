@@ -135,11 +135,11 @@ def get_cheapest_flight(flights: list[dict]) -> dict:
 
 # Testing!!
 if __name__ == "__main__":
-    res = get_connections("2024/20/04", ["Vancouver", "Beijing", "San Francisco"], recursive=True)
-    if res:
-        print(res)
-    else:
-        print("No flights found!")
+    # res = get_connections("2024/20/04", ["Vancouver", "Beijing", "San Francisco"], recursive=True)
+    # if res:
+    #     print(res)
+    # else:
+    #     print("No flights found!")
 
     import python_ta
 
