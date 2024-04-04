@@ -25,15 +25,18 @@ class Vertex:
     Instance Attributes:
         - location: The name of the city
         - destinations: A set of tuples. Only add a tuple to this set if there exists a flight from self.location
-            to another city. Each tuple stores the following information: (destination city, price of flights, airline,
-            date).
+            to another city. Each tuple stores the following information:
+            (initial city, destination city, flight price, airline, depature info, arrival info)
+            - departure info is a str in the form: "<YYYY/DD/MM> at <time of departure> from <XYZ>"
+            - arrival info is a str in the form: "<time of arrival> at <XYZ>"
+            - Note: XYZ is the airport code
 
     Representation Invariants:
         - all({self.location != destination[0] for destination in destinations})
         - len(self.destinations) != 0
     """
     location: Any
-    destinations: set[tuple[str, Union[int, float], str, datetime]]
+    destinations: set[tuple[str, str, str, Any, Any, str, str]]
 
     def __init__(self, location: str):
         """Initialize a new vertex with the given lcocation.
@@ -78,10 +81,11 @@ class Graph:
         if location not in self.vertices:
             self.vertices[location] = Vertex(location)
 
-    def add_edge_date(self, initial: str, destination: str, price: Union[float, int], airline: str, date: str):
-        """Add an edge between the vertex for an initial location in this graph and a destination. Note that only
-        self.vertices[initial].destinations will be modified, since vertex.destinations for any vertex only stores
-        flights that depart from the location, and does not store flights that arrive at the location.
+    def add_edge_user(self, initial: str, destination: str, flight: dict):
+        """Add an edge between the vertex for an initial location in this graph to one of the
+        user's desired destinations. Note that only self.vertices[initial].destinations will be modified,
+        since vertex.destinations for any vertex only stores flights that depart from the location,
+        and does not store flights that arrive at the location.
 
         Raise a ValueError if initial or destination do not appear as vertices in this graph.
 
@@ -94,10 +98,14 @@ class Graph:
             raise ValueError
         else:
             initial_vertex = self.vertices[initial]
-            edge_tuple = (initial, destination, price, airline, date)
+            price = flight["Price"]
+            airline = flight["Airline"]
+            departure = f'{flight["Date of Departure"]} at {flight["Departure"]} from {flight["From"]}'
+            arrival = f'{flight["Arrival"]} at {flight["To"]}'
+            flight_info = (initial, destination, price, airline, departure, arrival)
 
-            if edge_tuple not in initial_vertex.destinations:
-                initial_vertex.destinations.add(edge_tuple)
+            if flight_info not in initial_vertex.destinations:
+                initial_vertex.destinations.add(flight_info)
 
     def get_vertex(self, location):
         """Return the Vertex object associated with the given location.
@@ -126,25 +134,25 @@ class Graph:
         """Load a graph visualization mapping out the user's flight path according to the user's input.
         Print the info for the cheapest flights between these corresponding locations.
         The flight info is retrieved from Google Flights."""
-        flight = get_connections(start_date, locations)
+        flights = get_connections(start_date, locations)
         self.add_vertex(locations[0])
 
         for i in range(0, len(locations) - 1):
             self.add_vertex(locations[i + 1])
 
-            price = flight[i]["Price"]
-            airline = flight[i]["Airline"]
-            departure_date = flight[i]["Date of Departure"]
-            departue_time = flight[i]["Departure"]
-            arrival_time = flight[i]["Arrival"]
-            start_airport = flight[i]["From"]
-            end_airport = flight[i]["To"]
+            price = flights[i]["Price"]
+            airline = flights[i]["Airline"]
+            departure_date = flights[i]["Date of Departure"]
+            departure_time = flights[i]["Departure"]
+            arrival_time = flights[i]["Arrival"]
+            start_airport = flights[i]["From"]
+            end_airport = flights[i]["To"]
 
-            self.add_edge_date(locations[i], locations[i + 1], price, departure_date, start_date) #TODO, CHECK THIS THING
+            self.add_edge_user(locations[i], locations[i + 1], flights[i]) #TODO, CHECK THIS THING
 
             # Print each flight's details
-            print(f'Flight {i + 1}: Price: ${flight[i]["Price"]}, Airline: {airline}')
-            print(f'Departure: {departure_date} at {departue_time} from {start_airport}, '
+            print(f'Flight {i + 1}: Price: ${price}, Airline: {airline}')
+            print(f'Departure: {departure_date} at {departure_time} from {start_airport}, '
                   f'Arrival: {arrival_time} at {end_airport} \n')
 
     def draw_graph_matplot(self, airport_file: str, locations: list[str]):
