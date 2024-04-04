@@ -44,6 +44,7 @@ def _get_results_page(page: Page, start: str, end: str, departure: str) -> str:
     # dates
     departure_field = page.get_by_role("textbox", name="Departure")
     departure_field.first.click()
+    sleep(0.5)
     departure_field.press_sequentially(departure)
     for i in range(3):
         sleep(0.5)
@@ -82,7 +83,7 @@ def _parse(soup: BeautifulSoup) -> list[dict]:
                         'To': None
                         })
 
-    for i in range(0, len(departures)):
+    for i in range(0, len(prices)):
         results[i]['Departure'] = departures[i].text.replace("\u202f", " ")
         results[i]['Arrival'] = arrivals[i].text.replace("\u202f", " ")
         results[i]['Airline'] = airlines[i].text
