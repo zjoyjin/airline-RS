@@ -39,26 +39,3 @@ if __name__ == "__main__":
     flight_graph.draw_graph_matplot_all("airport.csv", locations)
 
 
-
-    #print the graph of user input
-
-
-
-    # # Creating the graph with airline data
-    # flight_graph = Graph('Airline_Data.csv')
-    #
-    # matching_flights = []
-    # for edge in flight_graph.edges[location]:
-    #     if edge.desfor initial, vertex in self.vertices.items():
-    #         for dest_tuple in vertex.destinations:
-    #             dest, price, airline, date = dest_tuple
-    #             G.add_edge(initial, dest, weight=price, airline=airline, date=date)tination.name == destination and edge.baggage == ('yes' if bag_check else 'no') and 0 <= edge.price <= upper_price:
-    #         matching_flights.append(edge)
-    #
-    # # Print out the matching flights
-    # if matching_flights:
-    #     print("\nMatching flights:")
-    #     for flight in matching_flights:
-    #         print(flight)
-    # else:
-    #     print("\nNo matching flights found.")
