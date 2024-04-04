@@ -122,20 +122,20 @@ def get_results(start: str, end: str, departure: str) -> list[dict]:
         try:
             # init soup
             soup = BeautifulSoup(_get_results_page(page, start, end, departure), 'html.parser')
-            return _parse(soup)
         except TimeoutError:
             print("ERROR WHILE GETTING RESULTS! Please ensure your Internet connection is decent \
                   and cities are spelled correctly!")
             return []
+        return _parse(soup)
 
 
 # For testing purposes
 if __name__ == "__main__":
-    # res = get_results("Vancouver", "Edmonton", "2024/20/04")
-    # if res:
-    #     print(res)
-    # else:
-    #     print("No flights found!")
+    res = get_results("Vancouver", "Edmonton", "2024/20/04")
+    if res:
+        print(res)
+    else:
+        print("No flights found!")
 
     import python_ta
 
