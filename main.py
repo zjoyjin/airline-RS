@@ -23,14 +23,14 @@ from mpl_toolkits.basemap import Basemap
 
 if __name__ == "__main__":
     print("What city are you currently in?")
-    locations = [input()]
+    locations = [str.capitalize(input())]
 
     print("How many cities do you want to visit (not including your current location)")
     number = int(input())
 
     print("Please type the names of all cities you want to visit and hit \"enter\" after each one.")
     for i in range(number):
-        locations.append(input())
+        locations.append(str.capitalize(input()))
 
     print("Please type your desired leaving date\n"
           "type the format in yyyy/dd/mm):")
