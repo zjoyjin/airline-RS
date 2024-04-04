@@ -124,7 +124,7 @@ class Graph:
 
             self.add_edge_user(locations[i], locations[i + 1], flights[i])
 
-        def print_label(self, longitude: float, latitude: float, locations: list[str]) -> None:
+    def print_label(self, longitude: float, latitude: float, locations: list[str]) -> None:
         """This is a helper function for draw_graph_from_user_input. This helper prints a label containing flight
         information at a given longitude and latitude."""
         location_vertex = self.vertices[locations[0]]
