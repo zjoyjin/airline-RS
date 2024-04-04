@@ -73,7 +73,7 @@ def _parse(soup: BeautifulSoup) -> list[dict]:
 
     # Return info as list of dictionaries
     results = []
-    for i in range(0, len(departures)):
+    for i in range(0, len(prices)):
         results.append({'Departure': None,
                         'Arrival': None,
                         'Airline': None,
