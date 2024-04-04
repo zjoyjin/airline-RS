@@ -66,6 +66,7 @@ def _get_connections_iterative(date: str, stops: list, days: int = 0) -> list[di
 
         flight_path.append(cheapest)
 
+        # update variables
         curr_date = _get_departure_date(curr_date, cheapest["Arrival"], days)
         i += 1
         if i < len(stops):
@@ -89,12 +90,13 @@ def _get_connections_recursive(date: str, stops: list, days: int = 0) -> list:
     if len(stops) == 1:
         return []
 
-    itinerary = [{"Price": 10**10}]
+    itinerary = [{"Price": 10**10}]     # default itinerary for comparison purposes
     for results in get_results(stops[0], stops[1], date):
         results['Date of Departure'] = date
         departure = _get_departure_date(date, results['Arrival'], days)
 
         possible_itinerary = [results] + _get_connections_recursive(departure, stops[1:], days)
+        # check to see if cheaper
         if sum((f["Price"] for f in possible_itinerary)) < sum((f["Price"] for f in itinerary)):
             itinerary = possible_itinerary
 
