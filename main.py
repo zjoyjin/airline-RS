@@ -1,24 +1,13 @@
 """ CSC111 Project 2: Flight Path Finder
 ============================================
-The Python module contains the user input and visualization code for for Project 2.
+The Python module contains the user input and visualization code for Project 2.
 
 Copyright and Usage Information
 ============================================
 This file is Copyright (c) Ashley Bi, Zhuoyi Jin, Elizabeth Liu, and Kerri Wei.
 """
-
-import networkx as nx
-import matplotlib.pyplot as plt
-import math
-from typing import Any, Union
 from Flight_Graph_User import Graph
-
 from flight_network_graph import Graph_all
-
-from mpl_toolkits.basemap import Basemap
-
-
-
 
 
 if __name__ == "__main__":
