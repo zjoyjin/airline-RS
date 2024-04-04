@@ -119,10 +119,14 @@ def get_results(start: str, end: str, departure: str) -> list[dict]:
 
         print("Getting results...")
 
-        # init soup
-        soup = BeautifulSoup(_get_results_page(page, start, end, departure), 'html.parser')
-
-        return _parse(soup)
+        try:
+            # init soup
+            soup = BeautifulSoup(_get_results_page(page, start, end, departure), 'html.parser')
+            return _parse(soup)
+        except TimeoutError:
+            print("ERROR WHILE GETTING RESULTS! Please ensure your Internet connection is decent \
+                  and cities are spelled correctly!")
+            return []
 
 
 # For testing purposes
