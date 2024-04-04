@@ -7,8 +7,7 @@ Copyright and Usage Information
 This file is Copyright (c) Ashley Bi, Zhuoyi Jin, Elizabeth Liu, and Kerri Wei.
 """
 from mpl_toolkits.basemap import Basemap
-
-from Flight_Graph_User import Graph
+from flight_graph_user import Graph
 from flight_network_graph import GraphAll
 
 
