@@ -108,6 +108,8 @@ def get_results(start: str, end: str, departure: str) -> list[dict]:
         - start: city of departure
         - end: city of arrival
         - departure: departing date in YYYY/DD/MM format
+    Preconditions:
+        - start != '' and end != '' and departure != ''
     """
 
     with sync_playwright() as playwright:
@@ -130,3 +132,12 @@ if __name__ == "__main__":
         print(res)
     else:
         print("No flights found!")
+
+
+    import python_ta
+
+    python_ta.check_all(config={
+        'extra-imports': [],  # the names (strs) of imported modules
+        'allowed-io': [],  # the names (strs) of functions that call print/open/input
+        'max-line-length': 120
+    })
