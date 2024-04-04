@@ -9,10 +9,8 @@ This file is Copyright (c) Ashley Bi, Zhuoyi Jin, Elizabeth Liu, and Kerri Wei.
 """
 
 from __future__ import annotations
-from connections import get_connections, get_cheapest_flight
+from connections import get_connections
 from typing import Union, Any, Optional
-from datetime import datetime
-from scrape import get_results
 import networkx as nx
 from mpl_toolkits.basemap import Basemap
 import matplotlib.pyplot as plt
@@ -36,7 +34,7 @@ class Vertex:
         - len(self.destinations) != 0
     """
     location: Any
-    destinations: set[tuple[str, str, str, Any, Any, str, str]]
+    destinations: set[tuple[str, str, Any, Any, str, str]]
 
     def __init__(self, location: str):
         """Initialize a new vertex with the given lcocation.
@@ -148,7 +146,7 @@ class Graph:
             start_airport = flights[i]["From"]
             end_airport = flights[i]["To"]
 
-            self.add_edge_user(locations[i], locations[i + 1], flights[i]) #TODO, CHECK THIS THING
+            self.add_edge_user(locations[i], locations[i + 1], flights[i])
 
             # Print each flight's details
             flight = flights[i]
