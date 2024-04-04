@@ -9,6 +9,7 @@ This file is Copyright (c) Ashley Bi, Zhuoyi Jin, Elizabeth Liu, and Kerri Wei.
 from datetime import datetime, timedelta
 from scrape import get_results
 
+
 def get_connections(date: str, stops: list, recursive: bool = False, days: int = 0) -> list[dict]:
     """Returns cheapest sequence of flights between the cities in stops with at least a 1-day
     layover between flights.
@@ -30,13 +31,14 @@ def get_connections(date: str, stops: list, recursive: bool = False, days: int =
         - From: str (XYZ airport code)
         - To: str (XYZ airport code)
         - Date of Departure: str (YYYY/DD/MM)
-    """  
+    """
     if recursive:
-        return get_connections_recursive(date, stops, days)
+        return _get_connections_recursive(date, stops, days)
     else:
-        return get_connections_iterative(date, stops, days)
+        return _get_connections_iterative(date, stops, days)
 
-def get_connections_iterative(date: str, stops: list, days: int = 0) -> list[dict]:
+
+def _get_connections_iterative(date: str, stops: list, days: int = 0) -> list[dict]:
     """
     Iteratively returns the "cheapest" sequence of flights between the cities in stops with at least a
     1-day layover between flights. Less accurate than the recursive implementation, but much faster.
@@ -62,14 +64,15 @@ def get_connections_iterative(date: str, stops: list, days: int = 0) -> list[dic
 
         flight_path.append(cheapest)
 
-        curr_date = get_departure_date(curr_date, cheapest["Arrival"], days)
+        curr_date = _get_departure_date(curr_date, cheapest["Arrival"], days)
         i += 1
         if i < len(stops):
             curr_start, curr_stop = curr_stop, stops[i]
 
     return flight_path
 
-def get_connections_recursive(date: str, stops: list, days: int = 0) -> list:
+
+def _get_connections_recursive(date: str, stops: list, days: int = 0) -> list:
     """
     Recursively returns the cheapest sequence of flights between the cities in stops with at least a
     1-day layover between flights. ACCURATE, but MUCH SLOWER than the iterative implemenation.
@@ -85,18 +88,18 @@ def get_connections_recursive(date: str, stops: list, days: int = 0) -> list:
         return []
 
     itinerary = [{"Price": 10**10}]
-    for res in get_results(stops[0], stops[1], date):
-        res['Date of Departure'] = date
-        departure = get_departure_date(date, res['Arrival'], 0)
-        
-        possible_itinerary = [res] + get_connections(departure, stops[1:], 0)
+    for results in get_results(stops[0], stops[1], date):
+        results['Date of Departure'] = date
+        departure = _get_departure_date(date, results['Arrival'], days)
+
+        possible_itinerary = [results] + get_connections(departure, stops[1:], days)
         if sum((f["Price"] for f in possible_itinerary)) < sum((f["Price"] for f in itinerary)):
             itinerary = possible_itinerary
 
     return itinerary
 
 
-def get_departure_date(arrival_date, arrival_time, days: int = 0) -> str:
+def _get_departure_date(arrival_date: str, arrival_time: str, days: int = 0) -> str:
     """
     Returns the expected date of departure of a flight following one with given
     `arrival_date` and `arrival_time`, with `days` in between the flights
@@ -111,6 +114,7 @@ def get_departure_date(arrival_date, arrival_time, days: int = 0) -> str:
     temp_date += timedelta(days=stay)
 
     return f'{temp_date.year}/{temp_date.day}/{temp_date.month}'
+
 
 def get_cheapest_flight(flights: list[dict]) -> dict:
     """Returns the cheapest flight from a given list of flight results.
@@ -127,16 +131,16 @@ def get_cheapest_flight(flights: list[dict]) -> dict:
 
 # Testing!!
 if __name__ == "__main__":
-    res = get_connections("2024/20/04", ["Vancouver", "Hong Kong", "Beijing", "San Francisco"])
-    if res:
-        print(res)
-    else:
-        print("No flights found!")
+    # res = get_connections("2024/20/04", ["Vancouver", "Hong Kong", "Beijing", "San Francisco"])
+    # if res:
+    #     print(res)
+    # else:
+    #     print("No flights found!")
 
     import python_ta
 
     python_ta.check_all(config={
-        'extra-imports': [],  # the names (strs) of imported modules
+        'extra-imports': ["datetime", "scrape"],  # the names (strs) of imported modules
         'allowed-io': [],  # the names (strs) of functions that call print/open/input
         'max-line-length': 120
     })

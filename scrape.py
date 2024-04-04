@@ -6,9 +6,9 @@ Copyright and Usage Information
 ============================================
 This file is Copyright (c) Ashley Bi, Zhuoyi Jin, Elizabeth Liu, and Kerri Wei.
 """
+from time import sleep
 from playwright.sync_api import sync_playwright, Page
 from bs4 import BeautifulSoup
-from time import sleep
 
 
 def _get_results_page(page: Page, start: str, end: str, departure: str) -> str:
@@ -46,7 +46,7 @@ def _get_results_page(page: Page, start: str, end: str, departure: str) -> str:
     departure_field.first.click()
     sleep(0.5)
     departure_field.press_sequentially(departure)
-    for i in range(3):
+    for _ in range(3):
         sleep(0.5)
         departure_field.press("Enter")
 
@@ -87,7 +87,7 @@ def _parse(soup: BeautifulSoup) -> list[dict]:
         results[i]['Departure'] = departures[i].text.replace("\u202f", " ")
         results[i]['Arrival'] = arrivals[i].text.replace("\u202f", " ")
         results[i]['Airline'] = airlines[i].text
-        results[i]['Price'] = float([p for p in prices[i].descendants][-1][3:].replace(',', ''))  # int
+        results[i]['Price'] = float(tuple(p for p in prices[i].descendants)[-1][3:].replace(',', ''))  # int
         results[i]['From'] = airportstart[i].text
         results[i]['To'] = airportend[i].text
 
@@ -133,11 +133,10 @@ if __name__ == "__main__":
     else:
         print("No flights found!")
 
-
     import python_ta
 
     python_ta.check_all(config={
-        'extra-imports': [],  # the names (strs) of imported modules
-        'allowed-io': [],  # the names (strs) of functions that call print/open/input
+        'extra-imports': ["playwright.sync_api", "bs4", "time"],  # the names (strs) of imported modules
+        'allowed-io': ["get_results"],  # the names (strs) of functions that call print/open/input
         'max-line-length': 120
     })
