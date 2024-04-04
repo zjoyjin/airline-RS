@@ -270,6 +270,6 @@ if __name__ == '__main__':
 
     python_ta.check_all(config={
         'extra-imports': ['csv', 'mpl_toolkits.basemap', 'matplotlib.pyplot', 'connections'],
-        'allowed-io': ['load_user_graph', 'draw_graph_from_user_input'],
+        'allowed-io': ['Graph.load_user_graph', 'Graph.draw_graph_from_user_input'],
         'max-line-length': 120
     })
