@@ -11,9 +11,8 @@ Amos,Amos Airport,YEY,48.5643,-78.248015
 Anahim Lake,Anahim Lake Airport,YAA,52.452325,-125.305134
 Angling Lake,Angling Lake Airport,YAX,53.842056,-89.574457
 Arctic Bay,Arctic Bay Airport,YAB,73.0050925,-85.0338354
-Argentia,NS Airport,NWP,NULL,NULL
 Armstrong,Armstrong Airport,YYW,50.306934,-89.029462
-Arnes MB,Arnes Airport,YNR,50.835538,-96.9562909
+Arnes,Arnes Airport,YNR,50.835538,-96.9562909
 Arviat,Arviat Airport,YEK,61.0955506,-94.0715464
 Asbestos Hill,Asbestos Hill Airport,YAF,45.766667,-71.95
 Ashcroft,Ashcroft Airport,YZA,50.716667,-121.283333
@@ -26,12 +25,12 @@ Baie Johan Beetz,Baie Johan Beetz Airport,YBJ,50.5,-62.916667
 Baker Lake,Baker Lake Airport,YBK,64.311964,-96.0213969
 Bamfield,Bamfield Airport,YBF,48.830567,-125.13226
 Banff,Banff Airport,YBA,51.2073771,-115.5418434
-Bathurst NB,Bathurst Airport,ZBF,47.629903,-65.735703
+Bathurst,Bathurst Airport,ZBF,47.629903,-65.735703
 Bearskin Lake,Bearskin Lake Airport,XBE,53.966324,-91.025569
 Beatton River,Beatton River Airport,YZC,56.166667,-120.416667
 Beaver Creek,Beaver Creek Airport,YXQ,62.4073548,-140.862545
 Bella Bella,Bella Bella Airport,ZEL,52.1811711,-128.1546318
-Bella Coola BC,Bella Coola Airport,QBC,52.333332,-126.666664
+Bella Coola,Bella Coola Airport,QBC,52.333332,-126.666664
 Berens River,Berens River Airport,YBV,52.358977,-97.016935
 Big Bay Marina,Big Bay Marina Airport,YIG,50.383333,-125.133333
 Big Bay Yacht Club,Big Bay Yacht Club Airport,YYA,50.4,-123.133333
@@ -40,9 +39,9 @@ Black Tickle,Black Tickle Airport,YBI,53.4692426,-55.7853132
 Blanc Sablon,Blanc Sablon Airport,YBX,51.442107,-57.186372
 Bloodvein,Bloodvein Airport,YDV,51.75,-96.733333
 Blubber Bay,Blubber Bay Airport,XBB,49.8,-124.633333
-Bobquinn Lake BC,Bob Quinn Lake Airport,YBO,56.966667,-130.25
+Bobquinn Lake,Bob Quinn Lake Airport,YBO,56.966667,-130.25
 Bonaventure,Bonaventure Airport,YVB,48.0679566,-65.4572725
-Bonnyville AB,Bonnyville Airport,YBY,54.266666,-110.73333
+Bonnyville,Bonnyville Airport,YBY,54.266666,-110.73333
 Borden,Borden Airport,YBN,44.271762,-79.911905
 Brandon,Brandon Airport,YBR,49.9044319,-99.945333
 Broadview,Broadview Airport,YDR,50.333333,-102.5
@@ -54,12 +53,9 @@ Buchans,Buchans Airport,YZM,48.849684,-56.841778
 Buffalo Narrows,Buffalo Narrows Airport,YVT,55.859829,-108.473631
 Bull Harbour,Bull Harbour Airport,YBH,50.9,-127.916667
 Burns Lake,Burns Lake Airport,YPZ,54.3814571,-125.957222
-Burwash Landings,Burwash Landings Airport,YDB,NULL,NULL
-Calgary,Springbank Airport,YBW,51.103054,-114.374443
-Calgary AB,Calgary International Airport,YYC,51.131471,-114.010556
+Calgary,Calgary International Airport,YYC,51.131471,-114.010556
 Cambridge Bay,Cambridge Bay Airport,YCB,69.108056,-105.138333
 Campbell River,Campbell River Airport,YBL,49.9515893,-125.2683545
-Campbell River,Harbor SPB Airport,YHH,50.029164,-125.273987
 Cape Dorset,Cape Dorset Airport,YTE,64.230214,-76.524706
 Cape St James,Cape St James Airport,YCJ,51.940806,-131.018385
 Caribou Island,Caribou Island Airport,YCI,47.363666,-85.809196
@@ -71,7 +67,6 @@ Centralia,Centralia Airport,YCE,43.283453,-81.503246
 Chapleau,Chapleau Airport,YLD,47.819759,-83.353119
 Charlo,Charlo Airport,YCL,47.9875454,-66.3314352
 Charlottetown,Charlottetown Airport,YHG,46.2852208,-63.1299666
-Charlottetown,Charlottetown Airport,YYG,46.2852208,-63.1299666
 Chatham,Chatham Airport,XCM,42.306667,-82.080559
 Chesterfield Inlet,Chesterfield Inlet Airport,YCS,63.3459424,-90.7335479
 Chetwynd,Chetwynd Airport,YCQ,55.687154,-121.626726
@@ -99,10 +94,9 @@ Coronation,Coronation Airport,YCT,52.075279,-111.445261
 Cortes Bay,Cortes Bay Airport,YCF,50.066667,-124.933333
 Courtenay,Courtenay Airport,YCA,49.6814524,-124.9841011
 Cowley,Cowley Airport,YYM,49.636489,-114.094678
-Cranbrook BC,Cranbrook Airport,YXC,49.614293,-115.7858784
+Cranbrook,Cranbrook Airport,YXC,49.614293,-115.7858784
 Creston,Creston Valley Airport,CFQ,49.097889,-116.511299
 Cross Lake,Cross Lake Airport,YCR,54.63333,-97.8
-Daniels Harbour,Daniels Harbour Airport,YDH,NULL,NULL
 Dauphin,Dauphin Airport,YDN,51.101435,-100.051789
 Davis Inlet,Davis Inlet Airport,YDI,55.927743,-60.944748
 Dawson City,Dawson City Airport,YDA,64.0447838,-139.1253916
@@ -111,9 +105,7 @@ Dean River,Dean River Airport,YRD,52.816667,-126.966667
 Dease Lake,Dease Lake Airport,YDL,58.422885,-130.030109
 Deception,Deception Airport,YGY,62.1113509,-74.5547676
 Deer Lake,Deer Lake Airport,YDF,49.2111639,-57.391498
-Deer Lake,Deer Lake Airport,YVZ,49.2111639,-57.391498
 Deline,Deline Airport,YWJ,65.1925119,-123.4289932
-Desolation Sound,Desolation Sound Airport,YDS,NULL,NULL
 Diavik,Diavik Airport,DVK,64.51139,-110.289444
 Digby,Digby Airport,YDG,44.545415,-65.786617
 Doc Creek,Doc Creek Airport,YDX,52.046058,-128.078166
@@ -123,9 +115,7 @@ Dryden,Dryden Municipal Airport,YHD,49.8265188,-92.7376669
 Duncan/Quam,Duncan Quam Airport,DUQ,48.783333,-123.7
 Earlton,Earlton Airport,YXR,47.6975679,-79.847053
 East Main,East Main Airport,ZEM,52.225833,-78.5224999
-Edmonton,Namao Fld Airport,YED,53.543564,-113.490452
-Edmonton,Edmonton City Center Airport,YXD,53.5709286,-113.5218077
-Edmonton AB,Edmonton International Airport,YEG,53.308035,-113.583768
+Edmonton,Edmonton International Airport,YEG,53.308035,-113.583768
 Edson,Edson Airport,YET,53.578876,-116.464801
 Ekati,Ekati Airport,YOA,64.698889,-110.614722
 Elliot Lake,Elliot Lake Airport,YEL,46.3521936,-82.5567213
@@ -137,7 +127,6 @@ Fairmont Hot Springs,Fairmont Hot Springs Airport,YCZ,50.330105,-115.873474
 Fairview,Fairview Airport,ZFW,56.066666,-118.38333
 Falher,Falher Airport,YOE,55.733333,-117.2
 Faro,Faro Airport,ZFA,62.2075,-133.375833
-Fiumicino,Fiumicino Harbour Airport,ZRR,NULL,NULL
 Flin Flon,Flin Flon Airport,YFO,54.677835,-101.681493
 Fond Du Lac,Fond Du Lac Airport,ZFD,59.335704,-107.184572
 Fontanges,Fontanges Airport,YFG,54.554069,-71.17321
@@ -186,9 +175,7 @@ Greenwood,Greenwood Airport,YZX,44.9797019,-64.922467
 Grise Fiord,Grise Fiord Airport,YGZ,76.425835,-82.909156
 Haines Junction,Haines Junction Airport,YHT,60.789271,-137.546555
 Hakai Pass,Hakai Pass Airport,YHC,51.73398,-128.123888
-Halifax,Shearwater Airport,YAW,44.6361551,-63.5124329
-Halifax,Downtown Waterfront H P Airport,YWF,44.65,-63.6
-Halifax NS,Halifax International Airport,YHZ,44.885059,-63.514854
+Halifax,Halifax International Airport,YHZ,44.885059,-63.514854
 Hall Beach,Hall Beach Airport,YUX,68.772735,-81.235208
 Hanna,Hanna Airport,HNX,51.6314,-111.903
 Hartley Bay,Hartley Bay Airport,YTB,53.416667,-129.25
@@ -209,9 +196,7 @@ Iles De La Madeleine,Iles De La Madeleine Airport,YGR,47.4238815,-61.7749117
 Ilford,Ilford Airport,ILF,56.051722,-95.614482
 Inukjuak,Inukjuak Airport,YPH,58.472782,-78.078245
 Inuvik,Inuvik mike Zubko Airport,YEV,68.3061978,-133.4973805
-Inverlake,Inverlake Airport,TIL,NULL,NULL
 Iqaluit,Iqaluit Airport,YFB,63.7513656,-68.5367466
-Island Lk/Garden Hill,Island Lk Garden Hill Airport,YIV,NULL,NULL
 Ivujivik,Ivujivik Airport,YIK,62.417521,-77.92569
 Jasper-hinton,Jasper hinton Airport,YJP,53.319178,-117.752823
 Jenpeg,Jenpeg Airport,ZJG,54.518561,-98.045469
@@ -227,10 +212,9 @@ Kaschechewan,Kaschechewan Airport,ZKE,52.1341225,-106.6296429
 Kattiniq,Kattiniq donaldson Airport,YAU,61.66177,-73.320166
 Keewaywin,Keewaywin Airport,KEW,52.992778,-92.840833
 Kegaska,Kegaska Airport,ZKG,50.195833,-61.265833
-Kelowna BC,Kelowna Airport,YLW,49.95704,-119.380016
+Kelowna,Kelowna Airport,YLW,49.95704,-119.380016
 Kelsey,Kelsey Airport,KES,56.037793,-96.509606
 Kemano,Kemano Airport,XKO,53.566667,-127.933333
-Kennosao Lake,Kennosao Lake Airport,YKI,NULL,NULL
 Kenora,Kenora Airport,YQK,49.789532,-94.3659981
 Key Lake,Key Lake Airport,YKJ,57.257119,-105.613647
 Killaloe,Killaloe Airport,YXI,45.665295,-77.587328
@@ -241,13 +225,11 @@ Kincardine,Township Airport,YKD,44.1989174,-81.5972758
 Kindersley,Kindersley Airport,YKY,51.518313,-109.179494
 Kingfisher Lake,Kingfisher Lake Airport,KIF,53.016142,-89.851719
 Kingston,Kingston Airport,YGK,44.2191268,-76.596222
-Kinoosao,Kinoosao Airport,KNY,NULL,NULL
 Kirkland Lake,Kirkland Lake Airport,YKX,48.1667078,-80.0370152
 Kitchener/Waterloo,Kitchener Waterloo Regional Airport,YKF,43.4558168,-80.3857458
 Kitkatla,Kitkatla Airport,YKK,53.7952805,-130.4388509
 Klemtu,Klemtu Airport,YKT,52.598762,-128.512374
 Knee Lake,Knee Lake Airport,YKE,55.05,-94.666667
-Knights Inlet,Knights Inlet Airport,KNV,NULL,NULL
 Kugaaruk,Kugaaruk Airport,YBB,68.536266,-89.807006
 Kugluktuk/Coppermine,Kugluktuk Airport,YCO,67.833336,-115.083336
 Kuujjuaq,Kuujjuaq Airport,YVP,58.142636,-68.443316
@@ -271,9 +253,8 @@ Leaf Rapids,Leaf Rapids Airport,YLR,56.514383,-99.986296
 Lebel-Sur-Quevillon,Lebel Sur Quevillon Airport,YLS,49.0357932,-77.0214693
 Lethbridge,Lethbridge Airport,YQL,49.6337392,-112.787895
 Little Grand Rapids,Little Grand Rapids Airport,ZGR,52.045524,-95.465988
-Lloydminster AB,Lloydminster Airport,YLL,53.309328,-110.072892
+Lloydminster,Lloydminster Airport,YLL,53.309328,-110.072892
 London,London International Airport,YXU,43.0284861,-81.1490079
-Long Point,Long Point Airport,YLX,NULL,NULL
 Lupin,Lupin Airport,YWO,65.756673,-111.251274
 Lutselke/Snowdrift,Lutselke Airport,YSG,62.417293,-110.694867
 Lyall Harbour,Lyall Harbour Airport,YAJ,48.816667,-123.2
@@ -284,7 +265,6 @@ Makkovik,Makkovik Airport,YMN,55.076944,-59.186389
 Manitouwadge,Manitouwadge Airport,YMG,49.083889,-85.860556
 Manitowaning,East Manitoulin Airport,YEM,45.841695,-81.857902
 Maniwaki,Maniwaki Airport,YMW,46.272849,-75.990387
-Maple Bay,Maple Bay Airport,YAQ,NULL,NULL
 Marathon,Marathon Airport,YSP,48.7587382,-86.3503092
 Maricourt Airstrip,Maricourt Airstrip Airport,YMC,56.516667,-71.066667
 Masset,Masset Airport,ZMT,54.027222,-132.125
@@ -294,9 +274,7 @@ Mayo,Mayo Airport,YMA,63.617021,-135.873377
 Meadow Lake,Meadow Lake Airport,YLJ,54.123838,-108.510026
 Medicine Hat,Medicine Hat Airport,YXH,50.0191618,-110.7208911
 Merritt,Merritt Airport,YMB,50.12337,-120.744832
-Merry Island,Merry Island Airport,YMR,NULL,NULL
 Minaki,Minaki Airport,YMI,49.971527,-94.700162
-Miners Bay,Miners Bay Airport,YAV,NULL,NULL
 Mingan,Mingan Airport,YLP,50.290279,-64.143608
 Miramichi,Miramichi Airport,YCH,47.007481,-65.449669
 Moncton,Greater Moncton International Airport,YQM,46.1161746,-64.6887764
@@ -304,26 +282,21 @@ Mont Joli,Mont Joli Airport,YYY,48.6022954,-68.2113876
 Mont Tremblant,La Macaza Airport,YTM,46.4113783,-74.7693221
 Montagne Harbor,Montagne Harbor Airport,YMF,48.816667,-123.2
 Montreal,Pierre Elliott Trudeau International Airport,YUL,45.45764,-73.749697
-Montreal,St Lambert Rail Svce Airport,XLM,45.5086699,-73.5539925
-Montreal,Mirabel Airport,YMX,45.6834084,-74.0290831
-Montreal (QC),Metropolitan Area Airport,YMQ,45.5086699,-73.5539925
-Montreal QC,St Hubert Airport,YHU,45.530222,-73.4076931
 Moose Jaw,Moose Jaw Air Vice Marshal C M Mcewen Airport,YMJ,50.3370393,-105.5557797
 Moose Lake,Moose Lake Airport,YAD,53.706311,-100.343967
-Moosonee ON,Moosonee Airport,YMO,51.2915894,-80.6104178
+Moosonee,Moosonee Airport,YMO,51.2915894,-80.6104178
 Mould Bay,Mould Bay Airport,YMD,76.235748,-119.334738
 Mount Hope,John C Munroe Airport,YHM,49.3850627,-121.4411528
-Murray Bay NT,Charlevoix Airport,YML,45.3180632,-85.2584004
+Murray Bay,Charlevoix Airport,YML,45.3180632,-85.2584004
 Muskoka,Muskoka Airport,YQA,44.9684961,-79.3071823
 Muskrat Dam,Muskrat Dam Airport,MSA,53.441389,-91.762778
 Nemiscau,Nemiscau Airport,YNS,51.6910219,-76.135998
 New Westminster,New Westminster Airport,YBD,49.21815,-122.891064
 Nitchequon,Nitchequon Airport,YNI,53.197222,-70.908333
-Nootka Sound,Nootka Sound Airport,YNK,NULL,NULL
 Norman Wells,Norman Wells Airport,YVQ,65.28225,-126.799232
 North Battleford,North Battleford Airport,YQW,52.76905,-108.243064
 North Bay,North Bay Airport,YYB,46.362411,-79.4169542
-North Spirit Lake ON,North Spirit Lake Airport,YNO,52.490833,-92.9725
+North Spirit Lake,North Spirit Lake Airport,YNO,52.490833,-92.9725
 Norway House,Norway House Airport,YNE,53.957999,-97.844409
 Obre Lake,Obre Lake Airport,YDW,60.317404,-103.130392
 Ocean Falls,Ocean Falls Airport,ZOF,52.36667,-127.7
@@ -332,11 +305,7 @@ Old Crow,Old Crow Airport,YOC,67.5668627,-139.8514963
 Old Fort Bay,Old Fort Bay Airport,ZFB,51.583333,-57.916667
 Opapamiska Lake,Musselwhite Airport,YBS,52.606667,-90.376944
 Oshawa,Oshawa Airport,YOO,43.9256098,-78.8968586
-Ottawa,Fallowfield Railway Airport,ZIF,45.4215296,-75.6971931
-Ottawa,Executive Gatineau Ottawa Airport,YND,45.521527,-75.5636339
 Ottawa,Ottawa Macdonald Cartier International Airport,YOW,45.3226524,-75.6673903
-Ottawa,Rockcliffe St Airport,YRO,45.4606016,-75.6446589
-Owekeno Village,Rivers Inlet Airport,YRN,NULL,NULL
 Owen Sound,Billy Bishop Regional Airport,YOS,44.5849339,-80.8352157
 Oxford House,Oxford House Airport,YOH,54.9334485,-95.2772538
 Pakuashipi,Pakuashipi Airport,YIF,51.211667,-58.658333
@@ -375,22 +344,18 @@ Powell Lake,Powell Lake Airport,WPL,50.183333,-124.4
 Powell River,Powell River Airport,YPW,49.83391,-124.499586
 Prince Albert SK,Glass Field Airport,YPA,53.218092,-105.673574
 Prince George,Prince George Airport,YXS,53.8844156,-122.6739094
-Prince George,Pr George Rail Stn Airport,XDV,53.91848,-122.776584
 Prince Rupert,Digby Island Airport,YPR,54.2917252,-130.4474153
-Prince Rupert,Seal Cove Airport,ZSW,54.3303058,-130.2806205
 Pukatawagan,Pukatawagan Airport,XPK,55.748583,-101.265968
 Qikiqtarjuaq,Qikiqtarjuaq Airport,YVM,67.545148,-64.021831
 Qualicum,Qualicum Airport,XQU,49.3377824,-124.3945911
 Quaqtaq,Quaqtaq Airport,YQC,61.045805,-69.618429
-Quebec,Sainte Foy Rail Svce Airport,XFY,52.9399159,-73.5491361
-Quebec,Quebec Stn Rail Svce Airport,XLJ,52.9399159,-73.5491361
 Quebec,Charny Airport,XFZ,52.9399159,-73.5491361
 Quebec City,Quebec Airport,YQB,46.7914148,-71.3840527
 Queen Charlotte Is,Queen Charlotte Is Airport,ZQS,53,-132
 Quesnel,Quesnel Airport,YQZ,53.025201,-122.509424
 Rae Lakes,Rae Lakes Airport,YRA,64.115939,-117.306882
 Rainbow Lake,Rainbow Lake Airport,YOP,58.490069,-119.401581
-Rankin Inlet NT,Nuuk Airport,YRT,64.18362,-51.721407
+Rankin Inlet,Nuuk Airport,YRT,64.18362,-51.721407
 Red Deer,Red Deer Airport,YQF,52.178786,-113.889033
 Red Lake,Red Lake Airport,YRL,51.0687653,-93.7990043
 Red Sucker Lake,Red Sucker Lake Airport,YRS,54.167125,-93.56138
@@ -409,7 +374,6 @@ Roberval,Roberval Airport,YRJ,48.5270409,-72.2199009
 Rocky Mountain House,Rocky Mountain House Airport,YRM,52.429899,-114.903762
 Ross River,Ross River Airport,XRR,61.972241,-132.431363
 Round Lake,Round Lake Airport,ZRJ,52.943832,-91.312034
-Rouyn-Noranda Quebec,Rouyn Noranda Airport,YUY,NULL,NULL
 Sable Island,Sable Island Airport,YSA,43.946852,-59.85261
 Sachigo Lake,Sachigo Lake Airport,ZPB,53.890833,-92.196111
 Sachs Harbour,Sachs Harbour Airport,YSY,71.9943119,-125.253955
@@ -421,7 +385,6 @@ Sandspit,Sandspit Airport,YZP,53.254347,-131.813807
 Sandy Lake,Sandy Lake Airport,ZSJ,53.04896,-93.335798
 Sanikiluaq,Sanikiluaq Airport,YSK,56.537778,-79.246667
 Sans Souci,Sans Souci Airport,YSI,45.266667,-80
-Sarnia,Sarnia Airport,YZR,NULL,NULL
 Saskatoon,John G Diefenbaker International Airport,YXE,52.1700512,-106.6902601
 Sault Ste Marie,Sault Ste Marie Airport,YAM,46.4852785,-84.5005852
 Schefferville,Schefferville Airport,YKL,54.8054641,-66.8057536
@@ -431,9 +394,7 @@ Shamattawa,Shamattawa Airport,ZTM,55.85942,-92.082086
 Shearwater,Shearwater Airport,YSX,52.1375749,-128.0596826
 Sherbrooke,Sherbrooke Airport,YSC,45.4166414,-71.9000614
 Shilo,Shilo Airport,YLO,49.806944,-99.632997
-Silva Bay,Silva Bay Airport,SYF,NULL,NULL
 Sioux Lookout,Sioux Lookout Airport,YXL,50.1152203,-91.9027414
-Slate Island,Slate Island Airport,YSS,NULL,NULL
 Slave Lake,Slave Lake Airport,YZH,55.293165,-114.778681
 Smith Falls,Smith Falls Airport,YSH,44.946761,-75.938681
 Smithers,Smithers Airport,YYD,54.824651,-127.183458
@@ -441,7 +402,6 @@ Snake River,Snake River Airport,YXF,65.966667,-134.166667
 Snare Lake,Snare Lake Airport,YFJ,64.1905385,-114.0755286
 South Indian Lake,South Indian Lake Airport,XSI,56.792661,-98.907391
 South Trout Lake,South Trout Lake Airport,ZFL,52.833333,-93.666667
-Spring Island,Spring Island Airport,YSQ,NULL,NULL
 Squamish,Squamish Airport,YSE,49.782127,-123.161806
 Squirrel Cove,Squirrel Cove Airport,YSZ,50.066667,-124.933333
 St Anthony,St Anthony Airport,YAY,51.3910654,-56.0900974
@@ -450,7 +410,7 @@ St Jean,St Jean Airport,YJN,45.3291464,-65.8901715
 St Leonard,St Leonard Airport,YSL,47.157664,-67.83129
 St Paul,St Paul Airport,ZSP,53.99358,-111.378351
 St Thomas,Pembroke Area Mncpl Airport,YQS,51.6737326,-4.9084334
-St. Johns NL,St Johns International Airport,YYT,47.6129574,-52.7432907
+St Johns,St Johns International Airport,YYT,47.6129574,-52.7432907
 Ste Therese Point,Ste Therese Point Airport,YST,53.856667,-94.6525
 Stephenville,Stephenville Airport,YJT,48.5453502,-58.5606432
 Stewart,Stewart Airport,ZST,55.9365618,-129.9814514
@@ -466,16 +426,14 @@ Summerside,Summerside Airport,YSU,46.4364847,-63.843288
 Summit Lake,Summit Lake Airport,IUM,54.283333,-122.633333
 Swan River,Swan River Airport,ZJN,52.121186,-101.234957
 Swift Current,Swift Current Airport,YYN,50.2809483,-107.6897049
-Sydney NS,Sydney Airport,YQY,46.1673052,-60.0471642
-Tadoule Lake MB,Tadoule Lake Airport,XTL,58.708382,-98.507672
+Sydney,Sydney Airport,YQY,46.1673052,-60.0471642
+Tadoule Lake,Tadoule Lake Airport,XTL,58.708382,-98.507672
 Tahsis,Tahsis Airport,ZTS,49.910715,-126.660549
 Taloyoak,Taloyoak Airport,YYH,69.53333,-93.51667
 Taltheilei Narrows,Taltheilei Narrows Airport,GSL,62.600756,-111.546291
 Tasiujuaq,Tasiujuaq Airport,YTQ,58.66783,-69.9563529
-Tasu,Tasu Airport,YTU,NULL,NULL
 Telegraph Creek,Telegraph Creek Airport,YTX,57.914436,-131.122552
-Telegraph Harbour,Telegraph Harbour Airport,YBQ,NULL,NULL
-Terrace BC,Terrace Airport,YXT,54.472626,-128.5791276
+Terrace,Terrace Airport,YXT,54.472626,-128.5791276
 Terrace Bay,Terrace Bay Airport,YTJ,48.814076,-87.099517
 Teslin,Teslin Airport,YZW,60.173262,-132.744221
 Tete-a-La Baleine,Tete a La Baleine Airport,ZTB,50.674444,-59.383611
@@ -483,18 +441,13 @@ The Pas,Clearwater Airport,YQD,51.8243702,-120.034639
 Thicket Portage,Thicket Portage Airport,YTD,55.319402,-97.707757
 Thompson,Thompson Airport,YTH,55.802358,-97.856234
 Thunder Bay,Thunder Bay Airport,YQT,48.3719491,-89.3118554
-Timmins ON,Timmins Airport,YTS,48.5666083,-81.3721421
+Timmins,Timmins Airport,YTS,48.5666083,-81.3721421
 Tisdale sk,Tisdale Airport,YTT,52.836666,-104.066666
 Tofino,Seaplane Base Airport,YTP,49.154444,-125.408056
-Tofino BC,Tofino Airport,YAZ,49.082047,-125.776971
-Toronto,Buttonville Municipal Airport,YKZ,43.8657626,-79.3699234
-Toronto,Downsview Airport,YZD,43.7368127,-79.4725254
-Toronto,Toronto City Centre Airport,YTZ,43.6317392,-79.3954907
-Toronto ON,Metropolitan Area Airport,YTO,43.653226,-79.3831843
-Toronto ON,Lester B Pearson International Airport,YYZ,43.681727,-79.612049
+Tofino,Tofino Airport,YAZ,49.082047,-125.776971
+Toronto,Lester B Pearson International Airport,YYZ,43.681727,-79.612049
 Trail,Trail Regional Airport,YZZ,49.0578259,-117.6073511
 Trenton,Trenton Airport,YTR,44.1100008,-77.532815
-Triple Island,Triple Island Airport,YTI,NULL,NULL
 Trois-Rivieres,Trois Rivieres Airport,YRQ,46.3623972,-72.6758477
 Tuktoyaktuk,Tuktoyaktuk Airport,YUB,69.435561,-133.0220854
 Tulita/Fort Norman,Tulita Airport,ZFN,64.909102,-125.567917
@@ -505,11 +458,9 @@ Umiujaq,Umiujaq Airport,YUD,56.536111,-76.518333
 Uranium City,Uranium City Airport,YBE,59.562034,-108.478471
 Valcartier,Valcartier Airport,YOY,46.9020221,-71.5042988
 Val-dor,Aeroport Regional De Val dor Airport,YVO,48.053488,-77.783177
-Vancouver,Boundary Bay Airport,YDT,49.193554,-123.1811303
-Vancouver,Vancouver Rail Stn Airport,XEA,49.261226,-123.1139268
 Vancouver,Coal Harbour Airport,CXH,49.289725,-123.1188708
 Vermilion,Vermilion Airport,YVG,53.3574043,-110.8249224
-Vernon B. C.,Vernon Regional Airport,YVE,50.2474739,-119.330999
+Vernon,Vernon Regional Airport,YVE,50.2474739,-119.330999
 Victoria,Victoria Inner Harbor Airport,YWH,48.4237653,-123.3710297
 Victoria,Victoria International Airport,YYJ,48.640055,-123.429058
 Wabush,Wabush Airport,YWK,52.9224109,-66.864476
@@ -524,7 +475,7 @@ Whistler,Whistler Airport,YWS,50.15,-122.966667
 White River,White River Airport,YWR,48.583333,-85.25
 Whitecourt,Whitecourt Airport,YZU,54.143483,-115.785312
 Whitehorse Yukon,Whitehorse International Airport,YXY,60.7142758,-135.0758933
-Wiarton ON,Wiarton Keppel Airport,YVV,44.7474809,-81.111538
+Wiarton,Wiarton Keppel Airport,YVV,44.7474809,-81.111538
 Williams Harbour,Williams Harbour Airport,YWM,52.333333,-56
 Williams Lake,Williams Lake Airport,YWL,52.1867619,-122.0675532
 Windsor,Windsor Airport,YQG,42.2660214,-82.9601741
@@ -533,7 +484,7 @@ Winnipeg,Winnipeg Airport,YWG,49.904033,-97.22588
 Wollaston Lake,Wollaston Lake Airport,ZWL,58.106837,-103.172145
 Wrigley,Wrigley Airport,YWY,63.210952,-123.440071
 Wunnummin Lake,Wunnummin Lake Airport,WNN,52.893889,-89.289167
-Yarmouth NS,Yarmouth Airport,YQI,43.8300234,-66.0879429
+Yarmouth,Yarmouth Airport,YQI,43.8300234,-66.0879429
 Yellowknife,Yellowknife Airport,YZF,62.47084,-114.4378528
 York Landing,York Landing Airport,ZAC,56.090323,-96.090679
 Yorkton,Yorkton Airport,YQV,51.264383,-102.4600619
