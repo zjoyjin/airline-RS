@@ -52,7 +52,7 @@ if __name__ == "__main__":
     m.drawmapboundary(fill_color=bg_color)
 
     # Draw the graph with flights corresponding to user input (with the cheapest flights from Google Flights)
-    user_flight_graph.draw_graph_from_user_input(m, "airport.csv", locations[0], [])
+    user_flight_graph.draw_graph_from_user_input(m, "airport.csv", locations)
 
     flight_graph = GraphAll()
     flight_graph.load_flights_graph(start_date, "airport.csv", locations)
