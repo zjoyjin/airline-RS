@@ -46,10 +46,7 @@ def get_connections(date: str, stops: list) -> list[dict]:
         flight_path.append(cheapest)
 
         # Add one day to the current date using datetime (and any other additional days from last flight)
-        year = int(date[:4])
-        day = int(date[5:7])
-        month = int(date[8:])
-        temp_date = datetime(year, month, day)
+        temp_date = datetime.strptime(date, "%Y/%d/%m")
         temp_date += timedelta(days=1 + added_days)
         curr_date = f'{temp_date.year}/{temp_date.day}/{temp_date.month}'
 
@@ -72,7 +69,7 @@ def get_cheapest_flight(flights: list[dict]) -> dict:
 
 # Testing!!
 if __name__ == "__main__":
-    res = get_connections("2024/20/04", ["Vancouver", "Toronto", "Edmonton"])
+    res = get_connections("2024/20/04", ["Vancouver", "Hong Kong","Beijing", "San Francisco"])
     if res:
         print(res)
     else:
