@@ -7,7 +7,7 @@ Copyright and Usage Information
 This file is Copyright (c) Ashley Bi, Zhuoyi Jin, Elizabeth Liu, and Kerri Wei.
 """
 from Flight_Graph_User import Graph
-from flight_network_graph import Graph_all
+from flight_network_graph import GraphAll
 
 
 if __name__ == "__main__":
@@ -34,7 +34,7 @@ if __name__ == "__main__":
     user_flight_graph = Graph()
     user_flight_graph.load_user_graph(locations, start_date)
     user_flight_graph.draw_graph_matplot("airport.csv", locations)
-    flight_graph = Graph_all()
+    flight_graph = GraphAll()
     flight_graph.load_flights_graph(start_date, "airport.csv", locations)
     flight_graph.draw_graph_matplot_all("airport.csv", locations)
 

@@ -49,7 +49,7 @@ class Vertex:
         return len(self.destinations)
 
 
-class Graph_all:
+class GraphAll:
     """A graph used to represent a network of flights. Each vertex is representative of a location and each edge is
     representative of a flights with initial location, destination, cheapest price, and airline.
 
