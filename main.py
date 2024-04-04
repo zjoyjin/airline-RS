@@ -44,12 +44,13 @@ if __name__ == "__main__":
     user_flight_graph.load_user_graph(locations, start_date, recursive)
 
     # # # Creating basemap for visualization
-    bg_color = (1.0, 1.0, 1.0, 1.0)
-    coast_color = (10.0 / 255.0, 10.0 / 255.0, 10 / 255.0, 0.8)
+    lake_color = (0, 0, 1, 0.2)
     m = Basemap(llcrnrlon=-139.808215, llcrnrlat=41.508585, urcrnrlon=-41.425033, urcrnrlat=83.335074)
-    m.drawcoastlines(color=coast_color)
-    m.fillcontinents(color=bg_color, lake_color=bg_color)
-    m.drawmapboundary(fill_color=bg_color)
+    m.drawcoastlines(linewidth=0.2, color="grey")
+    m.fillcontinents(color="white", lake_color=lake_color)
+    m.drawcountries(linewidth=0.2, color="grey")
+    m.drawstates(linewidth=0.2, color="grey")
+    m.drawmapboundary(fill_color=lake_color)
 
     # Draw the graph with flights corresponding to user input (with the cheapest flights from Google Flights)
     user_flight_graph.draw_graph_from_user_input(m, "airport.csv", locations)
