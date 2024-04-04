@@ -124,8 +124,8 @@ class Graph:
 
             self.add_edge_user(locations[i], locations[i + 1], flights[i])
 
-    def print_label(self, longitude: float, latitude: float, locations: list[str]) -> None:
-        """This is a helper function for draw_graph_from_user_input. This helper prints a label containing flight 
+        def print_label(self, longitude: float, latitude: float, locations: list[str]) -> None:
+        """This is a helper function for draw_graph_from_user_input. This helper prints a label containing flight
         information at a given longitude and latitude."""
         location_vertex = self.vertices[locations[0]]
         for destination in location_vertex.destinations:
@@ -167,9 +167,8 @@ class Graph:
                     latitude = float(row[3])
                     longitude = float(row[4])
                     locations_coord += [(latitude, longitude)]
+                    self.print_label(longitude, latitude, locations)
                     break
-
-        self.print_label(longitude, latitude, locations)
 
         # find coordinates of each city (other than the first one) in locations with airport_file
         for i in range(1, len(locations) - 1):
