@@ -137,7 +137,7 @@ class Graph:
             print(f'Flight {i + 1}: Price: ${price}, Airline: {airline}')
             print(f'Departure: {departure_date} at {departure_time} from {start_airport}, '
                   f'Arrival: {arrival_time} at {end_airport} \n')
-            
+
     def draw_graph_from_user_input(self, m: Basemap, airport_file: str, locations: list[str]):
         """Draw the flights on a map using matplotlib.
         >>> bg_color = (1.0, 1.0, 1.0, 1.0)
@@ -147,11 +147,11 @@ class Graph:
         >>> m.fillcontinents(color=bg_color, lake_color=bg_color)
         >>> m.drawmapboundary(fill_color=bg_color)
         >>> g = Graph()
-        >>> g.add_vertex("Vancouver")
-        >>> g.add_vertex("Calgary")
-        >>> g.add_vertex("Fort Mcmurray")
-        >>> g.add_vertex("Montreal")
-        >>> g.add_vertex("Toronto")
+        >>> g.add_vertex_user("Vancouver")
+        >>> g.add_vertex_user("Calgary")
+        >>> g.add_vertex_user("Fort Mcmurray")
+        >>> g.add_vertex_user("Montreal")
+        >>> g.add_vertex_user("Toronto")
         >>> g.vertices["Vancouver"].destinations.add(("V", "Calgary", "300", "Air Canada", "2024/04/04", "arrival"))
         >>> g.vertices["Calgary"].destinations.add(("C", "Fort Mcmurray", "400", "WestJet", "2024/05/04", "Arrival"))
         >>> g.vertices["Fort Mcmurray"].destinations.add(("FM", "Montreal", "300", "airline", "40404040", "arrival"))
@@ -220,7 +220,7 @@ class Graph:
                     m.drawgreatcircle(prev_longitude, prev_latitude, longitude, latitude)
 
         plt.show()
-    
+
     # def draw_graph_matplot(self, airport_file: str, locations: list[str]):
     #     """Draw the flights on a map using matplotlib."""
     #     # set background and map colors
