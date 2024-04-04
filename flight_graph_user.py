@@ -269,7 +269,7 @@ if __name__ == '__main__':
     import python_ta
 
     python_ta.check_all(config={
-        'extra-imports': [],  # the names (strs) of imported modules
-        'allowed-io': [],  # the names (strs) of functions that call print/open/input
+        'extra-imports': ['csv', 'mpl_toolkits.basemap', 'matplotlib.pyplot', 'connections'],
+        'allowed-io': ['load_user_graph', 'draw_graph_from_user_input'],
         'max-line-length': 120
     })
