@@ -122,8 +122,10 @@ class Graph:
         else:
             return False
 
-    def load_viewed_user_graph(self, locations: list[str], start_date: str):
-        """Initialize the graph with flights between the canadian airports."""
+    def load_user_graph(self, locations: list[str], start_date: str):
+        """Load a graph visualization mapping out the user's flight path according to the user's input.
+        Print the info for the cheapest flights between these corresponding locations.
+        The flight info is retrieved from Google Flights."""
         flight = get_connections(start_date, locations)
         self.add_vertex(locations[0])
 

@@ -128,8 +128,8 @@ class Graph_all:
     #             self.add_vertex(destination)
     #             self.add_edge(start_city, destination, flight['Price'], flight['Airline'])
 
-    def load_viewed_graph(self, start_date: str, airport_file: str, locations: list[str]) -> None:
-        """Return a airline review graph corresponding to the given user inputs and the scarping of the data set.
+    def load_flights_graph(self, start_date: str, airport_file: str, locations: list[str]) -> None:
+        """Initialize a graph with flights between the Canadian airports.
         """
         city_list = []
         with open(airport_file, 'r') as file:
