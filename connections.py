@@ -94,7 +94,7 @@ def _get_connections_recursive(date: str, stops: list, days: int = 0) -> list:
         results['Date of Departure'] = date
         departure = _get_departure_date(date, results['Arrival'], days)
 
-        possible_itinerary = [results] + get_connections(departure, stops[1:], days)
+        possible_itinerary = [results] + _get_connections_recursive(departure, stops[1:], days)
         if sum((f["Price"] for f in possible_itinerary)) < sum((f["Price"] for f in itinerary)):
             itinerary = possible_itinerary
 
