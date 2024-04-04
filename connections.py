@@ -59,6 +59,8 @@ def _get_connections_iterative(date: str, stops: list, days: int = 0) -> list[di
 
     while i != len(stops):
         flights = get_results(curr_start, curr_stop, date)
+        if len(flights) == 0:
+            return []
         cheapest = get_cheapest_flight(flights)
         cheapest['Date of Departure'] = curr_date
 
@@ -96,6 +98,8 @@ def _get_connections_recursive(date: str, stops: list, days: int = 0) -> list:
         if sum((f["Price"] for f in possible_itinerary)) < sum((f["Price"] for f in itinerary)):
             itinerary = possible_itinerary
 
+    if itinerary == [{"Price": 10**10}]:
+        return []
     return itinerary
 
 
@@ -131,11 +135,11 @@ def get_cheapest_flight(flights: list[dict]) -> dict:
 
 # Testing!!
 if __name__ == "__main__":
-    # res = get_connections("2024/20/04", ["Vancouver", "Hong Kong", "Beijing", "San Francisco"])
-    # if res:
-    #     print(res)
-    # else:
-    #     print("No flights found!")
+    res = get_connections("2024/20/04", ["Vancouver", "Beijing", "San Francisco"], recursive=True)
+    if res:
+        print(res)
+    else:
+        print("No flights found!")
 
     import python_ta
 
