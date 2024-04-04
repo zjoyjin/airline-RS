@@ -131,11 +131,11 @@ def get_results(start: str, end: str, departure: str) -> list[dict]:
 
 # For testing purposes
 if __name__ == "__main__":
-    res = get_results("Vancouver", "Edmonton", "2024/20/04")
-    if res:
-        print(res)
-    else:
-        print("No flights found!")
+    # res = get_results("Vancouver", "Edmonton", "2024/20/04")
+    # if res:
+    #     print(res)
+    # else:
+    #     print("No flights found!")
 
     import python_ta
 

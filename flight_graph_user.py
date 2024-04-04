@@ -9,11 +9,11 @@ This file is Copyright (c) Ashley Bi, Zhuoyi Jin, Elizabeth Liu, and Kerri Wei.
 """
 
 from __future__ import annotations
-from connections import get_connections
 from typing import Any
+import csv
 from mpl_toolkits.basemap import Basemap
 import matplotlib.pyplot as plt
-import csv
+from connections import get_connections
 
 
 class Vertex:
@@ -35,7 +35,7 @@ class Vertex:
     location: Any
     destinations: set[tuple[str, str, Any, Any, str, str]]
 
-    def __init__(self, location: str):
+    def __init__(self, location: str) -> None:
         """Initialize a new vertex with the given lcocation.
 
         This vertex is initialized with no neighbours.
@@ -43,7 +43,7 @@ class Vertex:
         self.location = location
         self.destinations = set()
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return f"{self.location}"
 
     def degree(self) -> int:
@@ -64,11 +64,11 @@ class Graph:
     """
     vertices: dict[str, Vertex]
 
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize an empty graph (no vertices or edges)."""
         self.vertices = {}
 
-    def add_vertex_user(self, location: str):
+    def add_vertex_user(self, location: str) -> None:
         """Add a vertex with the given city name.
 
         The new vertex is not adjacent to any other vertices.
@@ -77,7 +77,7 @@ class Graph:
         if location not in self.vertices:
             self.vertices[location] = Vertex(location)
 
-    def add_edge_user(self, initial: str, destination: str, flight: dict):
+    def add_edge_user(self, initial: str, destination: str, flight: dict) -> None:
         """Add an edge between the vertex for an initial location in this graph to one of the
         user's desired destinations. Note that only self.vertices[initial].destinations will be modified,
         since vertex.destinations for any vertex only stores flights that depart from the location,
@@ -103,7 +103,7 @@ class Graph:
             if flight_info not in initial_vertex.destinations:
                 initial_vertex.destinations.add(flight_info)
 
-    def get_vertex(self, location):
+    def get_vertex(self, location: str) -> Vertex:
         """Return the Vertex object associated with the given location.
 
         Raise a ValueError if item does not appear as a vertex in this graph.
@@ -113,20 +113,7 @@ class Graph:
         else:
             raise ValueError
 
-    def check_existing_flight_any(self, flight_start: str, flight_destination: Any) -> bool:
-        """Return whether there is a flight from the given intial loaction to the given destination. This flight may be
-        of any price or airline and does not consider whether there is carry-on or no carry-on.
-
-        Return False if initial or destination do not appear as vertices in this graph.
-        """
-        if flight_start in self.vertices and flight_destination in self.vertices:
-            initial_vertex = self.vertices[flight_start]
-            return any(
-                flight_destination == initial_vertex_dest[0] for initial_vertex_dest in initial_vertex.destinations)
-        else:
-            return False
-
-    def load_user_graph(self, locations: list[str], start_date: str):
+    def load_user_graph(self, locations: list[str], start_date: str) -> None:
         """Load a graph visualization mapping out the user's flight path according to the user's input.
         Print the info for the cheapest flights between these corresponding locations.
         The flight info is retrieved from Google Flights."""
@@ -147,12 +134,11 @@ class Graph:
             self.add_edge_user(locations[i], locations[i + 1], flights[i])
 
             # Print each flight's details
-            flight = flights[i]
             print(f'Flight {i + 1}: Price: ${price}, Airline: {airline}')
             print(f'Departure: {departure_date} at {departure_time} from {start_airport}, '
                   f'Arrival: {arrival_time} at {end_airport} \n')
 
-    def draw_graph_from_user_input(self, m: Basemap, airport_file: str, initial_location: str, locations_coord: list):
+    def draw_graph_from_user_input(self, m: Basemap, airport_file: str, initial_location: str, locations_coord: list) -> None:
         """Draw the flights on a map using matplotlib.
         >>> bg_color = (1.0, 1.0, 1.0, 1.0)
         >>> coast_color = (10.0 / 255.0, 10.0 / 255.0, 10 / 255.0, 0.8)
@@ -277,6 +263,7 @@ class Graph:
     #                     break
 
         plt.show()
+
 
 if __name__ == '__main__':
     import python_ta
