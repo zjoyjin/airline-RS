@@ -26,7 +26,12 @@ if __name__ == "__main__":
     locations = [str.capitalize(input())]
 
     print("How many cities do you want to visit (not including your current location)")
-    number = int(input())
+    number = input()
+    while not str.isdigit(number):
+        print("Please enter a valid integer!")
+        number = input()
+
+    number = int(number)
 
     print("Please type the names of all cities you want to visit and hit \"enter\" after each one.")
     for i in range(number):
