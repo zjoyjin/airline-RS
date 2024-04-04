@@ -115,28 +115,14 @@ class Graph:
 
     def load_user_graph(self, locations: list[str], start_date: str, recursive: bool = False) -> None:
         """Load a graph visualization mapping out the user's flight path according to the user's input.
-        Print the info for the cheapest flights between these corresponding locations.
-        The flight info is retrieved from Google Flights."""
+        Each flight's info is retrieved from Google Flights."""
         flights = get_connections(start_date, locations, recursive=recursive)
         self.add_vertex_user(locations[0])
 
         for i in range(0, len(locations) - 1):
             self.add_vertex_user(locations[i + 1])
 
-            price = flights[i]["Price"]
-            airline = flights[i]["Airline"]
-            departure_date = flights[i]["Date of Departure"]
-            departure_time = flights[i]["Departure"]
-            arrival_time = flights[i]["Arrival"]
-            start_airport = flights[i]["From"]
-            end_airport = flights[i]["To"]
-
             self.add_edge_user(locations[i], locations[i + 1], flights[i])
-
-            # Print each flight's details
-            print(f'Flight {i + 1}: Price: ${price}, Airline: {airline}')
-            print(f'Departure: {departure_date} at {departure_time} from {start_airport}, '
-                  f'Arrival: {arrival_time} at {end_airport} \n')
 
     def draw_graph_from_user_input(self, m: Basemap, airport_file: str, locations: list[str]) -> None:
         """Draw the flights on a map using matplotlib.
