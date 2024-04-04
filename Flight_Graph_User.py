@@ -68,7 +68,7 @@ class Graph:
         """Initialize an empty graph (no vertices or edges)."""
         self.vertices = {}
 
-    def add_vertex(self, location: str):
+    def add_vertex_user(self, location: str):
         """Add a vertex with the given city name.
 
         The new vertex is not adjacent to any other vertices.
@@ -131,10 +131,10 @@ class Graph:
         Print the info for the cheapest flights between these corresponding locations.
         The flight info is retrieved from Google Flights."""
         flights = get_connections(start_date, locations)
-        self.add_vertex(locations[0])
+        self.add_vertex_user(locations[0])
 
         for i in range(0, len(locations) - 1):
-            self.add_vertex(locations[i + 1])
+            self.add_vertex_user(locations[i + 1])
 
             price = flights[i]["Price"]
             airline = flights[i]["Airline"]
