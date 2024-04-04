@@ -1,3 +1,11 @@
+""" CSC111 Project 2: Flight Path Finder
+============================================
+The Python module contains the code for functions that retrieve the cheapest flights for Project 2.
+
+Copyright and Usage Information
+============================================
+This file is Copyright (c) Ashley Bi, Zhuoyi Jin, Elizabeth Liu, and Kerri Wei.
+"""
 from datetime import datetime, timedelta
 from scrape import get_results
 

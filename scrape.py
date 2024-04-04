@@ -1,6 +1,15 @@
+""" CSC111 Project 2: Flight Path Finder
+============================================
+The Python module contains the code used to web-scrap the Google Flights API for flight information for Project 2.
+
+Copyright and Usage Information
+============================================
+This file is Copyright (c) Ashley Bi, Zhuoyi Jin, Elizabeth Liu, and Kerri Wei.
+"""
 from playwright.sync_api import sync_playwright, Page
 from bs4 import BeautifulSoup
 from time import sleep
+
 
 def _get_results_page(page: Page, start: str, end: str, departure: str) -> str:
     """ Gets the HTML content of the google flights results page according to user input.
