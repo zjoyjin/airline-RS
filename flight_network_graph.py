@@ -141,7 +141,7 @@ class GraphAll:
 
                     self.add_edge(initial_city, destination_city, price, airline)
 
-    def draw_graph_matplot_all(self, airport_file: str, locations: list[str]):
+    def draw_graph_matplot_all(self, m: Basemap, airport_file: str, initial_location: str, locations_coord: list):
         """Draw the flights on a map using matplotlib."""
         # set background and map colors
         bg_color = (1.0, 1.0, 1.0, 1.0)
@@ -181,6 +181,14 @@ class GraphAll:
         plt.show()
 
 if __name__ == '__main__':
+    print("Please type your desired leaving date\n"
+          "type the format in yyyy/dd/mm):")
+    start_date = input()
+
+    flight_graph = GraphAll()
+    flight_graph.load_flights_graph(start_date, "airport.csv")
+    flight_graph.draw_graph_matplot_all("airport.csv")
+
     import python_ta
 
     python_ta.check_all(config={
