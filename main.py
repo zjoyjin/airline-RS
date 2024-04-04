@@ -49,3 +49,12 @@ if __name__ == "__main__":
     flight_graph = GraphAll()
     flight_graph.load_flights_graph(start_date, "airport.csv", locations)
     flight_graph.draw_graph_matplot_all("airport.csv", locations)
+
+    # Python-TA
+    import python_ta
+
+    python_ta.check_all(config={
+        'extra-imports': ['mpl_toolkits.basemap', 'flight_graph_user', 'flight_network_graph'],
+        'allowed-io': [],
+        'max-line-length': 120
+    })
