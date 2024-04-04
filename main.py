@@ -8,7 +8,6 @@ This file is Copyright (c) Ashley Bi, Zhuoyi Jin, Elizabeth Liu, and Kerri Wei.
 """
 from mpl_toolkits.basemap import Basemap
 from flight_graph_user import Graph
-from flight_network_graph import GraphAll
 
 
 if __name__ == "__main__":
@@ -55,15 +54,11 @@ if __name__ == "__main__":
     # Draw the graph with flights corresponding to user input (with the cheapest flights from Google Flights)
     user_flight_graph.draw_graph_from_user_input(m, "airport.csv", locations)
 
-    flight_graph = GraphAll()
-    flight_graph.load_flights_graph(start_date, "airport.csv", locations)
-    flight_graph.draw_graph_matplot_all("airport.csv", locations)
-
     # Python-TA
     import python_ta
 
     python_ta.check_all(config={
-        'extra-imports': ['mpl_toolkits.basemap', 'flight_graph_user', 'flight_network_graph'],
+        'extra-imports': ['mpl_toolkits.basemap', 'flight_graph_user'],
         'allowed-io': [],
         'max-line-length': 120
     })
