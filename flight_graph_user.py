@@ -169,6 +169,7 @@ class Graph:
                         prev_latitude = prev_coord[0]
                         prev_longitude = prev_coord[1]
 
+
                         m.drawgreatcircle(prev_longitude, prev_latitude, longitude, latitude)
                         plt.show()
 
@@ -184,6 +185,7 @@ class Graph:
                         prev_coord = locations_coord[len(locations_coord) - 2]
                         prev_latitude = prev_coord[0]
                         prev_longitude = prev_coord[1]
+                       
 
                         m.drawgreatcircle(prev_longitude, prev_latitude, longitude, latitude)
 
