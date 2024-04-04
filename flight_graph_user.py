@@ -137,8 +137,8 @@ class Graph:
             print(f'Flight {i + 1}: Price: ${price}, Airline: {airline}')
             print(f'Departure: {departure_date} at {departure_time} from {start_airport}, '
                   f'Arrival: {arrival_time} at {end_airport} \n')
-
-    def draw_graph_from_user_input(self, m: Basemap, airport_file: str, initial_location: str, locations_coord: list) -> None:
+            
+    def draw_graph_from_user_input(self, m: Basemap, airport_file: str, locations: list[str]):
         """Draw the flights on a map using matplotlib.
         >>> bg_color = (1.0, 1.0, 1.0, 1.0)
         >>> coast_color = (10.0 / 255.0, 10.0 / 255.0, 10 / 255.0, 0.8)
@@ -147,83 +147,80 @@ class Graph:
         >>> m.fillcontinents(color=bg_color, lake_color=bg_color)
         >>> m.drawmapboundary(fill_color=bg_color)
         >>> g = Graph()
-        >>> g.add_vertex_user("Calgary")
-        >>> g.add_vertex_user("Toronto")
-        >>> g.add_vertex_user("Vancouver")
-        >>> g.vertices["Calgary"].destinations.add(("Calgary", "Toronto", "300", "Air Canada", "2024/04/04", "arrival"))
-        >>> g.vertices["Toronto"].destinations.add(("Toronto", "Vancouver", "400", "WestJet", "2024/05/04", "Arrival"))
-        >>> g.draw_graph_from_user_input(m, "airport.csv", "Calgary", [])
-        """
+        >>> g.add_vertex("Vancouver")
+        >>> g.add_vertex("Calgary")
+        >>> g.add_vertex("Fort Mcmurray")
+        >>> g.add_vertex("Montreal")
+        >>> g.add_vertex("Toronto")
+        >>> g.vertices["Vancouver"].destinations.add(("V", "Calgary", "300", "Air Canada", "2024/04/04", "arrival"))
+        >>> g.vertices["Calgary"].destinations.add(("C", "Fort Mcmurray", "400", "WestJet", "2024/05/04", "Arrival"))
+        >>> g.vertices["Fort Mcmurray"].destinations.add(("FM", "Montreal", "300", "airline", "40404040", "arrival"))
+        >>> g.vertices["Montreal"].destinations.add(("Montreal", "Toronto", "300", "airline", "40404040", "arrival"))
+        >>> g.draw_graph_from_user_input(m, "airport.csv", ["Vancouver", "Calgary", "Fort Mcmurray", "Montreal", "Toronto"])"""
 
-        # set background and map colors
-        if len(self.vertices[initial_location].destinations) == 0 and len(locations_coord) > 1:
+        locations_coord = []  # this is a list that keeps tracks of coordinates
+
+        with open(airport_file, 'r') as file:
+            reader = csv.reader(file)
+            for row in reader:
+                if row[0] == locations[0]:
+                    latitude = float(row[3])
+                    longitude = float(row[4])
+                    locations_coord += [(latitude, longitude)]
+                    break
+
+        location_vertex = self.vertices[locations[0]]
+        for destination in location_vertex.destinations:
+            price = str(destination[2])
+            airline = destination[3]
+            departure_date = destination[4]
+            arrival_info = destination[5]
+            label = ("$" + price + " " + airline + "\n"
+                    " flight to " + locations[1] + ". \nDeparture at " + departure_date + "\n"
+                    " and arrival at " + arrival_info + ".")
+            plt.text(longitude, latitude, label, fontsize=5, ha='left', va='center')
+
+        # find coordinates of each city (other than the first one) in locations with airport_file
+        for i in range(1, len(locations) - 1):
             with open(airport_file, 'r') as file:
                 reader = csv.reader(file)
                 for row in reader:
-                    if row[0] == initial_location:
+                    if row[0] != locations[i]:
+                        continue
+                    else:
                         latitude = float(row[3])
                         longitude = float(row[4])
                         locations_coord += [(latitude, longitude)]
 
-                        prev_coord = locations_coord[len(locations_coord) - 2]
-                        prev_latitude = prev_coord[0]
-                        prev_longitude = prev_coord[1]
-
-
+                        prev_latitude = locations_coord[i - 1][0]
+                        prev_longitude = locations_coord[i - 1][1]
                         m.drawgreatcircle(prev_longitude, prev_latitude, longitude, latitude)
-                        plt.show()
 
-        elif len(locations_coord) >= 1:
-            with open(airport_file, 'r') as file:
-                reader = csv.reader(file)
-                for row in reader:
-                    if row[0] == initial_location:
-                        latitude = float(row[3])
-                        longitude = float(row[4])
-                        locations_coord += [(latitude, longitude)]
+                        location_vertex = self.vertices[locations[i]]
+                        for destination in location_vertex.destinations:
+                            price = str(destination[2])
+                            airline = destination[3]
+                            departure_date = destination[4]
+                            arrival_info = destination[5]
+                            label = ("$" + price + " " + airline + "\n"
+                                    " flight to " + locations[i + 1] + ". \nDeparture at " + departure_date + "\n"
+                                    " and arrival at " + arrival_info + ".")
+                            plt.text(longitude, latitude, label, fontsize=5, ha='left', va='center')
 
-                        prev_coord = locations_coord[len(locations_coord) - 2]
-                        prev_latitude = prev_coord[0]
-                        prev_longitude = prev_coord[1]
-                       
+        with open(airport_file, 'r') as file:
+            reader = csv.reader(file)
+            for row in reader:
+                if row[0] == locations[len(locations) - 1]:
+                    latitude = float(row[3])
+                    longitude = float(row[4])
+                    locations_coord += [(latitude, longitude)]
 
-                        m.drawgreatcircle(prev_longitude, prev_latitude, longitude, latitude)
+                    prev_latitude = locations_coord[len(locations) - 2][0]
+                    prev_longitude = locations_coord[len(locations) - 2][1]
+                    m.drawgreatcircle(prev_longitude, prev_latitude, longitude, latitude)
 
-            location_vertex = self.vertices[initial_location]
-            for destination in location_vertex.destinations:
-                destination_city_name = destination[1]
-                price = str(destination[2])
-                airline = destination[3]
-                departure_date = destination[4]
-                arrival_info = destination[5]
-                label = ("Take $" + price + " " + airline + " flight to " + destination_city_name + ". \n"
-                                            "Departure at " + departure_date + " and arrival at " + arrival_info + ".")
-                plt.text(longitude, latitude, label, fontsize=5, ha='left', va='center')
-
-                self.draw_graph_from_user_input(m, airport_file, destination_city_name, locations_coord)
-
-        elif len(locations_coord) == 0:
-            with open(airport_file, 'r') as file:
-                reader = csv.reader(file)
-                for row in reader:
-                    if row[0] == initial_location:
-                        latitude = float(row[3])
-                        longitude = float(row[4])
-                        locations_coord += [(latitude, longitude)]
-
-            location_vertex = self.vertices[initial_location]
-            for destination in location_vertex.destinations:
-                destination_city_name = destination[1]
-                price = str(destination[2])
-                airline = destination[3]
-                departure_date = destination[4]
-                arrival_info = destination[5]
-                label = ("Take $" + price + " " + airline + " flight to " + destination_city_name + ". \n"
-                                            "Departure at " + departure_date + " and arrival at " + arrival_info + ".")
-                plt.text(longitude, latitude, label, fontsize=5, ha='left', va='center')
-
-                self.draw_graph_from_user_input(m, airport_file, destination_city_name, locations_coord)
-
+        plt.show()
+    
     # def draw_graph_matplot(self, airport_file: str, locations: list[str]):
     #     """Draw the flights on a map using matplotlib."""
     #     # set background and map colors
