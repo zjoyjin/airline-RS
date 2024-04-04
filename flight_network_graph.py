@@ -134,8 +134,7 @@ class GraphAll:
                 if initial_city != destination_city:
                     flight = get_results(destination_city, initial_city, start_date)
                     price = flight[initial_city]["Price"]
-                    airline = flight[initial_city]["Airline"]  #
-                    # reAD FLIGHT FOR THE PRICE AND AIRLINE
+                    airline = flight[initial_city]["Airline"]
 
                     self.add_vertex(initial_city)
                     self.add_vertex(destination_city)
