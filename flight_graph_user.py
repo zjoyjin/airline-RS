@@ -113,11 +113,11 @@ class Graph:
         else:
             raise ValueError
 
-    def load_user_graph(self, locations: list[str], start_date: str) -> None:
+    def load_user_graph(self, locations: list[str], start_date: str, recursive: bool = False) -> None:
         """Load a graph visualization mapping out the user's flight path according to the user's input.
         Print the info for the cheapest flights between these corresponding locations.
         The flight info is retrieved from Google Flights."""
-        flights = get_connections(start_date, locations)
+        flights = get_connections(start_date, locations, recursive=recursive)
         self.add_vertex_user(locations[0])
 
         for i in range(0, len(locations) - 1):
