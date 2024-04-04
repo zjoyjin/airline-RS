@@ -146,8 +146,10 @@ class Graph:
         >>> g.draw_graph_from_user_input(m, "airport.csv", locations)
         """
 
-        locations_coord = []  # this is a list that keeps tracks of coordinates
+        # this is a list that keeps tracks of coordinates
+        locations_coord = []  
 
+        # find the coordinates of the first city in locations
         with open(airport_file, 'r') as file:
             reader = csv.reader(file)
             for row in reader:
@@ -157,6 +159,7 @@ class Graph:
                     locations_coord += [(latitude, longitude)]
                     break
 
+        # find and print the flight information that is stored at the vertex for the first city in locations
         location_vertex = self.vertices[locations[0]]
         for destination in location_vertex.destinations:
             price = str(destination[2])
@@ -168,7 +171,8 @@ class Graph:
                     " and arrival at " + arrival_info + ".")
             plt.text(longitude, latitude, label, fontsize=5, ha='left', va='center')
 
-        # find coordinates of each city (other than the first one) in locations with airport_file
+        # find coordinates of each city (other than the first one and last one) in locations and draw an arc between each consecutive city
+        # also plot the label at each departing city
         for i in range(1, len(locations) - 1):
             with open(airport_file, 'r') as file:
                 reader = csv.reader(file)
@@ -195,6 +199,7 @@ class Graph:
                                     " and arrival at " + arrival_info + ".")
                             plt.text(longitude, latitude, label, fontsize=5, ha='left', va='center')
 
+        # find the coordinates of the last city in locations and draw an arc between this city and the previous one
         with open(airport_file, 'r') as file:
             reader = csv.reader(file)
             for row in reader:
@@ -207,6 +212,7 @@ class Graph:
                     prev_longitude = locations_coord[len(locations) - 2][1]
                     m.drawgreatcircle(prev_longitude, prev_latitude, longitude, latitude)
 
+        # show the graph
         plt.show()
 
 
