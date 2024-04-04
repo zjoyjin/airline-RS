@@ -108,6 +108,8 @@ def get_results(start: str, end: str, departure: str) -> list[dict]:
         - start: city of departure
         - end: city of arrival
         - departure: departing date in YYYY/DD/MM format
+    Preconditions:
+        - start != '' and end != '' and departure != ''
     """
 
     with sync_playwright() as playwright:
