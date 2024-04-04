@@ -124,8 +124,8 @@ class Graph:
 
             self.add_edge_user(locations[i], locations[i + 1], flights[i])
 
-    def print_label(self, longitude, latitude, locations: list[str]):
-        """This is a helper function for draw_graph_from_user_input. This helper prints a label containing flight 
+    def print_label(self, longitude: float, latitude: float, locations: list[str]) -> None:
+        """This is a helper function for draw_graph_from_user_input. This helper prints a label containing flight
         information at a given longitude and latitude."""
         location_vertex = self.vertices[locations[0]]
         for destination in location_vertex.destinations:
@@ -138,7 +138,7 @@ class Graph:
                      " and arrival at " + arrival_info + ".")
             plt.text(longitude, latitude, label, fontsize=5, ha='left', va='center')
 
-    def draw_graph_from_user_input(self, m: Basemap, airport_file: str, locations: list[str]):
+    def draw_graph_from_user_input(self, m: Basemap, airport_file: str, locations: list[str]) -> None:
         """Draw the flights on a map using matplotlib.
         >>> bg_color = (1.0, 1.0, 1.0, 1.0)
         >>> coast_color = (10.0 / 255.0, 10.0 / 255.0, 10 / 255.0, 0.8)
