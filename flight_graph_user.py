@@ -221,48 +221,6 @@ class Graph:
 
         plt.show()
 
-    # def draw_graph_matplot(self, airport_file: str, locations: list[str]):
-    #     """Draw the flights on a map using matplotlib."""
-    #     # set background and map colors
-    #     bg_color = (1.0, 1.0, 1.0, 1.0)
-    #     coast_color = (10.0 / 255.0, 10.0 / 255.0, 10 / 255.0, 0.8)
-    #
-    #     m = Basemap(llcrnrlon=-139.808215, llcrnrlat=41.508585, urcrnrlon=-41.425033, urcrnrlat=83.335074)
-    #     m.drawcoastlines(color=coast_color)
-    #     m.fillcontinents(color=bg_color, lake_color=bg_color)
-    #     m.drawmapboundary(fill_color=bg_color)
-    #
-    #     locations_coord = []  # this is a list that keeps tracks of coordinates
-    #
-    #     # find the coordinates for the first city in locations with airport_file
-    #     with open(airport_file, 'r') as file:
-    #         reader = csv.reader(file)
-    #         for row in reader:
-    #             if row[0] == locations[0]:
-    #                 latitude = float(row[3])
-    #                 longitude = float(row[4])
-    #                 locations_coord += [(latitude, longitude)]
-    #                 break
-    #
-    #     # find coordinates of each city (other than the first one) in locations with airport_file
-    #     for i in range(1, len(locations)):
-    #         with open(airport_file, 'r') as file:
-    #             reader = csv.reader(file)
-    #             for row in reader:
-    #                 if row[0] != locations[i]:
-    #                     continue
-    #                 else:
-    #                     latitude = float(row[3])
-    #                     longitude = float(row[4])
-    #                     locations_coord += [(latitude, longitude)]
-    #
-    #                     prev_latitude = locations_coord[i - 1][0]
-    #                     prev_longitude = locations_coord[i - 1][1]
-    #                     m.drawgreatcircle(prev_longitude, prev_latitude, longitude, latitude)
-    #                     break
-
-        plt.show()
-
 
 if __name__ == '__main__':
     import python_ta
