@@ -73,7 +73,7 @@ class Graph:
         self.vertices = {}
 
     def add_vertex(self, location: str):
-        """Add a vertex with the given city name, price, and airline to this graph.
+        """Add a vertex with the given city name.
 
         The new vertex is not adjacent to any other vertices.
         Do nothing if the given item is already in this graph.
@@ -151,6 +151,7 @@ class Graph:
             self.add_edge_user(locations[i], locations[i + 1], flights[i]) #TODO, CHECK THIS THING
 
             # Print each flight's details
+            flight = flights[i]
             print(f'Flight {i + 1}: Price: ${price}, Airline: {airline}')
             print(f'Departure: {departure_date} at {departure_time} from {start_airport}, '
                   f'Arrival: {arrival_time} at {end_airport} \n')
