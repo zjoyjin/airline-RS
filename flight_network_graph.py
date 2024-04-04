@@ -9,10 +9,8 @@ This file is Copyright (c) Ashley Bi, Zhuoyi Jin, Elizabeth Liu, and Kerri Wei.
 """
 
 from __future__ import annotations
-from typing import Union, Any, Optional
-from datetime import datetime
+from typing import Union, Any
 from scrape import get_results
-import networkx as nx
 from mpl_toolkits.basemap import Basemap
 import matplotlib.pyplot as plt
 import csv

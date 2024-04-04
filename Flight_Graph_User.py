@@ -10,8 +10,7 @@ This file is Copyright (c) Ashley Bi, Zhuoyi Jin, Elizabeth Liu, and Kerri Wei.
 
 from __future__ import annotations
 from connections import get_connections
-from typing import Union, Any, Optional
-import networkx as nx
+from typing import Any
 from mpl_toolkits.basemap import Basemap
 import matplotlib.pyplot as plt
 import csv
@@ -53,11 +52,10 @@ class Vertex:
 
 
 class Graph:
-    """A graph used to represent a network of flights. Each vertex is representative of a location and each edge is
-    representative of a flights with initial location, destination, cheapest price, and airline.
-
-    This is a directed graph, since we need to keep track of flights that occur in both directions (eg.
-    Toronto to Vancouver versus Vancouver to Toronto). Finally, this graph is showing the cheapest flight available.
+    """A graph used to represent a collection of flights. Each vertex is representative of a location
+    Each edge is representative of a flight, and contains the info about the flight. This includes the
+    initial location, destination, departure info (date, time, airport code), arrival info (time, airport code),
+    price, and airline.
 
     Instance Attributes:
          - vertices:
