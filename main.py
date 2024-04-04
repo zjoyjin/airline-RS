@@ -12,7 +12,7 @@ from flight_graph_user import Graph
 
 if __name__ == "__main__":
     print("What city are you currently in?")
-    locations = [str.capitalize(input())]
+    locations = [str.title(input())]
 
     print("How many cities do you want to visit (not including your current location)")
     number = input()
