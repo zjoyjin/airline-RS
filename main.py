@@ -31,9 +31,17 @@ if __name__ == "__main__":
           "type the format in yyyy/dd/mm):")
     start_date = input()
 
+    print("Search recursively? (Caution: slower, but yields cheaper results)\n"
+          "type Y or N:")
+    recursive = input()
+    if recursive.upper() == 'Y':
+        recursive = True
+    else:
+        recursive = False
+
     # Draw the graph after user input
     user_flight_graph = Graph()
-    user_flight_graph.load_user_graph(locations, start_date)
+    user_flight_graph.load_user_graph(locations, start_date, recursive)
 
     # Creating basemap for visualization
     bg_color = (1.0, 1.0, 1.0, 1.0)

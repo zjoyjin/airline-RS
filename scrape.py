@@ -44,7 +44,7 @@ def _get_results_page(page: Page, start: str, end: str, departure: str) -> str:
     # dates
     departure_field = page.get_by_role("textbox", name="Departure")
     departure_field.first.click()
-    sleep(0.5)
+    sleep(0.7)
     departure_field.press_sequentially(departure)
     for _ in range(3):
         sleep(0.5)
