@@ -138,7 +138,7 @@ class Graph:
             print(f'Departure: {departure_date} at {departure_time} from {start_airport}, '
                   f'Arrival: {arrival_time} at {end_airport} \n')
 
-    def draw_graph_from_user_input(self, m: Basemap, airport_file: str, locations: list[str]):
+    def draw_graph_from_user_input(self, m: Basemap, airport_file: str, locations: list[str]) -> None:
         """Draw the flights on a map using matplotlib.
         >>> bg_color = (1.0, 1.0, 1.0, 1.0)
         >>> coast_color = (10.0 / 255.0, 10.0 / 255.0, 10 / 255.0, 0.8)
@@ -156,7 +156,9 @@ class Graph:
         >>> g.vertices["Calgary"].destinations.add(("C", "Fort Mcmurray", "400", "WestJet", "2024/05/04", "Arrival"))
         >>> g.vertices["Fort Mcmurray"].destinations.add(("FM", "Montreal", "300", "airline", "40404040", "arrival"))
         >>> g.vertices["Montreal"].destinations.add(("Montreal", "Toronto", "300", "airline", "40404040", "arrival"))
-        >>> g.draw_graph_from_user_input(m, "airport.csv", ["Vancouver", "Calgary", "Fort Mcmurray", "Montreal", "Toronto"])"""
+        >>> locations = ["Vancouver", "Calgary", "Fort Mcmurray", "Montreal", "Toronto"]
+        >>> g.draw_graph_from_user_input(m, "airport.csv", locations)
+        """
 
         locations_coord = []  # this is a list that keeps tracks of coordinates
 
