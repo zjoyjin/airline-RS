@@ -39,23 +39,30 @@ def get_connections(date: str, stops: list) -> list[dict]:
         cheapest = get_cheapest_flight(flights)
         cheapest['Date of Departure'] = curr_date
 
-        # Check if flight lands during the next day (from departure day)
-        added_days = 0
-        if '+' in cheapest['Arrival']:
-            added_days = int(cheapest['Arrival'][-1])
         flight_path.append(cheapest)
 
-        # Add one day to the current date using datetime (and any other additional days from last flight)
-        temp_date = datetime.strptime(date, "%Y/%d/%m")
-        temp_date += timedelta(days=1 + added_days)
-        curr_date = f'{temp_date.year}/{temp_date.day}/{temp_date.month}'
-
+        curr_date = get_departure_date(curr_date, cheapest["Arrival"], days)
         i += 1
         if i < len(stops):
             curr_start, curr_stop = curr_stop, stops[i]
 
     return flight_path
 
+def get_departure_date(arrival_date, arrival_time, days: int = 0) -> str:
+    """
+    Returns the expected date of departure of a flight following one with given
+    `arrival_date` and `arrival_time`, with `days` in between the flights
+    (default 0; i.e. returned date will be the day after initial arrival)
+    Precondition:
+        - days >= 0
+    """
+    stay = 1 + days
+    if '+' in arrival_time:
+        stay += int(arrival_time[-1])
+    temp_date = datetime.strptime(arrival_date, "%Y/%d/%m")
+    temp_date += timedelta(days=stay)
+
+    return f'{temp_date.year}/{temp_date.day}/{temp_date.month}'
 
 def get_cheapest_flight(flights: list[dict]) -> dict:
     """Returns the cheapest flight from a given list of flight results."""
