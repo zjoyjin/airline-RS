@@ -196,13 +196,4 @@ class Graph:
                         m.drawgreatcircle(prev_longitude, prev_latitude, longitude, latitude)
                         break
 
-            # Add label with airline, money, and date
-
-            # airline = get_connections(locations[i]["Airline"])
-            # money = get_connections(locations[i]["Price"])
-            # date = get_connections(locations[i], locations[i])
-            #
-            # plt.annotate(f"{airline}, {money}, {date}")
-
-
         plt.show()

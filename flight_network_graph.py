@@ -120,14 +120,6 @@ class GraphAll:
         else:
             return False
 
-    # def airport_add_edge(self, start_city: str, start_date: datetime, destination: str):
-    #     """Initialize the graph with flights between the canadian airports."""
-    #     flights = get_results(start_city, destination, start_date)
-    #     for flight in flights:
-    #             self.add_vertex(start_city)
-    #             self.add_vertex(destination)
-    #             self.add_edge(start_city, destination, flight['Price'], flight['Airline'])
-
     def load_flights_graph(self, start_date: str, airport_file: str, locations: list[str]) -> None:
         """Initialize a graph with flights between the Canadian airports.
         """
@@ -138,7 +130,6 @@ class GraphAll:
                 if row[0] == locations[0]:
                     city_list += [row[0]]
                     break
-
 
         for initial_city in city_list:
             for destination_city in city_list:
@@ -190,145 +181,4 @@ class GraphAll:
                         m.drawgreatcircle(prev_longitude, prev_latitude, longitude, latitude)
                         break
 
-        # airline = get_connections(locations[i]["Airline"])    # Draw nodes
-        # money = get_connections(locations[i]["Price"])    nx.draw_networkx_nodes(G, pos, node_size=700, node_color='skyblue', label=True)
-        # date = get_connections(locations[i], locations[i])
-        #     # Draw edges
-        # plt.annotate(f"{airline}, {money}, {date}")    nx.draw_networkx_edges(G, pos, width=1.0, alpha=0.5, arrows=True)
-
-
         plt.show()
-        # edge_labels = {(u, v): f"{d['weight']}, {d['airline']}" for u, v, d in G.edges(data=True)}
-
-
-
-#  # Load the weighted graph
-#         graph = WeightedGraph()
-#         graph.load_viewed_graph()
-#
-#         # Visualize the graph
-#         graph.visualize_graph()
-
-
-# def visualize_graph(self):
-#     # Create a directed graph
-#     G = nx.DiGraph()
-#
-#     # Add nodes (airports) to the graph
-#     for airport in self.vertices:
-#         G.add_node(airport)
-#
-#     # Add edges (flights) to the graph
-#     for airport, vertex in self.vertices.items():
-#         for destination, price, airline in vertex.destinations:
-#             G.add_edge(airport, destination, price=price, airline=airline)
-#
-#     # Plot the graph
-#     plt.figure(figsize=(12, 8))
-#     pos = nx.spring_layout(G)  # Positions for all nodes
-#
-#     # Draw nodes
-#     nx.draw_networkx_nodes(G, pos, node_size=700, node_color='skyblue')
-#
-#     # Draw edges
-#     nx.draw_networkx_edges(G, pos, width=2, alpha=0.5, edge_color='gray')
-#
-#     # Draw labels (airport codes)
-#     nx.draw_networkx_labels(G, pos, font_size=12, font_family='sans-serif')
-#
-#     # Draw edge labels (prices)
-#     edge_labels = {(u, v): f"${d['price']}" for u, v, d in G.edges(data=True)}
-#     nx.draw_networkx_edge_labels(G, pos, edge_labels=edge_labels, font_size=10)
-#
-#     # Set plot title and display the graph
-#     plt.title('Flight Routes')
-#     plt.axis('off')  # Turn off axis
-#     plt.show()
-
-
-# def get_edges(self, vertex):
-#     if isinstance(vertex, Vertex):
-#         return self.edges[vertex.name]
-#     else:
-#         raise ValueError("Invalid vertex")
-
-
-# Creating graph
-# graph = Graph()
-
-# Reading data from CSV file
-# with open('flights.csv', 'r') as file:
-#     csv_reader = csv.reader(file)
-#     next(csv_reader)  # Skip header
-#     for row in csv_reader:
-#         start = Vertex(row[0])
-#         destination = Vertex(row[1])
-#         airline = row[4]
-#         baggage = row[2]
-#         price = int(row[3])
-
-#         graph.add_vertex(start)
-#         graph.add_vertex(destination)
-#         graph.add_edge(Edge(start, destination, airline, baggage, price))
-
-# res = get_results()
-# for flight in res:
-#     start = flight['_to']
-#     destination = flight['_from']
-#     departure = flight['departure']
-#     arrival = flight['arrival']
-#     price = flight['Price']
-#     airline = flight['Airline']
-
-#     # baggage = flight['Carry-on']
-
-#     graph.add_vertex(start)
-#     graph.add_vertex(destination)
-#     graph.add_edge(start, destination, price, airline)
-
-#
-# def get_similarity_score(self, flight_start: str, flight_destination: str, price: float) -> float:
-#     """Return a similarity score between the user input (source and destination cities, price range)
-#     and the given flight.
-#
-#     The similarity score is calculated based on the closeness of the flight's start city, end city,
-#     and price to the user's input.
-#
-#     Preconditions:
-#         - flight_start and flight_destination are valid city names.
-#         - price is a non-negative float representing the flight's price.
-#     """
-#     similarity_score = 0.0
-#
-#     if flight_start.lower() == self.user_start.lower(): #doesn't even make sense uhhhhh
-#         similarity_score += 1.0
-#
-#     if flight_destination.lower() == self.user_end.lower():
-#         similarity_score += 1.0
-#
-#     price_difference = abs(price - self.user_price)
-#     if price_difference <= self.price_range:
-#         similarity_score += 1.0 - (price_difference / self.price_range)
-#
-#     return similarity_score
-# #how do i get the user input here?
-
-
-# #test
-# CITIES = { "Toronto", "Vancouver", "Montreal","Calgary","Ottawa","Edmonton","Halifax","Winnipeg","Quebec City","Victoria"}
-#
-# graph = WeightedGraph()
-# source_city = input("Enter the source city: ").strip().capitalize()
-# destination_city = input("Enter the destination city: ").strip().capitalize()
-# start_date = input("Enter the start date (YYYY/MM/DD): ").strip()
-# end_date = input("Enter the end date (YYYY/MM/DD): ").strip()
-#
-# airline_preference = input("Enter airline preference (leave blank for all airlines): ").strip()
-# carry_on_preference = input("Carry-on baggage preference (yes/no): ").strip().lower() == 'yes'
-#
-# # Initialize graph based on user input and flight results
-# # for source_city in CITIES:
-# #     for destination_city in CITIES:
-# #         graph.initialize_with_airports(source_city, destination_city, start_date, end_date, airline=airline_preference, carry_on=carry_on_preference)
-# graph.initialize_with_airports(source_city, destination_city, start_date, end_date, airline=airline_preference, carry_on=carry_on_preference)
-# graph.visualize_graph(airline_preference, source_city, destination_city, start_date, end_date)
