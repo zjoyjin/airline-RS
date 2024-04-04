@@ -129,7 +129,21 @@ class Graph:
 
         for i in range(0, len(locations) - 1):
             self.add_vertex(locations[i + 1])
-            self.add_edge_date(locations[i],locations[i + 1], flight[i]["Price"], flight[i]["Airline"], flight[i]["Date of Departure"]) #TODO, CHECK THIS THING
+
+            price = flight[i]["Price"]
+            airline = flight[i]["Airline"]
+            departure_date = flight[i]["Date of Departure"]
+            departue_time = flight[i]["Departure"]
+            arrival_time = flight[i]["Arrival"]
+            start_airport = flight[i]["From"]
+            end_airport = flight[i]["To"]
+
+            self.add_edge_date(locations[i], locations[i + 1], price, departure_date, start_date) #TODO, CHECK THIS THING
+
+            # Print each flight's details
+            print(f'Flight {i + 1}: Price: ${flight[i]["Price"]}, Airline: {airline}')
+            print(f'Departure: {departure_date} at {departue_time} from {start_airport}, '
+                  f'Arrival: {arrival_time} at {end_airport} \n')
 
     def draw_graph_matplot(self, airport_file: str, locations: list[str]):
         """Draw the flights on a map using matplotlib."""

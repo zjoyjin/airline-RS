@@ -136,7 +136,7 @@ class Graph_all:
             reader = csv.reader(file)
             for row in reader:
                 if row[0] == locations[0]:
-                    city_list += [(float(row[0]))]
+                    city_list += [row[0]]
                     break
 
 

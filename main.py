@@ -37,10 +37,11 @@ if __name__ == "__main__":
     start_date = input()
 
     # Draw the graph after user input
-    flight_graph = Graph()
-    flight_graph.load_viewed_user_graph(locations, start_date)
-    flight_graph.draw_graph_matplot("airport.csv", locations)
-    flight_graph.load_viewed_graph(locations, start_date)
+    user_flight_graph = Graph()
+    user_flight_graph.load_viewed_user_graph(locations, start_date)
+    user_flight_graph.draw_graph_matplot("airport.csv", locations)
+    flight_graph = Graph_all()
+    flight_graph.load_viewed_graph(start_date, "airport.csv", locations)
     flight_graph.draw_graph_matplot_all("airport.csv", locations)
 
 
