@@ -124,7 +124,21 @@ class Graph:
 
             self.add_edge_user(locations[i], locations[i + 1], flights[i])
 
-    def draw_graph_from_user_input(self, m: Basemap, airport_file: str, locations: list[str]) -> None:
+    def print_label(self, longitude, latitude, locations: list[str]):
+        """This is a helper function for draw_graph_from_user_input. This helper prints a label containing flight 
+        information at a given longitude and latitude."""
+        location_vertex = self.vertices[locations[0]]
+        for destination in location_vertex.destinations:
+            price = str(destination[2])
+            airline = destination[3]
+            departure_date = destination[4]
+            arrival_info = destination[5]
+            label = ("$" + price + " " + airline + "\n"
+                     " flight to " + locations[1] + ". \nDeparture at " + departure_date + "\n"
+                     " and arrival at " + arrival_info + ".")
+            plt.text(longitude, latitude, label, fontsize=5, ha='left', va='center')
+
+    def draw_graph_from_user_input(self, m: Basemap, airport_file: str, locations: list[str]):
         """Draw the flights on a map using matplotlib.
         >>> bg_color = (1.0, 1.0, 1.0, 1.0)
         >>> coast_color = (10.0 / 255.0, 10.0 / 255.0, 10 / 255.0, 0.8)
@@ -142,14 +156,10 @@ class Graph:
         >>> g.vertices["Calgary"].destinations.add(("C", "Fort Mcmurray", "400", "WestJet", "2024/05/04", "Arrival"))
         >>> g.vertices["Fort Mcmurray"].destinations.add(("FM", "Montreal", "300", "airline", "40404040", "arrival"))
         >>> g.vertices["Montreal"].destinations.add(("Montreal", "Toronto", "300", "airline", "40404040", "arrival"))
-        >>> locations = ["Vancouver", "Calgary", "Fort Mcmurray", "Montreal", "Toronto"]
-        >>> g.draw_graph_from_user_input(m, "airport.csv", locations)
-        """
+        >>> g.draw_graph_from_user_input(m, "airport.csv", ["Vancouver", "Calgary", "Fort Mcmurray", "Montreal", "Toronto"])"""
 
-        # this is a list that keeps tracks of coordinates
-        locations_coord = []  
+        locations_coord = []  # this is a list that keeps tracks of coordinates
 
-        # find the coordinates of the first city in locations
         with open(airport_file, 'r') as file:
             reader = csv.reader(file)
             for row in reader:
@@ -159,20 +169,9 @@ class Graph:
                     locations_coord += [(latitude, longitude)]
                     break
 
-        # find and print the flight information that is stored at the vertex for the first city in locations
-        location_vertex = self.vertices[locations[0]]
-        for destination in location_vertex.destinations:
-            price = str(destination[2])
-            airline = destination[3]
-            departure_date = destination[4]
-            arrival_info = destination[5]
-            label = ("$" + price + " " + airline + "\n"
-                    " flight to " + locations[1] + ". \nDeparture at " + departure_date + "\n"
-                    " and arrival at " + arrival_info + ".")
-            plt.text(longitude, latitude, label, fontsize=5, ha='left', va='center')
+        self.print_label(longitude, latitude, locations)
 
-        # find coordinates of each city (other than the first one and last one) in locations and draw an arc between each consecutive city
-        # also plot the label at each departing city
+        # find coordinates of each city (other than the first one) in locations with airport_file
         for i in range(1, len(locations) - 1):
             with open(airport_file, 'r') as file:
                 reader = csv.reader(file)
@@ -188,18 +187,8 @@ class Graph:
                         prev_longitude = locations_coord[i - 1][1]
                         m.drawgreatcircle(prev_longitude, prev_latitude, longitude, latitude)
 
-                        location_vertex = self.vertices[locations[i]]
-                        for destination in location_vertex.destinations:
-                            price = str(destination[2])
-                            airline = destination[3]
-                            departure_date = destination[4]
-                            arrival_info = destination[5]
-                            label = ("$" + price + " " + airline + "\n"
-                                    " flight to " + locations[i + 1] + ". \nDeparture at " + departure_date + "\n"
-                                    " and arrival at " + arrival_info + ".")
-                            plt.text(longitude, latitude, label, fontsize=5, ha='left', va='center')
+                        self.print_label(longitude, latitude, locations)
 
-        # find the coordinates of the last city in locations and draw an arc between this city and the previous one
         with open(airport_file, 'r') as file:
             reader = csv.reader(file)
             for row in reader:
@@ -212,7 +201,6 @@ class Graph:
                     prev_longitude = locations_coord[len(locations) - 2][1]
                     m.drawgreatcircle(prev_longitude, prev_latitude, longitude, latitude)
 
-        # show the graph
         plt.show()
 
 
